@@ -364,9 +364,11 @@ public class DigitalTransUtil
 	}
 
 	/**
-	 * 十六进制串转化为byte数组
+	 *十六进制串转化为byte数组
 	 *
-	 * @return the array of byte
+	 * @param hex  十六进制串
+	 * @return byte数组
+	 * @throws IllegalArgumentException 解析错误
 	 */
 	public static final byte[] hex2byte(String hex) throws IllegalArgumentException
 	{
