@@ -29,7 +29,11 @@ public class PhoneCallUtil
 		if (EmptyUtil.notEmpty(context))
 		{
 			TelephonyManager mTelephonyManager = (TelephonyManager) context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-			if (mTelephonyManager != null) phoneState = mTelephonyManager.getCallState();
+			if (mTelephonyManager != null)
+			{
+				int callState = mTelephonyManager.getCallState();
+				phoneState=callState;
+			}
 		}
 		return phoneState;
 	}
