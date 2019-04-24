@@ -8,4 +8,4 @@ my base utils for java and android
 use:
 
     implementation 'com.georgebindragon:utilsjava:1.0.0'
-    implementation 'com.georgebindragon:utilsandroid:1.0.2'
+    implementation 'com.georgebindragon:utilsandroid:1.0.3'
