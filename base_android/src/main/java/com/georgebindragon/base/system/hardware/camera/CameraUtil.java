@@ -25,7 +25,7 @@ import com.georgebindragon.base.utils.EmptyUtil;
 
 public class CameraUtil
 {
-	private static final String TAG               = "MainActivity-->";
+	private static final String TAG               = "CameraUtil-->";
 	private static final int    FACING_WRONG      = -2;
 	private static final int    ORIENTATION_WRONG = -2;
 

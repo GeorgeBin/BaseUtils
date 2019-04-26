@@ -28,7 +28,7 @@ import java.util.Set;
 
 public class BroadcastReceiverUtil
 {
-	public static final String TAG = "BroadcastReceiverTest-->";
+	private static final String TAG = "BroadcastReceiverUtil-->";
 
 	public static void getBroadcastIntentDetail(Intent intent)
 	{

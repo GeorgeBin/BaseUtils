@@ -48,7 +48,7 @@ public class VolumeUtil
 
 	private static void setVolume(Context context, int type, int volume, int flags)
 	{
-		AudioManager localAudioManager = getAudioManager(context);
+		AudioManager localAudioManager = AudioManagerUtil.getAudioManager(context);
 		if (null != localAudioManager && type >= -1 && type <= 11)
 		{
 			int streamMaxVolume = localAudioManager.getStreamMaxVolume(type);
@@ -61,12 +61,6 @@ public class VolumeUtil
 			}
 			localAudioManager.setStreamVolume(type, volume, flags);
 		}
-	}
-
-	private static AudioManager getAudioManager(Context context)
-	{
-		if (null == audioManager) audioManager = (AudioManager) context.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-		return audioManager;
 	}
 
 	public void adjustMusicVolume(boolean isUp)
@@ -87,7 +81,7 @@ public class VolumeUtil
 
 	public void adjustStreamVolume(Context context, int streamType, int direction, int flags)
 	{
-		AudioManager localAudioManager = getAudioManager(context);
+		AudioManager localAudioManager = AudioManagerUtil.getAudioManager(context);;
 		if (null != localAudioManager)
 		{
 			audioManager.adjustStreamVolume(streamType, direction, flags);

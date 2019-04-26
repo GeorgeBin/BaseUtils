@@ -3,7 +3,6 @@ package com.georgebindragon.base.android.log;
 
 import android.util.Log;
 
-import com.georgebindragon.base.android.BuildConfig;
 import com.georgebindragon.base.function.log.LogFunctionBaseImp;
 import com.georgebindragon.base.function.log.LogLevel;
 
@@ -59,7 +58,7 @@ public class LogFunctionAndroidImp extends LogFunctionBaseImp
 	@Override
 	protected boolean defaultEnable()
 	{
-		return BuildConfig.DEBUG;
+		return false;
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public class LogFunctionAndroidImp extends LogFunctionBaseImp
 	@Override
 	protected int defaultLogLength()
 	{
-		return 100;
+		return 500;
 	}
 
 	@Override
@@ -89,6 +88,6 @@ public class LogFunctionAndroidImp extends LogFunctionBaseImp
 	@Override
 	protected String defaultTAG()
 	{
-		return "RongChat";
+		return "Base";
 	}
 }

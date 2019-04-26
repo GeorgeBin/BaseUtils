@@ -12,7 +12,7 @@ public class GPSUtil
 	/**
 	 * 判断定位是否可用
 	 *
-	 * @return {@code true}: 是<br>{@code false}: 否
+	 * @return {@code true}: 是 {@code false}: 否
 	 */
 	public static boolean isGPSOn(Context context)
 	{

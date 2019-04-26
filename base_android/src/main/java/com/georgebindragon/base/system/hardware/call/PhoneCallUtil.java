@@ -23,6 +23,14 @@ public class PhoneCallUtil
 {
 	public static final int callState_Default = -1;
 
+	/**
+	 * Returns one of the following constants that represents the current state of all
+	 * phone calls.
+	 *
+	 * {@link TelephonyManager#CALL_STATE_RINGING}
+	 * {@link TelephonyManager#CALL_STATE_OFFHOOK}
+	 * {@link TelephonyManager#CALL_STATE_IDLE}
+	 */
 	public static int getCallState(Context context)
 	{
 		int phoneState = callState_Default;

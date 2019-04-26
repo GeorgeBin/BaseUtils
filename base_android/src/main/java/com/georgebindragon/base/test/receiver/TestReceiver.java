@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.georgebindragon.base.abilities.callbacks.IBaseReceiverCallBack;
-import com.georgebindragon.base.receiver.BaseBroadcastReceiver;
+import com.georgebindragon.base.base.receiver.BaseBroadcastReceiver;
 import com.georgebindragon.base.system.software.BroadcastReceiverUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 
@@ -30,11 +30,10 @@ public class TestReceiver extends BaseBroadcastReceiver<IBaseReceiverCallBack>
 
 	static TestReceiver getInstance() { return ourInstance; }
 
-	//接收到 启动广播
+	//接收到广播
 	@Override
-	public void onReceive(Context context, Intent intent)
+	protected void onBroadcastReceived(Context context, Intent intent)
 	{
-		super.onReceive(context, intent);
 		BroadcastReceiverUtil.getBroadcastIntentDetail(intent);
 		if (EmptyUtil.notEmpty(receiverCallBack)) receiverCallBack.onReceive(context, intent);
 	}

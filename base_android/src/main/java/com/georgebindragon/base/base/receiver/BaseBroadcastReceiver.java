@@ -1,4 +1,4 @@
-package com.georgebindragon.base.receiver;
+package com.georgebindragon.base.base.receiver;
 
 /**
  * 创建人：George

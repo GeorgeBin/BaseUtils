@@ -1,4 +1,4 @@
-package com.georgebindragon.base.receiver;
+package com.georgebindragon.base.base.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,5 +29,8 @@ public abstract class BaseBaseBroadcastReceiver extends BroadcastReceiver
 	{
 		LogProxy.d(TAG, "onReceive-->收到广播，广播Action为：" + ((null == intent) ? "NULL" : intent.getAction()));
 		if (null == intent) return;
+		onBroadcastReceived(context, intent);
 	}
+
+	protected abstract void onBroadcastReceived(Context context, Intent intent);
 }

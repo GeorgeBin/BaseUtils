@@ -16,6 +16,16 @@ import com.georgebindragon.base.thread.HandlerUtil;
  * 要求:
  * 1. 主线程初始化
  *
+ * 定义:
+ *
+ *  Proxy: 代理, 能切换具体实现类 或者 能进行解耦的代理
+ *
+ *  Function: 功能, 库本身封装的功能
+ *  Executive: 管理者, 一般是调用系统的功能
+ *  Monitor: 监听器, 用于Listener 和 CallBack的管理者
+ *
+ *  Listener: 可注册多个
+ *  CallBack: 只可以注册一个, 或回调一次
  *
  * 修改人：
  * 修改时间：

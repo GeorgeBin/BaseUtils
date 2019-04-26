@@ -21,7 +21,7 @@ public class DebugUtil
 {
 	public static boolean isBuildDebug()
 	{
-		return BuildConfig.DEBUG;
+		return BuildConfig.DEBUG;//做为库, 一直是complete版本, 所以一直返回false
 	}
 
 	public static void makeACrash()
