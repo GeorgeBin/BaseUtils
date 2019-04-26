@@ -8,8 +8,22 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:text="Hello World!"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Hello World!"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="更新时间"
+        tools:ignore="HardcodedText"/>
 
 </LinearLayout>
