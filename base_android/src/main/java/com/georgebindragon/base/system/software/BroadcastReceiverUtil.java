@@ -77,6 +77,7 @@ public class BroadcastReceiverUtil
 			}
 			intentFilter.setPriority(priority);//设置 广播接受者 优先级
 			context.getApplicationContext().registerReceiver(receiver, intentFilter);
+			LogProxy.i(TAG, "registerBroadcastByActionString-->注册广播");
 		}
 	}
 
@@ -93,6 +94,7 @@ public class BroadcastReceiverUtil
 			intentFilter.addAction(actionString);
 			intentFilter.setPriority(priority);//设置 广播接受者 优先级
 			context.getApplicationContext().registerReceiver(receiver, intentFilter);
+			LogProxy.i(TAG, "registerBroadcastByActionString-->注册广播");
 		}
 	}
 

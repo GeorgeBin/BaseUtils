@@ -41,6 +41,8 @@ public class PhoneCallMonitor extends BaseListenerMonitor<PhoneCallMonitor.Phone
 		String action = intent.getAction();
 		if (EmptyUtil.notEmpty(action) && phoneStateAction.equalsIgnoreCase(action))
 		{
+			LogProxy.d(TAG, "onBroadcastReceived-->电话状态");
+
 			Bundle extras = intent.getExtras();
 			if (EmptyUtil.notEmpty(extras))
 			{

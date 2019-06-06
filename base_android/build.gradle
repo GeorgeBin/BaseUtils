@@ -1,5 +1,12 @@
 apply plugin: 'com.android.library'
 
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':base_java')
+    // implementation 'com.georgebindragon:utilsjava:1.0.4'
+}
+
 android {
     compileSdkVersion 28
 
@@ -31,8 +38,5 @@ tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.georgebindragon:utilsjava:1.0.4'
-}
+
 

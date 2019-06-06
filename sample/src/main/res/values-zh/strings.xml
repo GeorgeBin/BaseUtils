@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">George2的应用</string>
+    <string name="app_test_language" >中文字符串</string>
+</resources>

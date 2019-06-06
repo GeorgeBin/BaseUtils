@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressLint("StaticFieldLeak")
 public class UtilsActions
 {
-	protected String TAG = "Monitor: " + getClass().getSimpleName() + "-->";
+	private static final String TAG = "UtilsActions-->";
 
 	private static UtilsActions sInstance;
 

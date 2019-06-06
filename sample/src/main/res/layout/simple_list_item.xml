@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/text222"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimens_50dp"
+          android:background="@color/base_color_pure_black"
+          android:gravity="start|center_vertical"
+          android:text="群组名称"
+          android:textColor="@color/base_color_pure_white">
+
+</TextView>

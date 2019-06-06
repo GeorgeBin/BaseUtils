@@ -11,7 +11,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    implementation 'com.georgebindragon:utilsjava:1.0.4'
+    implementation project(':base_java')
+    // implementation 'com.georgebindragon:utilsjava:1.0.4'
 }
 
 
