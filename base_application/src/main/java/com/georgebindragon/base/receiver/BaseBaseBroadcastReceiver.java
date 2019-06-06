@@ -1,4 +1,4 @@
-package com.georgebindragon.base.base.receiver;
+package com.georgebindragon.base.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

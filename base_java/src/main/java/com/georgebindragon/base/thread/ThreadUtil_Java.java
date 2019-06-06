@@ -3,11 +3,9 @@ package com.georgebindragon.base.thread;
 import com.georgebindragon.base.function.log.LogProxy;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：ThreadUtil_Java
  * 类概述：Thread 相关工具
- * 创建时间：2017-06-23 13:47
  * 详细描述：
  *
  * 修改人：

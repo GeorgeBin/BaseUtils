@@ -4,11 +4,9 @@ package com.georgebindragon.base.data.basic;
 import com.georgebindragon.base.utils.EmptyUtil;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：StringUtil
  * 类概述：String类型相关工具
- * 创建时间：2017-06-08 15:52
  * 详细描述：
  *
  * 修改人：
@@ -17,7 +15,7 @@ import com.georgebindragon.base.utils.EmptyUtil;
  */
 public class StringUtil
 {
-	public static final String TAG = "StringUtil-->";
+	private static final String TAG = "StringUtil-->";
 
 	public static boolean checkLength(String str, int minLength)
 	{

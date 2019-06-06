@@ -8,11 +8,9 @@ import java.util.List;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：RxCommonUtil
  * 类概述：RxJava 的通用工具
- * 创建时间：2017-07-03 18:11
  * 详细描述：
  *
  * 修改人：
@@ -21,7 +19,7 @@ import io.reactivex.disposables.Disposable;
  */
 public class RxCommonUtil
 {
-	public static final String TAG = "RxCommonUtil-->";
+	private static final String TAG = "RxCommonUtil-->";
 
 	public static void dispose(Disposable disposable)
 	{

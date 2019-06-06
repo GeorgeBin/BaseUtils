@@ -1,4 +1,6 @@
-package com.georgebindragon.base.abilities.callbacks;
+package com.georgebindragon.base.receiver.callbacks;
+
+import com.georgebindragon.base.abilities.callbacks.ICallBack;
 
 /**
  * 创建人：George
@@ -13,6 +15,6 @@ package com.georgebindragon.base.abilities.callbacks;
  */
 
 
-public interface IReceiverCallBacks extends ICallBack
+interface IReceiverCallBacks extends ICallBack
 {
 }

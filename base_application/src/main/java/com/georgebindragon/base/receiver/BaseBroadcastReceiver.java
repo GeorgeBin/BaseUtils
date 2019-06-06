@@ -1,4 +1,6 @@
-package com.georgebindragon.base.base.receiver;
+package com.georgebindragon.base.receiver;
+
+import com.georgebindragon.base.base.receiver.BaseBaseBroadcastReceiver;
 
 /**
  * 创建人：George

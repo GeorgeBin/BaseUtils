@@ -1,4 +1,4 @@
-package com.georgebindragon.base.abilities.callbacks;
+package com.georgebindragon.base.receiver.callbacks;
 
 import android.content.Context;
 import android.content.Intent;

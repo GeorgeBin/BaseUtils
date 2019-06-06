@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--常用颜色-->
+    <color name="base_color_pure_white">#ffffff</color>
+    <color name="base_color_pure_black">#000000</color>
+
+    <color name="base_color_marrs_green">#007D85</color>     <!--马尔斯绿-->
+    <color name="base_color_tiffany_blue">#66CCCC</color>    <!--蒂芙尼蓝-->
+
+    <color name="base_color_rainbow_red">#FF0000</color>     <!--彩虹色: 红-->
+    <color name="base_color_rainbow_orange">#FF7F00</color>  <!--彩虹色: 橙-->
+    <color name="base_color_rainbow_yellow">#FFFF00</color>  <!--彩虹色: 黄-->
+    <color name="base_color_rainbow_green">#00FF00</color>   <!--彩虹色: 绿-->
+    <color name="base_color_rainbow_blue">#0000FF</color>    <!--彩虹色: 蓝-->
+    <color name="base_color_rainbow_indigo">#00FFFF</color>  <!--彩虹色: 靛-->
+    <color name="base_color_rainbow_violet">#8B00FF</color>  <!--彩虹色: 紫-->
+
+    <color name="base_color_comfort_green">#19CAAD</color>  <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_green2">#8CC7B5</color> <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_green3">#BEEDC7</color> <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_blue">#A0EEE1</color>   <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_gall">#BEE7E9</color>   <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_yellow">#D6D5B7</color> <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_gold">#D1BA74</color>   <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_brown">#E6CEAC</color>  <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_pink">#ECAD9E</color>   <!--十大舒服色: 绿-->
+    <color name="base_color_comfort_red">#F4606C</color>    <!--十大舒服色: 红色-->
+
+    <!--Android原生颜色-->
+    <color name="base_color_android_focused_blue_light">#803197ff</color>  <!-- Android原生焦点颜色(外框) -->
+    <color name="base_color_android_focused_blue_dark">#333197ff</color>   <!-- Android原生焦点颜色(内部) -->
+
+</resources>

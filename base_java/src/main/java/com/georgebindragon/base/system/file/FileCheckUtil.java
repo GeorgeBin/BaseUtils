@@ -5,11 +5,9 @@ import com.georgebindragon.base.utils.EmptyUtil;
 import java.io.File;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：FileCheckUtil
  * 类概述：文件检测工具类
- * 创建时间：2017-05-11 15:13
  * 详细描述：文件检测：文件是否存在，文件夹是否存在，文件夹是否为空
  *
  * 修改人：
@@ -18,7 +16,7 @@ import java.io.File;
  */
 public class FileCheckUtil
 {
-	public static final String TAG = "FileCheckUtil-->";
+	private static final String TAG = "FileCheckUtil-->";
 
 	public static boolean isDirectoryEmpty(File file)
 	{

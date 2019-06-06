@@ -2,10 +2,11 @@ package com.georgebindragon.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 
 import com.georgebindragon.base.android.log.LogFunctionAndroidImp;
 import com.georgebindragon.base.function.log.LogProxy;
-import com.georgebindragon.base.receiver.UtilsReceiver;
+import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.system.software.LanguageUtil;
 import com.georgebindragon.base.thread.HandlerUtil;
 
@@ -37,6 +38,7 @@ import com.georgebindragon.base.thread.HandlerUtil;
 @SuppressLint("StaticFieldLeak")
 public class BaseUtils
 {
+	private static final String Action_LocaleChanged = Intent.ACTION_LOCALE_CHANGED;
 	private static Context context;
 
 	public static void init(Context context2)
@@ -48,7 +50,7 @@ public class BaseUtils
 		HandlerUtil.init();
 
 		//语言 & 资源 的管理
-		UtilsReceiver.getInstance().registerUtilsBroadcast(context2);
+		UtilsActions.getInstance().listenSomeAction(Action_LocaleChanged, LanguageUtil::onSystemLocalChanged);
 		LanguageUtil.init(context2);
 	}
 

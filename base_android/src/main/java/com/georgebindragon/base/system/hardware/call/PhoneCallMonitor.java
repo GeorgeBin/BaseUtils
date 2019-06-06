@@ -1,16 +1,14 @@
 package com.georgebindragon.base.system.hardware.call;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 
-import com.georgebindragon.base.base.receiver.BaseBaseBroadcastReceiver;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.monitor.BaseListenerMonitor;
-import com.georgebindragon.base.system.software.BroadcastReceiverUtil;
+import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.system.software.PermissionUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 import com.georgebindragon.base.utils.StringUtil;
@@ -36,67 +34,53 @@ public class PhoneCallMonitor extends BaseListenerMonitor<PhoneCallMonitor.Phone
 
 	public static PhoneCallMonitor getInstance() { return ourInstance; }
 
-	private static final String[] phoneStateAction = {TelephonyManager.ACTION_PHONE_STATE_CHANGED,};
+	private static final String phoneStateAction = TelephonyManager.ACTION_PHONE_STATE_CHANGED;
 
-	private BroadcastReceiver broadcastReceiver;
-
-	private PhoneCallMonitor()
+	private void onBroadcastReceived(Context context, Intent intent)
 	{
-		super();
-		broadcastReceiver = new BaseBaseBroadcastReceiver()
+		String action = intent.getAction();
+		if (EmptyUtil.notEmpty(action) && phoneStateAction.equalsIgnoreCase(action))
 		{
-			@Override
-			protected void onBroadcastReceived(Context context, Intent intent)
+			Bundle extras = intent.getExtras();
+			if (EmptyUtil.notEmpty(extras))
 			{
-				BroadcastReceiverUtil.getBroadcastIntentDetail(intent);
+				String incoming_number = extras.getString("incoming_number");
+				String stateString = extras.getString("state");
 
-				String action = intent.getAction();
-				if (EmptyUtil.notEmpty(action) && TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(action))
+				int state;
+				if (EmptyUtil.notEmpty(stateString))
 				{
-					Bundle extras = intent.getExtras();
-					if (EmptyUtil.notEmpty(extras))
+					switch (stateString)
 					{
-						incoming_number = extras.getString("incoming_number");
-						String stateString = extras.getString("state");
-
-						if (EmptyUtil.notEmpty(stateString))
-						{
-							switch (stateString)
-							{
-								case "RINGING":
-									state = TelephonyManager.CALL_STATE_RINGING;
-									break;
-								case "IDLE":
-									state = TelephonyManager.CALL_STATE_IDLE;
-									break;
-								case "OFFHOOK":
-									state = TelephonyManager.CALL_STATE_OFFHOOK;
-									break;
-								default:
-									state = queryCurrentCallState(context);
-									LogProxy.d(TAG, "onReceive-->stateString 未能识别=" + stateString);
-									break;
-							}
-						} else
-						{
+						case "RINGING":
+							state = TelephonyManager.CALL_STATE_RINGING;
+							break;
+						case "IDLE":
+							state = TelephonyManager.CALL_STATE_IDLE;
+							break;
+						case "OFFHOOK":
+							state = TelephonyManager.CALL_STATE_OFFHOOK;
+							break;
+						default:
 							state = queryCurrentCallState(context);
-						}
-						notifyListeners(state, StringUtil.getPrintString(incoming_number));
-
-					} else
-					{
-						LogProxy.d(TAG, "onReceive-->extras=" + StringUtil.getPrintString(extras));
+							LogProxy.d(TAG, "onReceive-->stateString 未能识别=" + stateString);
+							break;
 					}
 				} else
 				{
-					LogProxy.d(TAG, "onReceive-->action=" + StringUtil.getPrintString(action));
+					state = queryCurrentCallState(context);
 				}
-			}
-		};
-	}
+				notifyListeners(state, StringUtil.getPrintString(incoming_number));
 
-	private int    state           = PhoneCallUtil.callState_Default;
-	private String incoming_number = StringUtil.NULL;
+			} else
+			{
+				LogProxy.d(TAG, "onReceive-->extras=" + StringUtil.getPrintString(extras));
+			}
+		} else
+		{
+			LogProxy.d(TAG, "onReceive-->action=" + StringUtil.getPrintString(action));
+		}
+	}
 
 	/**
 	 * 注册监听器
@@ -106,7 +90,7 @@ public class PhoneCallMonitor extends BaseListenerMonitor<PhoneCallMonitor.Phone
 	 */
 	public boolean registerMonitor(Context context)
 	{
-		BroadcastReceiverUtil.registerBroadcastByActionStrings(context, phoneStateAction, Integer.MAX_VALUE, broadcastReceiver);
+		UtilsActions.getInstance().listenSomeAction(phoneStateAction, this::onBroadcastReceived);
 		LogProxy.d(TAG, "registerMonitor-->注册");
 
 		//有这两个权限之一, 即可获取到状态
@@ -121,12 +105,10 @@ public class PhoneCallMonitor extends BaseListenerMonitor<PhoneCallMonitor.Phone
 	/**
 	 * 注销监听器
 	 * 注销后, 所有的Listener都不会再收到监听回调
-	 *
-	 * @param context 注销Broadcast需要的context
 	 */
-	public void unregisterMonitor(Context context)
+	public void unregisterMonitor()
 	{
-		BroadcastReceiverUtil.unregisterBroadcastReceiver(context, broadcastReceiver);
+		UtilsActions.getInstance().stopSomeAction(phoneStateAction);
 		clearListeners();
 		LogProxy.d(TAG, "unregisterMonitor-->注销");
 	}

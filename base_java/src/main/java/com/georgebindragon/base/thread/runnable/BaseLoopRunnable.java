@@ -7,7 +7,6 @@ import com.georgebindragon.base.function.log.LogProxy;
  *
  * 类名称：BaseLoopRunnable
  * 类概述：
- * 创建时间：2018-08-03 14:45
  * 详细描述：
  *
  * 修改人：

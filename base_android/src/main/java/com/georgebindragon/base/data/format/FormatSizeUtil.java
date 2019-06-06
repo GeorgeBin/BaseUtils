@@ -4,11 +4,9 @@ import android.content.Context;
 import android.text.format.Formatter;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：FormatSizeUtil
  * 类概述：格式化工具--格式化大小数据
- * 创建时间：2017-06-09 14:38
  * 详细描述：计算文件数据大小
  *
  * 修改人：
@@ -17,7 +15,8 @@ import android.text.format.Formatter;
  */
 public class FormatSizeUtil
 {
-	public static final String TAG = "FormatSizeUtil-->";
+	private static final String TAG = "FormatSizeUtil-->";
+
 	//447KB 350B
 	public static final String B   = "B ";
 	public static final String KB  = "KB ";

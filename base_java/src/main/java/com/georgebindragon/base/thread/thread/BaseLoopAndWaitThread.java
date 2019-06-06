@@ -7,7 +7,6 @@ import com.georgebindragon.base.function.log.LogProxy;
  * 创建人：George
  * 类名称：BaseLoopAndWaitThread
  * 类概述：
- * 创建时间：
  * 详细描述：
  *
  * 修改人：

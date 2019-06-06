@@ -9,7 +9,6 @@ import com.georgebindragon.base.thread.runnable.BaseRunnable;
  *
  * 类名称：BaseLoopThread
  * 类概述：
- * 创建时间：2018-08-03 15:20
  * 详细描述：
  *
  * 修改人：

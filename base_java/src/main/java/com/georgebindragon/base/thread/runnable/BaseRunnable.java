@@ -8,7 +8,6 @@ import com.georgebindragon.base.function.log.LogProxy;
  *
  * 类名称：BaseRunnable
  * 类概述：
- * 创建时间：2018-08-03 14:32
  * 详细描述：
  *
  * 修改人：

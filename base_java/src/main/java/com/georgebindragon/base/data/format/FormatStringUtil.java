@@ -4,11 +4,9 @@ package com.georgebindragon.base.data.format;
 import com.georgebindragon.base.data.basic.StringUtil;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：FormatStringUtil
  * 类概述：格式化工具--格式化String
- * 创建时间：2017-06-27 15:17
  * 详细描述：从尾部去除某些固定字符啊、拼接字符串啊
  *
  * 修改人：
@@ -17,7 +15,7 @@ import com.georgebindragon.base.data.basic.StringUtil;
  */
 public class FormatStringUtil
 {
-	public static final String TAG = "FormatStringUtil-->";
+	private static final String TAG = "FormatStringUtil-->";
 
 	public static String cutLastStringFromTarget(String target, String needCut)
 	{

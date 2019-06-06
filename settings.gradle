@@ -1,3 +1,3 @@
-include ':base_sample', ':base_rx'
+include ':base_sample', ':base_rx', ':base_application'
 include ':base_java'
 include ':base_android'

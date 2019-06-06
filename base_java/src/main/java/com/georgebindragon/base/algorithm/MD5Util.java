@@ -11,11 +11,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：MD5Util
  * 类概述：MD5计算工具
- * 创建时间：2017-07-11 09:37
  * 详细描述：计算文件、字符串等MD5值
  *
  * 修改人：
@@ -24,11 +22,12 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5Util
 {
-	public static final  String TAG                  = "MD5Util-->";
+	private static final String TAG = "MD5Util-->";
+
 	/**
 	 * MS5
 	 */
-	private static final int    STREAM_BUFFER_LENGTH = 1024;
+	private static final int STREAM_BUFFER_LENGTH = 1024;
 
 	public static MessageDigest getDigest(final String algorithm) throws NoSuchAlgorithmException
 	{

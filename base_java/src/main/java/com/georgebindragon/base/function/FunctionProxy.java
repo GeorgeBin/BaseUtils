@@ -1,11 +1,9 @@
 package com.georgebindragon.base.function;
 
 /**
- * 项目名称：George2_Java_Base
  * 创建人：George
  * 类名称：FunctionProxy
  * 类概述：
- * 创建时间：2019-03-22 09:18
  * 详细描述：
  *
  * 修改人：

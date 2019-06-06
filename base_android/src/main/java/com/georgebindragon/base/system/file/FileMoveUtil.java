@@ -12,11 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 项目名称：BaiduVoiceLibDemo
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：FileMoveUtil
  * 类概述：
- * 创建时间：2018-04-17 17:08
  * 详细描述：
  *
  * 修改人：
@@ -26,7 +24,7 @@ import java.io.InputStream;
 public class FileMoveUtil
 {
 
-	public static final String TAG = "FileMoveUtil-->";
+	private static final String TAG = "FileMoveUtil-->";
 
 	/**
 	 * 将APK的资源文件拷贝到SD卡中

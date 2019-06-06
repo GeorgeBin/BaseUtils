@@ -80,6 +80,22 @@ public class BroadcastReceiverUtil
 		}
 	}
 
+	public static void registerBroadcastByActionString(Context context, String actionString, BroadcastReceiver receiver)
+	{
+		registerBroadcastByActionString(context, actionString, 0, receiver);
+	}
+
+	public static void registerBroadcastByActionString(Context context, String actionString, int priority, BroadcastReceiver receiver)
+	{
+		if (EmptyUtil.notEmpty(context, actionString, receiver))
+		{
+			IntentFilter intentFilter = new IntentFilter();
+			intentFilter.addAction(actionString);
+			intentFilter.setPriority(priority);//设置 广播接受者 优先级
+			context.getApplicationContext().registerReceiver(receiver, intentFilter);
+		}
+	}
+
 	public static void unregisterBroadcastReceiver(Context context, BroadcastReceiver receiver)
 	{
 		if (EmptyUtil.notEmpty(context, receiver))
