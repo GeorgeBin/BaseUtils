@@ -34,11 +34,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
+    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
     api 'com.leon.channel:helper:2.0.2'
 
 
@@ -64,11 +63,13 @@ dependencies {
 //    //基础库
 //
     // 基础工具类
-//    implementation 'com.georgebindragon:utilsjava:1.0.4'
-//    implementation 'com.georgebindragon:utilsandroid:1.0.4'
-    implementation project(':base_java')
-    implementation project(':base_android')
-    implementation project(':base_rx')
+//    implementation 'com.georgebindragon:utils-java:1.1.0'
+//    implementation 'com.georgebindragon:utils-android:1.1.0'
+//    implementation 'com.georgebindragon:utils-rx:1.1.0'
+//    implementation 'com.georgebindragon:base-application:1.1.0'
+    implementation project(':utils_java')
+    implementation project(':utils_android')
+    implementation project(':utils_rx')
     implementation project(':base_application')
 //
 //    //Bugly

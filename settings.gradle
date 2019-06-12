@@ -1,8 +1,8 @@
 
-include ':base_java'
-include ':base_android'
-include ':base_rx'
+include ':utils_java'
+include ':utils_android'
+include ':utils_rx'
 
 include ':base_application'
 
-include ':sample'
+include ':example_sample'
