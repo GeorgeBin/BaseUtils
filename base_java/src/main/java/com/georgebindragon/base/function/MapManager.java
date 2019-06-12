@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 修改备注：
  */
 
-public class MapManager<T>
+public class MapManager<K,V>
 {
 	protected String TAG = "MapManager: " + getClass().getSimpleName() + "-->";
 
@@ -36,19 +36,19 @@ public class MapManager<T>
 	//
 	//	private MapManager() { }
 
-	protected Map<String, T> map = new ConcurrentHashMap<>();
+	protected Map<K, V> map = new ConcurrentHashMap<>();
 
-	public T getValue(String key)
+	public V getValueByKey(K key)
 	{
 		return map.get(key);
 	}
 
-	public void setKeyAndValue(String key, T t)
+	public void setKeyAndValue(K key, V t)
 	{
 		map.put(key, t);
 	}
 
-	public void deleteKeyAndValue(String key)
+	public void deleteKeyAndValue(K key)
 	{
 		map.remove(key);
 	}

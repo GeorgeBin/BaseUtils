@@ -3,16 +3,20 @@ package com.georgebindragon.application.sample;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.georgebindragon.application.sample.bean.GroupBean;
+import com.georgebindragon.application.sample.media.AlertSoundPlayer1;
+import com.georgebindragon.application.sample.media.AlertSoundPlayer2;
 import com.georgebindragon.application.sample.mvi.main.MainPresenter;
 import com.georgebindragon.application.sample.mvi.main.MainView;
 import com.georgebindragon.application.sample.mvi.main.MainViewState;
@@ -21,6 +25,8 @@ import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.rx.lfc.RxThrottle;
 import com.georgebindragon.base.system.hardware.call.PhoneCallMonitor;
 import com.georgebindragon.base.system.hardware.call.PhoneCallUtil;
+import com.georgebindragon.base.system.software.DeviceUtil;
+import com.georgebindragon.base.system.software.PermissionUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 import com.georgebindragon.base.utils.TimeUtil;
 import com.georgebindragon.base.widget.qmui.popup.QMUIRecyclerViewPopup;
@@ -35,6 +41,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -69,13 +76,19 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 
 	Button mvi_btn;
 	Button testPop_btn;
+	Button testPop_btn2;
 
 	TextView textView;
 	TextView textView2;
+	TextView testInfo_device_manufacturer_tv;
+
 	Button   button;
 
-	String[] p  = {Manifest.permission.READ_PHONE_STATE};
-	String[] p2 = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG};
+	TextView         testSound_tv;
+	AppCompatSeekBar seekBar;
+
+	String[] permission_read_phone_state = {Manifest.permission.READ_PHONE_STATE};//申请查看电话状态, 只能获取状态值, 不能获取号码
+	String[] permission_read_call_log    = {Manifest.permission.READ_CALL_LOG};//申请查看电话状态, 只能获取状态值, 不能获取号码
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -87,35 +100,98 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 		mvi_btn.setOnClickListener(v -> onButtonClick());
 
 		testPop_btn = findViewById(R.id.testPop_btn);
-		testPop_btn.setOnClickListener(v -> onButtonClick2());
+		testPop_btn.setOnClickListener(v -> testPop2());
+
+		testPop_btn2 = findViewById(R.id.testPop_btn2);
+		testPop_btn2.setOnClickListener(v -> onButtonClick_SoundPlayer());
+
+		testSound_tv = findViewById(R.id.testSound_tv);
+		seekBar = findViewById(R.id.testSound_sb);
+		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+		{
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+			{
+				LogProxy.d(TAG, "OnSeekBarChangeListener-->onProgressChanged", "progress=" + progress, "fromUser=" + fromUser);
+				testSound_tv.setText("" + progress + "%");
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar)
+			{
+				LogProxy.d(TAG, "OnSeekBarChangeListener-->onStartTrackingTouch");
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar)
+			{
+				int progress = seekBar.getProgress();
+				int max      = seekBar.getMax();
+				LogProxy.d(TAG, "OnSeekBarChangeListener-->onStopTrackingTouch", "progress=" + progress);
+
+				float volume = (float) progress / (float) max;
+				AlertSoundPlayer1.getInstance().setVolume(volume);
+				AlertSoundPlayer2.getInstance().setVolume(volume);
+			}
+		});
+
 		textView = findViewById(R.id.text);
 		textView2 = findViewById(R.id.text2);
+		testInfo_device_manufacturer_tv = findViewById(R.id.testInfo_device_manufacturer_tv);
+		testInfo_device_manufacturer_tv.setText("制造商: "+ DeviceUtil.getManufacturer());
+		LogProxy.d(TAG, "制造商="+ DeviceUtil.getManufacturer());
 
 		button = findViewById(R.id.btn);
 		button.setOnClickListener(this);
 
 		MainPresenter.getInstance().init(this);
 		MainPresenter.getInstance().initButton();
-		//		initPop();
-		//		initPop2();
-
 
 		registerReFreshSubject();
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+		if (!PermissionUtil.checkPermission(this, permission_read_phone_state))
 		{
-			requestPermissions(p, 11111);//申请查看电话状态, 只能获取状态值, 不能获取号码
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+			{
+				requestPermissions(permission_read_phone_state, 1111);
+			}
 		}
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+		if (!PermissionUtil.checkPermission(this, permission_read_call_log))
 		{
-			requestPermissions(p2, 11111);//申请查看电话状态, 只能获取状态值, 不能获取号码
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+			{
+				requestPermissions(permission_read_call_log, 1111);
+			}
 		}
+
 		PhoneCallMonitor.getInstance().registerMonitor(this);
 		PhoneCallMonitor.getInstance().addListener(this);
 
 		int callState = PhoneCallUtil.getCallState(this);
 		reFreshCallState(callState, "初始化");
+
+		initSoundPlayer();
+	}
+
+
+	private void initSoundPlayer()
+	{
+		AlertSoundPlayer1.getInstance().init(this, AudioManager.STREAM_RING);
+		AlertSoundPlayer2.getInstance().init(this, AudioManager.STREAM_RING);
+//		AlertSoundPlayer1.getInstance().init(this, AudioManager.STREAM_MUSIC);
+//		AlertSoundPlayer2.getInstance().init(this, AudioManager.STREAM_MUSIC);
+	}
+
+	int count = 0;
+
+	private void onButtonClick_SoundPlayer()
+	{
+				AlertSoundPlayer1.getInstance().playNext(count);
+//		AlertSoundPlayer2.getInstance().playNext(count);
+//		AlertSoundPlayer1.getInstance().play_Error();
+//		AlertSoundPlayer2.getInstance().play_Error();
+		count++;
 	}
 
 	@Override
@@ -186,12 +262,6 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 	public void unregisterReFreshSubject()
 	{
 		if (EmptyUtil.notEmpty(refreshThrottle)) refreshThrottle.stopListen();
-	}
-
-	private void onButtonClick2()
-	{
-		//		testPop();
-		testPop2();
 	}
 
 	public void reFreshCallState(int callState, String incomingNumber)

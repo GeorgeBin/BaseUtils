@@ -11,7 +11,7 @@ package com.georgebindragon.base.function;
  * 修改备注：
  */
 
-class FunctionManager extends MapManager<Object>
+class FunctionManager extends MapManager<String,Object>
 {
 	private static FunctionManager sInstance;
 
@@ -31,7 +31,7 @@ class FunctionManager extends MapManager<Object>
 
 	Object getLocalService(String module)
 	{
-		return getValue(module);
+		return getValueByKey(module);
 	}
 
 	void registerService(String module, Object serviceImpl)
