@@ -1,6 +1,5 @@
 package com.georgebindragon.application.sample;
 
-import com.airbnb.mvrx.MvRxState;
 
 /**
  * 创建人：George
@@ -15,7 +14,3 @@ import com.airbnb.mvrx.MvRxState;
  */
 
 
-public class MvRxStateTest implements MvRxState
-{
-
-}
