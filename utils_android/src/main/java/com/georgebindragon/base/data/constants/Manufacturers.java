@@ -45,15 +45,20 @@ public class Manufacturers
 	public static final String Manufacturer_ELINK        = "ELINK";//易联科技
 	public static final String Manufacturer_ALK          = "ALK";//阿乐卡
 	public static final String Manufacturer_Simware      = "Simware";//信位
+	public static final String Manufacturer_HF           = "HF";//华飞
 	//
 	public static final String Manufacturer_YiMingShiDai = "YiMingShiDai";//世纪天元
-	public static final String Manufacturer_HF           = "HF";//衡星
 	public static final String Manufacturer_BoPTT        = "BoPTT";//泉盛
 
+	//行业内适配
+	public static boolean isSoundPoolDisable()
+	{
+		return isSomeManufacturer(Manufacturer_UNIPRO, Manufacturer_ALK, Manufacturer_HF);
+	}
 
 	public static boolean isNormalCellPhone()
 	{
-		return isSomeManufacturer(Manufacturer_Xiaomi, Manufacturer_Huawei, Manufacturer_samsung, MANUFACTURER_Meizu ,MANUFACTURER_OPPO, MANUFACTURER_vivo, MANUFACTURER_ZTE,
+		return isSomeManufacturer(Manufacturer_Xiaomi, Manufacturer_Huawei, Manufacturer_samsung, MANUFACTURER_Meizu, MANUFACTURER_OPPO, MANUFACTURER_vivo, MANUFACTURER_ZTE,
 				MANUFACTURER_YuLong, MANUFACTURER_LG, MANUFACTURER_Sony, MANUFACTURER_Letv, MANUFACTURER_LENOVO);
 	}
 
