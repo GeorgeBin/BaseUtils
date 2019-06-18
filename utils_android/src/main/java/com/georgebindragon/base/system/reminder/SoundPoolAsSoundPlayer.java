@@ -19,7 +19,7 @@ import com.georgebindragon.base.function.log.LogProxy;
  */
 
 
-public class SoundPoolAsSoundPlayer extends SoundPlayer<Integer, Integer>
+public abstract class SoundPoolAsSoundPlayer extends SoundPlayer<Integer, Integer>
 {
 	private SoundPool pool;
 
@@ -31,7 +31,17 @@ public class SoundPoolAsSoundPlayer extends SoundPlayer<Integer, Integer>
 	}
 
 	@Override
-	public void load(Context context, int streamType, Integer key, int resID)
+	protected void onStreamTypeChange(int streamType)
+	{
+		LogProxy.i(TAG, "onStreamTypeChange: 设置值:" + streamType);
+		pool = null;
+		onReload();
+	}
+
+	protected abstract void onReload();
+
+	@Override
+	public void load(Context context, Integer key, int resID)
 	{
 		if (null == context) context = BaseUtils.getContext();
 		//初始化, 并设置参数: 最大数量, 播放通道, 加载监听

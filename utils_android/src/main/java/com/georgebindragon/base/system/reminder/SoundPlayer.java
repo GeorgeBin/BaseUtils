@@ -1,6 +1,7 @@
 package com.georgebindragon.base.system.reminder;
 
 import android.content.Context;
+import android.media.AudioManager;
 
 import com.georgebindragon.base.function.MapManager;
 import com.georgebindragon.base.function.log.LogProxy;
@@ -42,7 +43,24 @@ abstract class SoundPlayer<K, V> extends MapManager<K, V>
 		}
 	}
 
-	public abstract void load(Context context, int streamType, K key, int resID);
+	protected int streamType = AudioManager.STREAM_RING;
+
+	public void setStreamType(int streamType)
+	{
+		LogProxy.i(TAG, "setStreamType: 设置值:" + streamType);
+		if (streamType < -1 || streamType > 11) streamType = AudioManager.STREAM_RING;
+
+		if (this.streamType != streamType)
+		{
+			this.streamType = streamType;
+			LogProxy.i(TAG, "setStreamType: 最终值:" + this.streamType);
+			onStreamTypeChange(this.streamType);
+		}
+	}
+
+	protected abstract void onStreamTypeChange(int streamType);
+
+	public abstract void load(Context context, K key, int resID);
 
 	public void unload(K key)
 	{

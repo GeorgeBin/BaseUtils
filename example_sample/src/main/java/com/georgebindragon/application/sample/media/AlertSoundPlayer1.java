@@ -26,12 +26,12 @@ public class AlertSoundPlayer1 extends MediaPlayerAsSoundPlayer
 
 	private AlertSoundPlayer1() { }
 
-	public void init(Context context, int streamType)
+	public void init(Context context)
 	{
-		load(context, streamType,  Raws.ID_Error, Raws.Raw_Error);
-		load(context, streamType,  Raws.ID_Msg_Send, Raws.Raw_Msg_Send);
-		load(context, streamType,  Raws.ID_PTI, Raws.Raw_PTI);
-		load(context, streamType,  Raws.ID_Take_Photo, Raws.Raw_Take_Photo);
+		load(context, Raws.ID_Error, Raws.Raw_Error);
+		load(context, Raws.ID_Msg_Send, Raws.Raw_Msg_Send);
+		load(context, Raws.ID_PTI, Raws.Raw_PTI);
+		load(context, Raws.ID_Take_Photo, Raws.Raw_Take_Photo);
 	}
 
 	public void play_Error()

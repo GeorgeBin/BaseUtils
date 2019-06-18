@@ -8,6 +8,8 @@ import android.os.Build;
 import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
 
+import java.util.Collection;
+
 /**
  * 创建人：George
  * 类名称：MediaPlayerAsSoundPlayer
@@ -31,7 +33,18 @@ public class MediaPlayerAsSoundPlayer extends SoundPlayer<Integer, MediaPlayer>
 	}
 
 	@Override
-	public void load(Context context, int streamType, Integer key, int resID)
+	protected void onStreamTypeChange(int streamType)
+	{
+		LogProxy.i(TAG, "onStreamTypeChange: 设置值:" + streamType);
+		Collection<MediaPlayer> values = map.values();
+		for (MediaPlayer player : values)
+		{
+			setPlayerStreamType(player, streamType);
+		}
+	}
+
+	@Override
+	public void load(Context context,  Integer key, int resID)
 	{
 		if (null == context) context = BaseUtils.getContext();
 		MediaPlayer player = createPlayer(context, resID);

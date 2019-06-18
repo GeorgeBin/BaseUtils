@@ -3,7 +3,6 @@ package com.georgebindragon.application.sample;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -177,10 +176,8 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 
 	private void initSoundPlayer()
 	{
-		AlertSoundPlayer1.getInstance().init(this, AudioManager.STREAM_RING);
-		AlertSoundPlayer2.getInstance().init(this, AudioManager.STREAM_RING);
-//		AlertSoundPlayer1.getInstance().init(this, AudioManager.STREAM_MUSIC);
-//		AlertSoundPlayer2.getInstance().init(this, AudioManager.STREAM_MUSIC);
+		AlertSoundPlayer1.getInstance().init(this);
+		AlertSoundPlayer2.getInstance().init(this);
 	}
 
 	int count = 0;
