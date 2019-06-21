@@ -11,6 +11,7 @@ import com.georgebindragon.base.utils.EmptyUtil;
 public class DeviceUtil
 {
 
+	public static final  String Manufacturer_UnKnown_Manufacturer = "UnKnown_Manufacturer";//未知
 
 	public static String getManufacturer()
 	{
@@ -20,7 +21,7 @@ public class DeviceUtil
 			return manufacturer;
 		} else
 		{
-			return "";
+			return Manufacturer_UnKnown_Manufacturer;
 		}
 	}
 

@@ -49,11 +49,12 @@ public class Manufacturers
 	//
 	public static final String Manufacturer_YiMingShiDai = "YiMingShiDai";//世纪天元
 	public static final String Manufacturer_BoPTT        = "BoPTT";//泉盛
+	public static final String Manufacturer_Quiswise     = "Quiswise";//信源达
 
 	//行业内适配
 	public static boolean isSoundPoolDisable()
 	{
-		return isSomeManufacturer(Manufacturer_UNIPRO, Manufacturer_ALK, Manufacturer_HF);
+		return isSomeManufacturer(Manufacturer_UNIPRO, Manufacturer_ALK, Manufacturer_HF, Manufacturer_Quiswise);
 	}
 
 	public static boolean isNormalCellPhone()

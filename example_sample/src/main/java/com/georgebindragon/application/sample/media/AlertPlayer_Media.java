@@ -3,13 +3,11 @@ package com.georgebindragon.application.sample.media;
 import android.content.Context;
 
 import com.georgebindragon.application.sample.constants.Raws;
-import com.georgebindragon.base.BaseUtils;
-import com.georgebindragon.base.function.log.LogProxy;
-import com.georgebindragon.base.system.reminder.SoundPoolAsSoundPlayer;
+import com.georgebindragon.base.system.reminder.MediaPlayerAsSoundPlayer;
 
 /**
  * 创建人：George
- * 类名称：AlertSoundPlayer1
+ * 类名称：AlertPlayer_Media
  * 类概述：
  * 详细描述：
  *
@@ -20,18 +18,16 @@ import com.georgebindragon.base.system.reminder.SoundPoolAsSoundPlayer;
  */
 
 
-public class AlertSoundPlayer2 extends SoundPoolAsSoundPlayer
+public class AlertPlayer_Media extends MediaPlayerAsSoundPlayer
 {
-	private static final AlertSoundPlayer2 ourInstance = new AlertSoundPlayer2();
+	private static final AlertPlayer_Media ourInstance = new AlertPlayer_Media();
 
-	public static AlertSoundPlayer2 getInstance() { return ourInstance; }
+	public static AlertPlayer_Media getInstance() { return ourInstance; }
 
-	private AlertSoundPlayer2() { }
+	private AlertPlayer_Media() { }
 
 	public void init(Context context)
 	{
-		setListener((soundPool, sampleId, status) -> LogProxy.d(TAG, "OnLoadCompleteListener-->soundPool=" + soundPool, "sampleId=" + sampleId, "status=" + status));
-
 		load(context, Raws.ID_Error, Raws.Raw_Error);
 		load(context, Raws.ID_Msg_Send, Raws.Raw_Msg_Send);
 		load(context, Raws.ID_PTI, Raws.Raw_PTI);
@@ -65,11 +61,5 @@ public class AlertSoundPlayer2 extends SoundPoolAsSoundPlayer
 			count = count % Raws.POOL_MAX;
 		}
 		playSound(count);
-	}
-
-	@Override
-	protected void onReload()
-	{
-		init(BaseUtils.getContext());
 	}
 }
