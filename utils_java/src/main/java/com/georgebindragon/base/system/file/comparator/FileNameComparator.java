@@ -4,11 +4,9 @@ import java.io.File;
 import java.util.Comparator;
 
 /**
- * 项目名称：YChat
- * 创建人：GeorgeBin
+ * 创建人：George
  * 类名称：FileNameComparator
  * 类概述：比较器-文件名
- * 创建时间：2017-08-29 15:05
  * 详细描述：比较文件名，以便于排序
  *
  * 修改人：
