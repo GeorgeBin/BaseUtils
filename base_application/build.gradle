@@ -55,9 +55,10 @@ dependencies {
     //    implementation project(':utils_java')
     //    implementation project(':utils_android')
     //    implementation project(':utils_rx')
-    api 'com.georgebindragon:utils-java:1.1.0'
-    api 'com.georgebindragon:utils-android:1.1.0'
-    api 'com.georgebindragon:utils-rx:1.1.0'
+    api 'com.georgebindragon:utils-java:1.1.1'
+    api 'com.georgebindragon:utils-android:1.1.1'
+    api 'com.georgebindragon:utils-rx:1.1.1'
+
     //响应式
     api 'io.reactivex.rxjava2:rxjava:2.2.8'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
