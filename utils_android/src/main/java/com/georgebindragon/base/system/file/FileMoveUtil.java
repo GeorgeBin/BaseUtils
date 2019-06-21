@@ -34,8 +34,8 @@ public class FileMoveUtil
 	 * @param source    源文件路径
 	 * @param dest      目的文件路径
 	 */
-	public static void copyFromAssetsToSdcard(final Context context, final boolean isCover, final String sourceMD5, final String source, final
-	String dest, final CopyResultCallBack copyResultCallBack)
+	public static void copyFromAssetsToSdcard(final Context context, final boolean isCover, final String sourceMD5
+			, final String source, final String dest, final CopyResultCallBack copyResultCallBack)
 	{
 		final Thread copyThread = new Thread(new Runnable()
 		{

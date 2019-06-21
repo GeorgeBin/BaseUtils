@@ -5,9 +5,6 @@ import com.georgebindragon.base.utils.EmptyUtil;
 
 import java.io.File;
 
-/**
- * 2017/5/11
- */
 
 public class FileCreateUtil
 {
