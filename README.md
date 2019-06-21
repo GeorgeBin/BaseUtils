@@ -8,8 +8,8 @@ my base utils for java and android
 use:
 
     
-    implementation 'com.georgebindragon:utils-java:1.1.0'
-    implementation 'com.georgebindragon:utils-android:1.1.0'
-    implementation 'com.georgebindragon:utils-rx:1.1.0'
+    implementation 'com.georgebindragon:utils-java:1.1.1'
+    implementation 'com.georgebindragon:utils-android:1.1.1'
+    implementation 'com.georgebindragon:utils-rx:1.1.1'
     
-    implementation 'com.georgebindragon:base-application:1.1.6'
+    implementation 'com.georgebindragon:base-application:1.1.7'
