@@ -1,12 +1,12 @@
 package com.georgebindragon.base.system.file;
 
 import android.content.Context;
-import android.text.TextUtils;
 
+import com.georgebindragon.base.abilities.callbacks.ResultCallBack;
 import com.georgebindragon.base.algorithm.MD5Util;
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.utils.EmptyUtil;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,83 +29,84 @@ public class FileMoveUtil
 	/**
 	 * 将APK的资源文件拷贝到SD卡中
 	 *
-	 * @param isCover   是否覆盖已存在的目标文件
-	 * @param sourceMD5 源文件的MD5 不需要校验，则可以给空
-	 * @param source    源文件路径
-	 * @param dest      目的文件路径
+	 * @param needCover            是否覆盖已存在的目标文件(MD5值不相同的情况下)
+	 * @param sourceMD5            源文件的MD5 不需要校验，则可以给空
+	 * @param sourceAssetsFileName Assets内文件名
+	 * @param destPath             要复制的位置
 	 */
-	public static void copyFromAssetsToSdcard(Context context, boolean isCover, String sourceMD5, String source, String dest, CopyResultCallBack copyResultCallBack)
+	public static void copyFromAssets(Context context, boolean needCover, String sourceMD5, String sourceAssetsFileName, String destPath, ResultCallBack resultCallBack)
 	{
-		final Thread copyThread = new Thread(new Runnable()
+		if (EmptyUtil.isEmpty(destPath) || EmptyUtil.isEmpty(sourceMD5))
 		{
-			@Override
-			public void run()
+			if (null != resultCallBack) resultCallBack.onResult(false);
+			return;
+		}
+
+		final Thread copyThread = new Thread(() -> checkFileExitsAndMD5(sourceMD5, destPath, isSuccess ->
+		{
+			if (isSuccess)
 			{
-				boolean createDir = FileCreateUtil.createParentDirectory(dest);
-				if (createDir)
+				if (null != resultCallBack) resultCallBack.onResult(true);
+			} else
+			{
+				boolean createParent = FileCreateUtil.createParentDirectory(destPath);
+				boolean fileExists   = FileCheckUtil.isFileExists(destPath);
+
+				if (createParent && (!fileExists || needCover))//父目录创建成果 + 文件不存在 或 需要覆盖
 				{
-					File    file       = new File(dest);
-					boolean isMd5Right = true;//默认：需要复制
-					if (!TextUtils.isEmpty(sourceMD5) && file.exists() && !isCover)//有源MD5 + 文件已经存在 + 不需要覆盖。
+					try
 					{
-						//则检测MD5，确认文件相同且完好
-						String fileMd5 = MD5Util.getFileMd5(dest);
-						LogProxy.d(TAG, "test-->MD5-->sourceMD5=" + sourceMD5);
-						LogProxy.d(TAG, "test-->MD5-->     dest=" + fileMd5);
-						if (!TextUtils.isEmpty(fileMd5) && sourceMD5.equals(fileMd5))
-						{
-							isMd5Right = true;//校验正确，不复制
-							if (null != copyResultCallBack) copyResultCallBack.onResult(true);
-						} else
-						{
-							isMd5Right = false;
-						}
-					}
-					//文件不存在 或 需要覆盖 或 MD5检测不通过。则需要复制
-					if (!file.exists() || isCover || !isMd5Right)
+						InputStream      in  = AndroidFileUtil.getAssetsInputStream(context, sourceAssetsFileName);
+						FileOutputStream out = new FileOutputStream(destPath);
+						FileCopyUtil.copyWithStream(in, out, resultCallBack);
+					} catch (IOException e)
 					{
-						InputStream      is  = null;
-						FileOutputStream fos = null;
-						try
-						{
-							is = context.getResources().getAssets().open(source);
-							fos = new FileOutputStream(dest);
-							byte[] buffer = new byte[1024];
-							int    size   = 0;
-							while ((size = is.read(buffer, 0, 1024)) >= 0)
-							{
-								fos.write(buffer, 0, size);
-							}
-							if (null != copyResultCallBack) copyResultCallBack.onResult(true);
-						} catch (IOException e)
-						{
-							e.printStackTrace();
-							if (null != copyResultCallBack) copyResultCallBack.onResult(false);
-						} finally
-						{
-							try
-							{
-								if (fos != null) fos.close();
-							} catch (IOException e) { e.printStackTrace(); }
-							try
-							{
-								if (is != null) is.close();
-							} catch (IOException e) { e.printStackTrace(); }
-						}
+						e.printStackTrace();
+						LogProxy.e(TAG, "copyFromAssets", e);
+						if (null != resultCallBack) resultCallBack.onResult(false);
 					}
 				} else
 				{
-					if (null != copyResultCallBack) copyResultCallBack.onResult(false);
+					if (null != resultCallBack) resultCallBack.onResult(false);
 				}
 			}
-		});
+		}));
 		copyThread.start();
 	}
 
-	public interface CopyResultCallBack
+	public static void checkFileExitsAndMD5(String md5, String filePath, ResultCallBack copyResultCallBack)
 	{
-		void onResult(boolean isSuccess);
+		if (EmptyUtil.isEmpty(filePath) || EmptyUtil.isEmpty(md5))
+		{
+			if (null != copyResultCallBack) copyResultCallBack.onResult(false);
+		} else
+		{
+			boolean fileExists = FileCheckUtil.isFileExists(filePath);
+			if (fileExists)
+			{
+				String fileMd5 = MD5Util.getFileMd5(filePath);
+				if (EmptyUtil.notEmpty(fileMd5) && md5.equalsIgnoreCase(fileMd5))
+				{
+					if (null != copyResultCallBack) copyResultCallBack.onResult(true);
+					return;
+				}
+			}
+			if (null != copyResultCallBack) copyResultCallBack.onResult(false);
+		}
 	}
+
+	public static void checkFileExitsAndMD5InThread(String md5, String filePath, ResultCallBack copyResultCallBack)
+	{
+		if (EmptyUtil.isEmpty(filePath) || EmptyUtil.isEmpty(md5))
+		{
+			if (null != copyResultCallBack) copyResultCallBack.onResult(false);
+			return;
+		}
+
+		final Thread md5Thread = new Thread(() -> checkFileExitsAndMD5(md5, filePath, copyResultCallBack));
+		md5Thread.start();
+	}
+
 }
 
 
