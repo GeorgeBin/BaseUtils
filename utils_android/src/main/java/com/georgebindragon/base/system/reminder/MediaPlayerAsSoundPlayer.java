@@ -36,15 +36,18 @@ public class MediaPlayerAsSoundPlayer extends SoundPlayer<Integer, MediaPlayer>
 	protected void onStreamTypeChange(int streamType)
 	{
 		LogProxy.i(TAG, "onStreamTypeChange: 设置值:" + streamType);
-		Collection<MediaPlayer> values = map.values();
-		for (MediaPlayer player : values)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 		{
-			setPlayerStreamType(player, streamType);
+			Collection<MediaPlayer> values = map.values();
+			for (MediaPlayer player : values)
+			{
+				setPlayerStreamType(player, streamType);
+			}
 		}
 	}
 
 	@Override
-	public void load(Context context,  Integer key, int resID)
+	public void load(Context context, Integer key, int resID)
 	{
 		if (null == context) context = BaseUtils.getContext();
 		MediaPlayer player = createPlayer(context, resID);
@@ -89,10 +92,8 @@ public class MediaPlayerAsSoundPlayer extends SoundPlayer<Integer, MediaPlayer>
 				{
 					player.setAudioAttributes(attributes);
 				} catch (Exception e) { LogProxy.e(TAG, "setPlayerStreamType", e); }
-			} else
-			{
-				player.setAudioStreamType(streamType);
 			}
+			//Android 4.x 不需要手动 设置或切换 播放通道, 否则会没有声音出来
 		} catch (Exception e) {LogProxy.e(TAG, "setPlayerStreamType", e);}
 	}
 

@@ -1,12 +1,15 @@
 package com.georgebindragon.base.system.file;
 
+import com.georgebindragon.base.abilities.callbacks.ResultCallBack;
 import com.georgebindragon.base.algorithm.MD5Util;
+import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.utils.EmptyUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * 创建人：George
@@ -21,17 +24,17 @@ public class FileCopyUtil
 {
 	private static final String TAG = "FileCopyUtil-->";
 
+	private static final int Read_Length = 1024;
+
 	/**
 	 * 将APK的资源文件拷贝到SD卡中
 	 *
-	 * @param isCover 是否覆盖已存在的目标文件
-	 * @param source  源文件路径
-	 * @param dest    目的文件路径
+	 * @param needCover 是否覆盖已存在的目标文件
+	 * @param source    源文件路径
+	 * @param dest      目的文件路径
 	 */
-	public static boolean copyFile(boolean isCover, String source, String dest)
+	public static void copyFile(boolean needCover, String source, String dest, final ResultCallBack copyResultCallBack)
 	{
-		boolean result = false;
-
 		boolean sourceFileExists = FileCheckUtil.isFileExists(source);
 		if (sourceFileExists)
 		{
@@ -40,48 +43,73 @@ public class FileCopyUtil
 			{
 				String sourceMd5 = MD5Util.getFileMd5(source);
 				String destMd5   = MD5Util.getFileMd5(dest);
-				if (EmptyUtil.notEmpty(sourceMd5, destMd5) && sourceMd5.equalsIgnoreCase(destMd5)) return true;
+				if (null != sourceMd5 && EmptyUtil.notEmpty(sourceMd5, destMd5))
+				{
+					if (sourceMd5.equalsIgnoreCase(destMd5))
+					{
+						if (null != copyResultCallBack) copyResultCallBack.onResult(true);
+					}
+				}
 			}
 
 			boolean createDir = FileCreateUtil.createFile(dest);
 			if (createDir)
 			{
 				File file = new File(dest);
-				if (isCover || !file.exists())
+				if (needCover || !file.exists())
 				{
-					FileInputStream  in  = null;
-					FileOutputStream out = null;
 					try
 					{
-						in = new FileInputStream(source);
-						out = new FileOutputStream(dest);
-						byte[] buffer = new byte[1024];
-						int    size   = 0;
-						while ((size = in.read(buffer, 0, 1024)) >= 0)
-						{
-							out.write(buffer, 0, size);
-						}
-						out.flush();
-						result = true;
-					} catch (IOException e)
+						FileInputStream  in  = new FileInputStream(source);
+						FileOutputStream out = new FileOutputStream(dest);
+						copyWithStreamInThread(in, out, copyResultCallBack);
+					} catch (Exception e)
 					{
 						e.printStackTrace();
-						result = false;
-					} finally
-					{
-						try
-						{
-							if (out != null) out.close();
-						} catch (IOException e) { e.printStackTrace(); }
-						try
-						{
-							if (in != null) in.close();
-
-						} catch (IOException e) { e.printStackTrace(); }
+						LogProxy.d(TAG, "copyFile-->close-->" + e.getMessage());
 					}
 				}
 			}
 		}
-		return result;
+	}
+
+	public static void copyWithStreamInThread(InputStream in, OutputStream out, final ResultCallBack copyResultCallBack)
+	{
+		if (null == in || null == out) return;
+		final Thread copyThread = new Thread(() -> copyWithStream(in, out, copyResultCallBack));
+		copyThread.start();
+	}
+
+	public static void copyWithStream(InputStream in, OutputStream out, final ResultCallBack copyResultCallBack)
+	{
+		if (null == in || null == out) return;
+
+		try
+		{
+			byte[] buffer = new byte[Read_Length];
+			int    size;
+
+			while ((size = in.read(buffer, 0, Read_Length)) >= 0)
+			{
+				out.write(buffer, 0, size);
+			}
+
+			if (null != copyResultCallBack) copyResultCallBack.onResult(true);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			LogProxy.e(TAG, "copyWithStream", e);
+			if (null != copyResultCallBack) copyResultCallBack.onResult(false);
+		} finally
+		{
+			try
+			{
+				out.close();
+			} catch (Exception e) { LogProxy.e(TAG, "copyWithStream-->out.close()", e); }
+			try
+			{
+				in.close();
+			} catch (Exception e) { LogProxy.e(TAG, "copyWithStream-->in.close()", e);}
+		}
 	}
 }
