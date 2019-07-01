@@ -50,7 +50,7 @@ public class BaseUtils
 		HandlerUtil.init();
 
 		//语言 & 资源 的管理
-		UtilsActions.getInstance().listenSomeAction(Action_LocaleChanged, LanguageUtil::onSystemLocalChanged);
+		UtilsActions.getInstance().listenSomeKey(Action_LocaleChanged, LanguageUtil::onSystemLocalChanged);
 		LanguageUtil.init(context2);
 	}
 

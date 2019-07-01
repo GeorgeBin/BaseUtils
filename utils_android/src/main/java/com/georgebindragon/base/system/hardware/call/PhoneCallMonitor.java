@@ -92,7 +92,7 @@ public class PhoneCallMonitor extends BaseListenerMonitor<PhoneCallMonitor.Phone
 	 */
 	public boolean registerMonitor(Context context)
 	{
-		UtilsActions.getInstance().listenSomeAction(phoneStateAction, this::onBroadcastReceived);
+		UtilsActions.getInstance().listenSomeKey(phoneStateAction, this::onBroadcastReceived);
 		LogProxy.d(TAG, "registerMonitor-->注册");
 
 		//有这两个权限之一, 即可获取到状态
@@ -110,7 +110,7 @@ public class PhoneCallMonitor extends BaseListenerMonitor<PhoneCallMonitor.Phone
 	 */
 	public void unregisterMonitor()
 	{
-		UtilsActions.getInstance().stopSomeAction(phoneStateAction);
+		UtilsActions.getInstance().stopSomeKey(phoneStateAction);
 		clearListeners();
 		LogProxy.d(TAG, "unregisterMonitor-->注销");
 	}

@@ -2,7 +2,6 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
     <!-- 网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -16,13 +15,14 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
 
-    <application
-        >
+    <application>
+
         <receiver android:name="com.georgebindragon.base.receiver.UtilsReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
             </intent-filter>
         </receiver>
+
     </application>
 </manifest>

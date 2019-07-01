@@ -52,4 +52,9 @@ public class MapManager<K,V>
 	{
 		map.remove(key);
 	}
+
+	public void clearMap()
+	{
+		map = new ConcurrentHashMap<>();
+	}
 }
