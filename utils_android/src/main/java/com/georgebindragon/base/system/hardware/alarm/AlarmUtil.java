@@ -31,10 +31,6 @@ public class AlarmUtil
 	final static String EXTRA_PID = "PID";
 	final static String alarmAction = "ALARM_ACTION(" + String.valueOf(Process.myPid()) + ")";
 
-	public static PendingIntent setAlarm(final long alarmID, final long afterMilliSeconds)
-	{
-		return setAlarm(alarmID, afterMilliSeconds, null);
-	}
 
 	public static PendingIntent setAlarm(final long alarmID, final long afterMilliSeconds, Context context)
 	{

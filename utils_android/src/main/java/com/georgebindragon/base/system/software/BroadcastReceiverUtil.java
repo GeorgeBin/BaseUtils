@@ -32,6 +32,10 @@ public class BroadcastReceiverUtil
 
 	public static void getBroadcastIntentDetail(Intent intent)
 	{
+		boolean logEnable = LogProxy.isLogEnable();
+		System.out.println("getBroadcastIntentDetail-->log是否可见: " + (logEnable ? "可见, 进行打印" : "不可见, 不调用分析打印"));
+		if (!logEnable) return;
+
 		try
 		{
 			if (EmptyUtil.isEmpty(intent)) return;

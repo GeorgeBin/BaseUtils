@@ -22,6 +22,8 @@ public interface LogFunctionI extends IFunction
 	//控制方法:
 	void setLogVisibility(boolean isLogEnable);
 
+	boolean isLogEnable();
+
 	void setLogLevel(int level);
 
 	//WTF         = 7;//Log.wtf

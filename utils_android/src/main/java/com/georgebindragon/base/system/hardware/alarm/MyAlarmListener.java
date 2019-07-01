@@ -4,7 +4,7 @@ import android.content.Intent;
 
 /**
  * 创建人：George
- * 类名称：MyAlarm
+ * 类名称：MyAlarmListener
  * 类概述：
  * 详细描述：
  *
@@ -15,10 +15,8 @@ import android.content.Intent;
  */
 
 
-public interface MyAlarm
+public interface MyAlarmListener
 {
-	long alarmID();//要监听的Alarm的ID
-
 	void onAlarmStart(long id, int after);
 
 	void onAlarmReceive(Intent intent);

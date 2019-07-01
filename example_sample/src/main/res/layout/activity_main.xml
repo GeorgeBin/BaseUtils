@@ -92,5 +92,27 @@
                 android:layout_weight="1"
                 android:maxLines="1"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_100dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/test_alarm_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimens_50dp"
+                android:layout_weight="1"
+                android:nextFocusDown="@+id/test_alarm_tv"
+                android:text="测试Alarm"/>
+
+            <TextView
+                android:id="@+id/test_alarm_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimens_50dp"
+                android:layout_weight="1"
+                android:text="显示Alarm"/>
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

@@ -1,6 +1,5 @@
 package com.georgebindragon.base.system.hardware.alarm;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 
 import com.georgebindragon.base.monitor.BaseListenerMonitor;
@@ -21,28 +20,17 @@ import java.util.Queue;
  */
 
 
-class AlarmMonitor extends BaseListenerMonitor<MyAlarm>
+class AlarmMonitor extends BaseListenerMonitor<MyAlarmListener>
 {
-	private PendingIntent pendingIntent;
-
-	PendingIntent getPendingIntent()
-	{
-		return pendingIntent;
-	}
-
-	void setPendingIntent(PendingIntent pendingIntent)
-	{
-		this.pendingIntent = pendingIntent;
-	}
 
 	void notifyListenerOnAlarmStart(long id, int after)
 	{
-		final Queue<MyAlarm> tempListenerList = getListenerList();
+		final Queue<MyAlarmListener> tempListenerList = getListenerList();
 		if (EmptyUtil.notEmpty(tempListenerList))
 		{
-			for (MyAlarm listener : tempListenerList)
+			for (MyAlarmListener listener : tempListenerList)
 			{
-				if (EmptyUtil.notEmpty(listener) && listener.alarmID() == id)
+				if (EmptyUtil.notEmpty(listener))
 				{
 					listener.onAlarmStart(id, after);
 				}
@@ -52,12 +40,12 @@ class AlarmMonitor extends BaseListenerMonitor<MyAlarm>
 
 	void notifyListenerOnAlarmReceive(long id, Intent intent)
 	{
-		final Queue<MyAlarm> tempListenerList = getListenerList();
+		final Queue<MyAlarmListener> tempListenerList = getListenerList();
 		if (EmptyUtil.notEmpty(tempListenerList))
 		{
-			for (MyAlarm listener : tempListenerList)
+			for (MyAlarmListener listener : tempListenerList)
 			{
-				if (EmptyUtil.notEmpty(listener) && listener.alarmID() == id)
+				if (EmptyUtil.notEmpty(listener))
 				{
 					listener.onAlarmReceive(intent);
 				}
@@ -67,12 +55,12 @@ class AlarmMonitor extends BaseListenerMonitor<MyAlarm>
 
 	void notifyListenerOnAlarmStop(long id)
 	{
-		final Queue<MyAlarm> tempListenerList = getListenerList();
+		final Queue<MyAlarmListener> tempListenerList = getListenerList();
 		if (EmptyUtil.notEmpty(tempListenerList))
 		{
-			for (MyAlarm listener : tempListenerList)
+			for (MyAlarmListener listener : tempListenerList)
 			{
-				if (EmptyUtil.notEmpty(listener) && listener.alarmID() == id)
+				if (EmptyUtil.notEmpty(listener) )
 				{
 					listener.onAlarmStop(id);
 				}

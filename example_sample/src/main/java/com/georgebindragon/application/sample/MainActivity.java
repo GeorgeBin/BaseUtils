@@ -3,6 +3,7 @@ package com.georgebindragon.application.sample;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -22,8 +23,11 @@ import com.georgebindragon.application.sample.mvi.main.MainViewState;
 import com.georgebindragon.application.sample.ui.adapter.PopListAdapter;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.rx.lfc.RxThrottle;
+import com.georgebindragon.base.system.hardware.alarm.AlarmMonitorManager;
+import com.georgebindragon.base.system.hardware.alarm.MyAlarmListener;
 import com.georgebindragon.base.system.hardware.call.PhoneCallMonitor;
 import com.georgebindragon.base.system.hardware.call.PhoneCallUtil;
+import com.georgebindragon.base.system.software.BroadcastReceiverUtil;
 import com.georgebindragon.base.system.software.DeviceUtil;
 import com.georgebindragon.base.system.software.PermissionUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
@@ -81,10 +85,13 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 	TextView textView2;
 	TextView testInfo_device_manufacturer_tv;
 
-	Button   button;
+	Button button;
 
 	TextView         testSound_tv;
 	AppCompatSeekBar seekBar;
+
+	TextView test_alarm_tv;
+	Button   test_alarm_btn;
 
 	String[] permission_read_phone_state = {Manifest.permission.READ_PHONE_STATE};//申请查看电话状态, 只能获取状态值, 不能获取号码
 	String[] permission_read_call_log    = {Manifest.permission.READ_CALL_LOG};//申请查看电话状态, 只能获取状态值, 不能获取号码
@@ -137,11 +144,15 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 		textView = findViewById(R.id.text);
 		textView2 = findViewById(R.id.text2);
 		testInfo_device_manufacturer_tv = findViewById(R.id.testInfo_device_manufacturer_tv);
-		testInfo_device_manufacturer_tv.setText("制造商: "+ DeviceUtil.getManufacturer());
-		LogProxy.d(TAG, "制造商="+ DeviceUtil.getManufacturer());
+		testInfo_device_manufacturer_tv.setText("制造商: " + DeviceUtil.getManufacturer());
+		LogProxy.d(TAG, "制造商=" + DeviceUtil.getManufacturer());
 
 		button = findViewById(R.id.btn);
 		button.setOnClickListener(this);
+
+		test_alarm_tv = findViewById(R.id.test_alarm_tv);
+		test_alarm_btn = findViewById(R.id.test_alarm_btn);
+		test_alarm_btn.setOnClickListener(this);
 
 		MainPresenter.getInstance().init(this);
 		MainPresenter.getInstance().initButton();
@@ -184,10 +195,10 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 
 	private void onButtonClick_SoundPlayer()
 	{
-				AlertPlayer_Media.getInstance().playNext(count);
-//		AlertPlayer_SoundPool.getInstance().playNext(count);
-//		AlertPlayer_Media.getInstance().play_Error();
-//		AlertPlayer_SoundPool.getInstance().play_Error();
+		AlertPlayer_Media.getInstance().playNext(count);
+		//		AlertPlayer_SoundPool.getInstance().playNext(count);
+		//		AlertPlayer_Media.getInstance().play_Error();
+		//		AlertPlayer_SoundPool.getInstance().play_Error();
 		count++;
 	}
 
@@ -207,9 +218,55 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 			case R.id.btn:
 				reFreshManuallyByFrequency();
 				break;
+			case R.id.test_alarm_btn:
+				testAlarm();
+				break;
 			default:
 				break;
 		}
+	}
+
+	private static final long ID = 111111;
+	private static final int time = 5*1000;
+	MyAlarmListener myAlarmListener = null;
+	int             alarmCount      = 0;
+
+	private void testAlarm()
+	{
+		if (null == myAlarmListener)
+		{
+			myAlarmListener = new MyAlarmListener()
+			{
+				@Override
+				public void onAlarmStart(long id, int after)
+				{
+					LogProxy.d(TAG, "onAlarmStart: id=" + id, "after=" + after);
+				}
+
+				@Override
+				public void onAlarmReceive(Intent intent)
+				{
+					LogProxy.d(TAG, "onAlarmReceive: ");
+					BroadcastReceiverUtil.getBroadcastIntentDetail(intent);
+					runOnUiThread(() ->
+					{
+						alarmCount++;
+						test_alarm_tv.setText("onAlarmReceive: 次数" + alarmCount);
+					});
+				}
+
+				@Override
+				public void onAlarmStop(long id)
+				{
+					LogProxy.d(TAG, "onAlarmStop: id=" + id);
+				}
+			};
+			AlarmMonitorManager.getInstance().listenSomeKey(ID, myAlarmListener);
+		}
+
+		boolean startAlarm = AlarmMonitorManager.getInstance().startAlarm(ID, time, this);
+		LogProxy.d(TAG, "startAlarm: 是否成功=" + (startAlarm ? "成功" : "不成功"));
+
 	}
 
 	@SuppressLint("SetTextI18n")

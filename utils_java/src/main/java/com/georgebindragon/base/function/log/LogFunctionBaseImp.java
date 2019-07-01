@@ -19,6 +19,12 @@ public abstract class LogFunctionBaseImp implements LogFunctionI
 	}
 
 	@Override
+	public boolean isLogEnable()
+	{
+		return defaultEnable;
+	}
+
+	@Override
 	public void setLogLevel(int level)
 	{
 		LOG_LEVEL = level;

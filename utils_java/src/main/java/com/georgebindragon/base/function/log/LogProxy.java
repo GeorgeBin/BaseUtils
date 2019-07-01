@@ -35,6 +35,8 @@ public class LogProxy
 	//服务内方法: 设置log开关
 	public static void setLogVisibility(boolean isLogEnable) { getAdapter().setLogVisibility(isLogEnable); }
 
+	public static boolean isLogEnable() { return getAdapter().isLogEnable(); }
+
 	//服务内方法: 设置log可见度
 	public static void setLogLevel(int level) { getAdapter().setLogLevel(level); }
 
