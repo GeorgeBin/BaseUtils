@@ -1,5 +1,7 @@
 package com.georgebindragon.base.utils;
 
+import com.georgebindragon.base.function.log.LogProxy;
+
 /**
  * 创建人：George
  * 类名称：StringUtil
@@ -16,6 +18,8 @@ package com.georgebindragon.base.utils;
 
 public class StringUtil
 {
+	private static final String TAG = "StringUtil-->";
+
 	public static final String NULL = "NULL";
 
 	public static String getPrintString(Object object)
@@ -25,8 +29,16 @@ public class StringUtil
 
 	public static String getPrintString(Object object, String defaultValue)
 	{
-		if (EmptyUtil.isEmpty(defaultValue)) defaultValue = NULL;
-		return EmptyUtil.isEmpty(object) ? defaultValue : object.toString();//返回可安全打印的字符串
+		try
+		{
+			if (EmptyUtil.isEmpty(defaultValue)) defaultValue = NULL;
+			return EmptyUtil.isEmpty(object) ? defaultValue : object.toString();//返回可安全打印的字符串
+		} catch (Exception e)
+		{
+			LogProxy.e(TAG, "getPrintString", e);
+			e.printStackTrace();
+		}
+		return "Exception";
 	}
 
 }

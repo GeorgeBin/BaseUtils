@@ -23,6 +23,8 @@ abstract class SoundPlayer<K, V> extends MapManager<K, V>
 {
 	protected String TAG = "SoundPlayer: " + getClass().getSimpleName() + "-->";
 
+	public static final int StreamType_Default = AudioManager.STREAM_RING;
+
 	protected float volume = 1.0f;
 
 	public void setVolume(float volume)
@@ -43,7 +45,7 @@ abstract class SoundPlayer<K, V> extends MapManager<K, V>
 		}
 	}
 
-	protected int streamType = AudioManager.STREAM_RING;
+	protected int streamType = StreamType_Default;
 
 	public void setStreamType(int streamType)
 	{

@@ -46,7 +46,7 @@ public class BytesUtil
 		int srcSubLength = srcLength - srcStart;
 		int destLength   = dataLength + destStart;
 
-		LogProxy.d(TAG, "subBytes()-->",
+		LogProxy.i(TAG, "subBytes()-->",
 				"srcBytes.length=" + srcLength, "srcStart=" + srcStart, "destStart=" + destStart, "dataLength=" + dataLength,
 				"要截取的长度 srcSubLength=" + srcSubLength, "截取后的目标长度 destLength=" + destLength);
 
