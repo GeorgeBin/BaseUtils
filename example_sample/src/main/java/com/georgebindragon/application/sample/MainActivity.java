@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		mvi_btn = findViewById(R.id.mvi_btn);
 		mvi_btn.setOnClickListener(v -> onButtonClick());
 

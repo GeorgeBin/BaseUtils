@@ -19,7 +19,7 @@ import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * 创建人：George
- * 类名称：SIMUtil
+ * 类名称：ICCIDUtil
  * 类概述：
  * 详细描述：
  *
@@ -31,9 +31,9 @@ import static android.content.Context.TELEPHONY_SERVICE;
  */
 
 @SuppressLint("MissingPermission")
-public class SIMUtil
+public class ICCIDUtil
 {
-	private static final String TAG = "SIMUtil-->";
+	private static final String TAG = "ICCIDUtil-->";
 
 	/**
 	 * @return 返回卡槽: SIM卡1 的ICCID

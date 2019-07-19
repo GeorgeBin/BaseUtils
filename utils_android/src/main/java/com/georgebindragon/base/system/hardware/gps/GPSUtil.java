@@ -24,7 +24,7 @@ public class GPSUtil
 	 *
 	 * @return {@code true}: 是 {@code false}: 否
 	 */
-	public boolean hasGPSHardware(Context context)
+	public static boolean hasGPSHardware(Context context)
 	{
 		final LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		if (mgr == null) return false;

@@ -48,6 +48,7 @@ public class FileCopyUtil
 					if (sourceMd5.equalsIgnoreCase(destMd5))
 					{
 						if (null != copyResultCallBack) copyResultCallBack.onResult(true);
+						return;
 					}
 				}
 			}

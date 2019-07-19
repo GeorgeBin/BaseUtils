@@ -19,7 +19,7 @@ import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * 创建人：George
- * 类名称：HardwareInfoUtil
+ * 类名称：IMEIUtil
  * 类概述：
  * 详细描述：
  *
@@ -31,9 +31,9 @@ import static android.content.Context.TELEPHONY_SERVICE;
  */
 
 @SuppressLint("MissingPermission")
-public class HardwareInfoUtil
+public class IMEIUtil
 {
-	private static final String TAG = "HardwareInfoUtil-->";
+	private static final String TAG = "IMEIUtil-->";
 
 	public static String getIMEI7()
 	{

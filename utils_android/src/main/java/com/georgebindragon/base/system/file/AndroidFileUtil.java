@@ -2,8 +2,10 @@ package com.georgebindragon.base.system.file;
 
 import android.content.Context;
 
+import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,7 +35,26 @@ public class AndroidFileUtil
 		{
 			e.printStackTrace();
 			LogProxy.e(TAG, "getAssetsInputStream", e);
-			return null;
 		}
+		return null;
+	}
+
+	public static String getCachePath(Context context)
+	{
+		if (null == context) context = BaseUtils.getContext();
+		if (null != context)
+		{
+			String cachePath = InternalFileUtil.getDataDataCachePath(context);// /data/data/程序的包名/cache
+			if (ExternalFileUtil.isExternalStorageMounted())
+			{
+				File externalCacheDir = context.getExternalCacheDir();
+				if (null != externalCacheDir)
+				{
+					cachePath = externalCacheDir.getPath();// /SD卡/Android/data/程序的包名/cache
+				}
+			}
+			return cachePath;
+		}
+		return null;
 	}
 }

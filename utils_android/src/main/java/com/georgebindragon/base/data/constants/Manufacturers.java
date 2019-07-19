@@ -51,7 +51,11 @@ public class Manufacturers
 	public static final String Manufacturer_BoPTT        = "BoPTT";//泉盛
 	public static final String Manufacturer_Quiswise     = "Quiswise";//信源达
 
-	//行业内适配
+	public static boolean isMediaPlayerDisable()
+	{
+		return isSomeManufacturer(Manufacturer_samsung);
+	}
+
 	public static boolean isSoundPoolDisable()
 	{
 		return isSomeManufacturer(Manufacturer_UNIPRO, Manufacturer_ALK, Manufacturer_HF, Manufacturer_Quiswise);
@@ -73,7 +77,7 @@ public class Manufacturers
 		return isSomeManufacturer(Manufacturer_Huawei);
 	}
 
-	private static boolean isSomeManufacturer(String... targets)
+	public static boolean isSomeManufacturer(String... targets)
 	{
 		if (null != targets && targets.length > 0)
 		{

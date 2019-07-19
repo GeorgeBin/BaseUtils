@@ -85,6 +85,11 @@ public class ExternalFileUtil
 		return SDCardAppData_Root + File.separator + appPackageName;
 	}
 
+	public static String getExternalXXXAppDataCachePath(String appPackageName)
+	{
+		return getExternalXXXAppDataPath(appPackageName + File.separator + "cache");
+	}
+
 	public static String getExternalXXXAppDataFilesPath(String appPackageName)
 	{
 		return getExternalXXXAppDataPath(appPackageName + File.separator + "files");
