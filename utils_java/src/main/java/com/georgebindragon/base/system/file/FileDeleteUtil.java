@@ -13,6 +13,7 @@ public class FileDeleteUtil
 	 * delete directory and all files inside
 	 *
 	 * @param filePath the absolute path of directory that you want to delete
+	 * @return is success
 	 */
 	public static boolean deleteDirectory(String filePath)
 	{
@@ -23,6 +24,7 @@ public class FileDeleteUtil
 	 * delete directory and all files inside
 	 *
 	 * @param directory the directory File you want to delete
+	 * @return is success
 	 */
 	public static boolean deleteDirectory(File directory)
 	{
@@ -60,6 +62,7 @@ public class FileDeleteUtil
 	 * delete directory and all files inside
 	 *
 	 * @param file the File you want to delete
+	 * @return is success
 	 */
 	public static boolean deleteOneFile(File file)
 	{

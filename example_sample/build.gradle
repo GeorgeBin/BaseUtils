@@ -44,7 +44,7 @@ dependencies {
 //    //基础库
 //
     // 基础工具类
-    implementation 'com.georgebindragon:base-application:1.1.8'
+    implementation 'com.georgebindragon:base-application:1.1.9'
 //    implementation project(':utils_java')
 //    implementation project(':utils_android')
 //    implementation project(':utils_rx')
