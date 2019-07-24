@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--AndroidManifest.xml中activity方向-->
+    <!--
+      android:screenOrientation="unspecified"
+      unspecified=-1，landscape=0, portrait=1，user=2，behind=3，sensor=4，nosensor=5，sensorLandscape=6，sensorPortrait=7，
+      reverseLandscape=8，reversePortrait=9，fullSensor=10，userLandscape=11，userPortrait=12，fullUser=13，locked=14
+      来源：https://developer.android.com/reference/android/content/pm/ActivityInfo.html -->
+
+    <integer name="ui_control_manifest_activityScreenOrientation_unspecified">-1</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_landscape">0</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_portrait">1</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_user">2</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_behind">3</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_sensor">4</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_nosensor">5</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_sensorLandscape">6</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_sensorPortrait">7</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_reverseLandscape">8</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_reversePortrait">9</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_fullSensor">10</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_userLandscape">11</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_userPortrait">12</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_fullUser">13</integer>
+    <integer name="ui_control_manifest_activityScreenOrientation_locked">14</integer>
+
+    <!--View.Visibility  是否显示-->
+    <!-- visible=0, invisible=1, gone=2 -->
+    <integer name="ui_control_view_visibility_visible">0</integer>
+    <integer name="ui_control_view_visibility_invisible">1</integer>
+    <integer name="ui_control_view_visibility_gone">2</integer>
+
+</resources>
