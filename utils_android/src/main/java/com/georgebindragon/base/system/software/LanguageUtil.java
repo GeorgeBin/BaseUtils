@@ -19,8 +19,16 @@ import java.util.Locale;
  * 创建人：George
  * 类名称：LanguageUtil
  * 类概述：
- * 详细描述：
  *
+ * 调整系统内语言过程：
+ * 1. 初始化，读取App语言配置信息（跟随系统、中文、English）
+ * 2. 代码设置App内自定义语言
+ * （Android-5.1 已经可以转换系统语言了）
+ * （Android-9 只有通过代码获取的字符串可以）
+ *
+ * 3. 更改Context：Application、Activity、Service
+ * 4. 系统语言变化回调：Application、Activity 检测当前App内语言，是否符合预期
+ * 5. 监听系统语言变化广播：变化时，检查是否需要跟随变更
  *
  * 修改人：
  * 修改时间：
