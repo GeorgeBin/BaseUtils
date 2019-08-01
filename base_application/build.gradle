@@ -56,7 +56,7 @@ dependencies {
 //        implementation project(':utils_android')
 //        implementation project(':utils_rx')
     api 'com.georgebindragon:utils-java:1.1.4'
-    api 'com.georgebindragon:utils-android:1.1.4'
+    api 'com.georgebindragon:utils-android:1.1.5'
     api 'com.georgebindragon:utils-rx:1.1.4'
 
     //响应式
