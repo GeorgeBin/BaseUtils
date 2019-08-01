@@ -38,7 +38,6 @@ import com.georgebindragon.base.thread.HandlerUtil;
 @SuppressLint("StaticFieldLeak")
 public class BaseUtils
 {
-	private static final String Action_LocaleChanged = Intent.ACTION_LOCALE_CHANGED;
 	private static Context context;
 
 	public static void init(Context context2)
@@ -50,7 +49,6 @@ public class BaseUtils
 		HandlerUtil.init();
 
 		//语言 & 资源 的管理
-		UtilsActions.getInstance().listenSomeKey(Action_LocaleChanged, LanguageUtil::onSystemLocalChanged);
 		LanguageUtil.init(context2);
 	}
 

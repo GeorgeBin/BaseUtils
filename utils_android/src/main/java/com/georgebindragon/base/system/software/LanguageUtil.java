@@ -9,7 +9,9 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
+import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.utils.StringUtil;
 
 import java.util.Locale;
 
@@ -32,12 +34,10 @@ public class LanguageUtil
 
 	@SuppressLint("StaticFieldLeak")
 	private static Context systemContext;
-	private static Locale  systemLocale;//记录系统当前语言
 
 	public static void init(Context context)
 	{
 		systemContext = context;
-		systemLocale = Locale.getDefault();//记录系统当前语言
 	}
 
 	public static Locale getAppLanguage()
@@ -49,7 +49,15 @@ public class LanguageUtil
 
 	public static Locale getSystemLanguage()
 	{
-		return systemLocale;
+		Locale locale;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+		{
+			locale = Resources.getSystem().getConfiguration().getLocales().get(0);
+		} else
+		{
+			locale = Resources.getSystem().getConfiguration().locale;
+		}
+		return locale;
 	}
 
 	public static Context wrapLanguageContext(Context base, Locale newLocale)
@@ -73,37 +81,11 @@ public class LanguageUtil
 			}
 		}
 
-		LogProxy.i(TAG, "wrapLanguageContext");
+		LogProxy.i(TAG, "wrapLanguageContext-->" + StringUtil.getPrintString(newLocale));
 		return base;
 	}
 
-	public static  void onSystemLocalChanged(Context context, Intent intent)
-	{
-		if (null != intent && Intent.ACTION_LOCALE_CHANGED.equals(intent.getAction()))
-		{
-			LogProxy.i(TAG, "onSystemLocalChanged");
-
-			if (null != context)
-			{
-				Configuration config = context.getResources().getConfiguration();
-				if (null != config)
-				{
-					LogProxy.i(TAG, "System Language change，config.toString()=" + config.toString());
-					LogProxy.i(TAG, "System Language change，config.locale=" + config.locale);
-
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-					{
-						systemLocale = config.getLocales().get(0);
-					} else
-					{
-						systemLocale = config.locale;
-					}
-				}
-			}
-		}
-	}
-
-	public boolean setLanguage(Locale newLocale)
+	public static boolean setLanguage(Locale newLocale)
 	{
 		Configuration  config = getSystemRes().getConfiguration();
 		DisplayMetrics dm     = getSystemRes().getDisplayMetrics();
@@ -123,14 +105,15 @@ public class LanguageUtil
 			getSystemRes().updateConfiguration(config, dm);//更新配置
 			//语言变更后要做的事情
 
-			LogProxy.i(TAG, "setLanguage local=" + systemContext.getResources().getConfiguration().locale.toString());
+			LogProxy.i(TAG, "setLanguage newLocale=" + StringUtil.getPrintString(newLocale));
 			return true;
 		}
 		return false;
 	}
 
-	private Resources getSystemRes()
+	public static Resources getSystemRes()
 	{
+		if (null == systemContext) systemContext = BaseUtils.getContext();
 		return ResourcesUtil.getSystemRes(systemContext);
 	}
 }
