@@ -2,11 +2,11 @@ package com.georgebindragon.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 
 import com.georgebindragon.base.android.log.LogFunctionAndroidImp;
+import com.georgebindragon.base.android.socket.SocketUtil_Android;
 import com.georgebindragon.base.function.log.LogProxy;
-import com.georgebindragon.base.receiver.UtilsActions;
+import com.georgebindragon.base.system.socket.SocketUtilProxy;
 import com.georgebindragon.base.system.software.LanguageUtil;
 import com.georgebindragon.base.thread.HandlerUtil;
 
@@ -45,6 +45,7 @@ public class BaseUtils
 		context = context2;
 
 		LogProxy.setLogImp(LogFunctionAndroidImp.getInstance());//设置log的具体实现服务
+		SocketUtilProxy.setImp(SocketUtil_Android.getInstance());//设置socket工具类的具体实现
 
 		HandlerUtil.init();
 

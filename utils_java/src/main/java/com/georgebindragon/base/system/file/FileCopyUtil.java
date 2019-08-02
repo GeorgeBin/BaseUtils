@@ -29,9 +29,10 @@ public class FileCopyUtil
 	/**
 	 * 将APK的资源文件拷贝到SD卡中
 	 *
-	 * @param needCover 是否覆盖已存在的目标文件
-	 * @param source    源文件路径
-	 * @param dest      目的文件路径
+	 * @param needCover          是否覆盖已存在的目标文件
+	 * @param source             源文件路径
+	 * @param dest               目的文件路径
+	 * @param copyResultCallBack 复制结果回调
 	 */
 	public static void copyFile(boolean needCover, String source, String dest, final ResultCallBack copyResultCallBack)
 	{

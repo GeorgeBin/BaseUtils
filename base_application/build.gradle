@@ -41,10 +41,10 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //内存泄漏检测
-    debugApi 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
+    debugApi 'com.squareup.leakcanary:leakcanary-android:2.0-beta-1'
     //DoKit-研发助手
-    debugApi 'com.didichuxing.doraemonkit:doraemonkit:1.1.5'
-    releaseApi 'com.didichuxing.doraemonkit:doraemonkit-no-op:1.1.5'
+    debugApi 'com.didichuxing.doraemonkit:doraemonkit:1.1.8'
+    releaseApi 'com.didichuxing.doraemonkit:doraemonkit-no-op:1.1.8'
 
 
     //--------------基础库--------------
