@@ -63,7 +63,6 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.2.8'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     api 'com.jakewharton.rxrelay2:rxrelay:2.1.0'
-    // api 'com.airbnb.android:mvrx:0.7.2'
 
 
     //--------------UI库--------------
@@ -79,25 +78,10 @@ dependencies {
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45'
 
 
-    //--------------进程--------------
-
-    //启动管理
-    //  implementation 'com.alibaba.android:alpha:1.0.0.1@aar'
-
-
     //--------------网络--------------
 
     api 'com.squareup.retrofit2:retrofit:2.5.0'
     api 'com.squareup.retrofit2:converter-gson:2.5.0'
-
-
-    //--------------存储--------------
-
-    //键值对
-    // implementation 'com.tencent:mmkv:1.0.18'
-
-    //数据库
-    // implementation 'com.tencent.wcdb:wcdb-android:1.0.5'
 }
 
 
