@@ -15,11 +15,11 @@ utils-java:
 
 utils-android:
 
-    implementation 'com.georgebindragon:utils-android:1.1.7'
+    implementation 'com.georgebindragon:utils-android:1.1.8'
 
 utils-rx:
     
-    implementation 'com.georgebindragon:utils-rx:1.1.5'
+    implementation 'com.georgebindragon:utils-rx:1.1.6'
     
 base-application:
 
@@ -27,4 +27,4 @@ base-application:
     
     build.gradle-->allprojects-->repositories-->add here
     
-    implementation 'com.georgebindragon:base-application:1.2.4'
+    implementation 'com.georgebindragon:base-application:1.2.5'
