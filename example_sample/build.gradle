@@ -1,29 +1,29 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'channel'
 //apply plugin: 'android-aspectjx'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Config.compileSdkVersion
 
     defaultConfig {
+        minSdkVersion Config.minSdkVersion
+        targetSdkVersion Config.targetSdkVersion
 
         versionCode 1
         versionName "1.0"
 
         applicationId "com.georgebindragon.application.sample"
 
-        minSdkVersion 16
-        targetSdkVersion 28
-
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,23 +33,17 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //--------------测试库--------------
+    testImplementation Dependence.Test_Junit
+    androidTestImplementation Dependence.Test_X_Support_Runner
+    androidTestImplementation Dependence.Test_X_Support_Espresso
 
     api 'com.leon.channel:helper:2.0.2'
 
     implementation 'com.hannesdorfmann.mosby3:mvi:3.1.1'
 
-//    //基础库
-//
     // 基础工具类
-    implementation 'com.georgebindragon:base-application:1.1.9'
-//    implementation project(':utils_java')
-//    implementation project(':utils_android')
-//    implementation project(':utils_rx')
-//    implementation project(':base_application')
-
+    api Dependence.BaseApplication
 
 //
 //    //Bugly
@@ -76,4 +70,16 @@ dependencies {
 //
 //    //数据库
 //    implementation 'com.tencent.wcdb:wcdb-android:1.0.5'
+}
+
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        if (useLocalModule) {
+            substitute module("$myGroup:utils-java") because "I want to debug with new code" with project(":utils_java")
+            substitute module("$myGroup:utils-rx") because "I want to debug with new code" with project(":utils_rx")
+            substitute module("$myGroup:utils-android") because "I want to debug with new code" with project(":utils_android")
+            substitute module("$myGroup:base-application") because "I want to debug with new code" with project(":base_application")
+        }
+    }
 }

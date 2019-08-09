@@ -4,34 +4,34 @@ apply plugin: 'com.android.library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation Dependence.Test_Junit
+    androidTestImplementation Dependence.Test_X_Support_Runner
+    androidTestImplementation Dependence.Test_X_Support_Espresso
 
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation Dependence.RxJava
+    implementation Dependence.RxAndroid
 
-//    implementation project(':utils_java')
-     implementation 'com.georgebindragon:utils-java:1.1.4'
+    implementation Dependence.Utilsjava
 }
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Config.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion Config.minSdkVersion_old
+        targetSdkVersion Config.targetSdkVersion
 
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
     buildTypes {
         release {
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -44,7 +44,14 @@ android {
 }
 
 
-tasks.withType(JavaCompile){
+tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        if (useLocalModule) {
+            substitute module("com.georgebindragon:utils-java") because "I want to debug with new code" with project(":utils_java")
+        }
+    }
+}

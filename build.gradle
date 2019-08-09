@@ -1,9 +1,12 @@
+//引用配置文件
+apply from:"localConfig.gradle"
+
 
 buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
@@ -13,9 +16,9 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
-        maven { url "https://jitpack.io" }
+        google() // = https://maven.google.com
+        jcenter()// = http://jcenter.bintray.com
+        maven { url "https://jitpack.io" } //https://github.com/CymChad/BaseRecyclerViewAdapterHelper 需要
     }
 }
 

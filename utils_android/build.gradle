@@ -3,21 +3,20 @@ apply plugin: 'com.android.library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-//     implementation project(':utils_java')
-    implementation 'com.georgebindragon:utils-java:1.1.5'
+    implementation Dependence.Utilsjava
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Config.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion Config.minSdkVersion_old
+        targetSdkVersion Config.targetSdkVersion
 
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -39,3 +38,10 @@ tasks.withType(JavaCompile){
 }
 
 
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        if (useLocalModule) {
+            substitute module("com.georgebindragon:utils-java") because "I want to debug with new code" with project(":utils_java")
+        }
+    }
+}
