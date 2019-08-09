@@ -43,10 +43,10 @@ ext {
             Doraemonkit_Release    : [group: DoraemonkitGroup, name: 'doraemonkit-no-op', version: '1.1.8'],
 
             //我的基础库  http://jcenter.bintray.com/com/georgebindragon/
-            Utilsjava              : [group: myGroup, name: 'utils-java', version: '1.1.5'],
-            UtilsRx                : [group: myGroup, name: 'utils-rx', version: '1.1.4'],
-            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.1.6'],
-            BaseApplication        : [group: myGroup, name: 'base-application', version: '1.2.3'],
+            Utilsjava              : [group: myGroup, name: 'utils-java', version: '1.1.6'],
+            UtilsRx                : [group: myGroup, name: 'utils-rx', version: '1.1.6'],
+            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.1.8'],
+            BaseApplication        : [group: myGroup, name: 'base-application', version: '1.2.5'],
 
             //数据解析库  http://jcenter.bintray.com/com/google/protobuf/protobuf-lite/
             ProtobufLite           : "com.google.protobuf:protobuf-lite:3.0.1",
