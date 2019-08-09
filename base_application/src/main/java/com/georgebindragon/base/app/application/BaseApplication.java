@@ -82,6 +82,7 @@ public abstract class BaseApplication extends Application
 			if (packageName.equals(processName))//确认包名和进程名相同
 			{
 				//				DoraemonKit.install(application);
+				LogProxy.i(TAG, "主进程中初始化");
 				initInMainProcess(application);
 				AppLifeCycleProxy.onAppStart();
 			} else
@@ -105,10 +106,11 @@ public abstract class BaseApplication extends Application
 		LogProxy.setLogVisibility(isLogEnable());
 		LogProxy.v(TAG, "打印一条log测试: 2");
 
-		Locale aDefault = Locale.getDefault();
-		LogProxy.v(TAG, "当前应用内语言: " + aDefault.toString());
+		Locale defaultLocale = Locale.getDefault();
+		LogProxy.i(TAG, "此时Locale.getDefault()= " + StringUtil.getPrintString(defaultLocale));
 
 		// LogProxy.v(TAG, "log测试: 是否使用本地库"); //本地使用时再放开
+		LogProxy.i(TAG, "多进程中初始化");
 		initInMultiProcess(application);
 	}
 
