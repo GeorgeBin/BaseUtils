@@ -3,15 +3,17 @@ package com.georgebindragon.base.app.application;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Process;
 import android.util.Log;
 
-import com.didichuxing.doraemonkit.DoraemonKit;
 import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.app.lifecycle.AppLifeCycleProxy;
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.system.software.AppUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
+import com.georgebindragon.base.utils.StringUtil;
 
 import java.util.Locale;
 
@@ -44,7 +46,7 @@ public abstract class BaseApplication extends Application
 	{
 		super.attachBaseContext(base);
 		MultiDex.install(this);
-		Log.d(TAG,"attachBaseContext");
+		Log.d(TAG, "attachBaseContext");
 	}
 
 
@@ -53,9 +55,9 @@ public abstract class BaseApplication extends Application
 	{
 		super.onCreate();
 		context = getApplicationContext();
-		Log.d(TAG,"onCreate");
+		Log.d(TAG, "onCreate");
 
-		initBase();
+		initBase(this);
 		checkMainProcess(this);
 	}
 
@@ -79,26 +81,40 @@ public abstract class BaseApplication extends Application
 		{
 			if (packageName.equals(processName))//确认包名和进程名相同
 			{
-				DoraemonKit.install(application);
+				//				DoraemonKit.install(application);
 				initInMainProcess(application);
+				AppLifeCycleProxy.onAppStart();
+			} else
+			{
+				LogProxy.i(TAG, "当前进程名: " + StringUtil.getPrintString(processName));
 			}
 		}
 	}
 
-	protected void initBase()
+	protected void initBase(Application application)
 	{
 		//工具类 初始化
-		BaseUtils.init(this);
+		BaseUtils.init(application);
+		//注册开机广播和关机广播
+		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_BOOT_COMPLETED, (context, intent)
+				-> AppLifeCycleProxy.onAppReceiveBootCompleted());
+		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_SHUTDOWN, (context, intent)
+				-> AppLifeCycleProxy.onAppReceiveShutdown());
 
 		LogProxy.v(TAG, "打印一条log测试: 1");
 		LogProxy.setLogVisibility(isLogEnable());
 		LogProxy.v(TAG, "打印一条log测试: 2");
 
 		Locale aDefault = Locale.getDefault();
-		LogProxy.v(TAG, "当前应用内语言: "+aDefault.toString());
+		LogProxy.v(TAG, "当前应用内语言: " + aDefault.toString());
+
+		// LogProxy.v(TAG, "log测试: 是否使用本地库"); //本地使用时再放开
+		initInMultiProcess(application);
 	}
 
 	protected abstract boolean isLogEnable();//是否在控制栏打印log
 
-	protected abstract void initInMainProcess(Application application);
+	protected abstract void initInMultiProcess(Application application);//需要在多进程中初始化的
+
+	protected abstract void initInMainProcess(Application application);//需要在主进程中初始化的
 }

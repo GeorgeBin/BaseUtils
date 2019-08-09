@@ -75,7 +75,7 @@ public class WindowsUtil
 				if (EmptyUtil.notEmpty(am))
 				{
 					am.moveTaskToFront(taskId, ActivityManager.MOVE_TASK_WITH_HOME);
-					LogProxy.d(TAG, "onStop()-->回到前台");
+					LogProxy.d(TAG, "moveAppToForeground-->回到前台");
 				}
 			} catch (Exception e)
 			{

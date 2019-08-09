@@ -25,7 +25,6 @@ public class AppLifeCycleProxy
 	private static void initImp()
 	{
 		lifeCycle = FunctionProxy.getFunction(IAppLifeCycle.class);
-		//		if (null == lifeCycle) lifeCycle = XXXAppLifeCycle.getInstance();
 		isInit = true;
 	}
 
@@ -44,8 +43,28 @@ public class AppLifeCycleProxy
 		initImp();
 	}
 
+	public static void onAppStart()
+	{
+		if (null != getImp()) getImp().onAppStart();
+	}
+
+	public static void onAppReceiveBootCompleted()
+	{
+		if (null != getImp()) getImp().onAppReceiveBootCompleted();
+	}
+
+	public static void onAppReceiveShutdown()
+	{
+		if (null != getImp()) getImp().onAppReceiveShutdown();
+	}
+
 	public static void onTerminate()
 	{
 		if (null != getImp()) getImp().onTerminate();
+	}
+
+	public static void onAppExit()
+	{
+		if (null != getImp()) getImp().onAppExit();
 	}
 }

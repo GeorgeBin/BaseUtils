@@ -21,6 +21,8 @@ public interface IAppLifeCycle extends IFunction
 
 	void onAppReceiveBootCompleted();
 
+	void onAppReceiveShutdown();
+
 	void onTerminate();
 
 	void onAppExit();

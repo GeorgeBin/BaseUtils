@@ -3,9 +3,9 @@ package com.georgebindragon.application.sample;
 import android.app.Application;
 
 import com.georgebindragon.base.app.application.BaseApplication;
+import com.georgebindragon.base.app.lifecycle.AppLifeCycleProxy;
+import com.georgebindragon.base.app.lifecycle.IAppLifeCycle;
 import com.georgebindragon.base.function.log.LogProxy;
-import com.qmuiteam.qmui.layout.QMUILayoutHelper;
-import com.qmuiteam.qmui.util.QMUIDeviceHelper;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 /**
@@ -21,12 +21,18 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
  */
 
 
-public class MainApplication extends BaseApplication
+public class MainApplication extends BaseApplication implements IAppLifeCycle
 {
 	@Override
 	protected boolean isLogEnable()
 	{
 		return BuildConfig.DEBUG;
+	}
+
+	@Override
+	protected void initInMultiProcess(Application application)
+	{
+		AppLifeCycleProxy.setImp(this);
 	}
 
 	@Override
@@ -37,5 +43,29 @@ public class MainApplication extends BaseApplication
 
 		int screenHeight = QMUIDisplayHelper.getScreenHeight(application);
 		LogProxy.d(TAG, "QMUIDisplayHelper.getScreenHeight=" + screenHeight);
+	}
+
+	@Override
+	public void onAppStart()
+	{
+		LogProxy.i(TAG, "log测试: onAppStart");
+	}
+
+	@Override
+	public void onAppReceiveBootCompleted()
+	{
+		LogProxy.i(TAG, "log测试: onAppReceiveBootCompleted");
+	}
+
+	@Override
+	public void onAppReceiveShutdown()
+	{
+		LogProxy.i(TAG, "log测试: onAppReceiveShutdown");
+	}
+
+	@Override
+	public void onAppExit()
+	{
+		LogProxy.i(TAG, "log测试: onAppExit");
 	}
 }

@@ -52,7 +52,10 @@ public class UtilsActions extends BaseListenerMonitorManager<String, BroadcastMo
 	@Override
 	protected BroadcastMonitor onMonitorFirstCreate(String key)
 	{
-		BroadcastReceiverUtil.registerBroadcastByActionString(BaseUtils.getContext(), key, UtilsReceiver.getInstance());
+		if (!key.equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED) && !key.equalsIgnoreCase(Intent.ACTION_SHUTDOWN))
+		{
+			BroadcastReceiverUtil.registerBroadcastByActionString(BaseUtils.getContext(), key, UtilsReceiver.getInstance());
+		}
 		return new BroadcastMonitor();
 	}
 }
