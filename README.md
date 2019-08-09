@@ -11,17 +11,15 @@ if you want to use
  
 utils-java: 
  
-    implementation'com.georgebindragon:utils-java:1.1.3'
+    implementation'com.georgebindragon:utils-java:1.1.6'
 
 utils-android:
 
-    implementation'com.georgebindragon:utils-java:1.1.3'
-    implementation 'com.georgebindragon:utils-android:1.1.3'
+    implementation 'com.georgebindragon:utils-android:1.1.7'
 
 utils-rx:
     
-    implementation'com.georgebindragon:utils-java:1.1.3'
-    implementation 'com.georgebindragon:utils-rx:1.1.2'
+    implementation 'com.georgebindragon:utils-rx:1.1.5'
     
 base-application:
 
@@ -29,4 +27,4 @@ base-application:
     
     build.gradle-->allprojects-->repositories-->add here
     
-    implementation 'com.georgebindragon:base-application:1.1.8'
+    implementation 'com.georgebindragon:base-application:1.2.4'
