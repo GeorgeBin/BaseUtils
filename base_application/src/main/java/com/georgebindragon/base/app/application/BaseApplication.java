@@ -79,15 +79,14 @@ public abstract class BaseApplication extends Application
 
 		if (EmptyUtil.notEmpty(packageName, processName))
 		{
+			LogProxy.i(TAG, "当前进程名: " + StringUtil.getPrintString(processName));
+
 			if (packageName.equals(processName))//确认包名和进程名相同
 			{
-				//				DoraemonKit.install(application);
+				// DoraemonKit.install(application);//因为可能会上报App一些信息，所以取消此处调用，要使用的话，请在自己的工程内添加
 				LogProxy.i(TAG, "主进程中初始化");
 				initInMainProcess(application);
 				AppLifeCycleProxy.onAppStart();
-			} else
-			{
-				LogProxy.i(TAG, "当前进程名: " + StringUtil.getPrintString(processName));
 			}
 		}
 	}
