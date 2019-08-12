@@ -2,7 +2,6 @@ package com.georgebindragon.base.crash;
 
 import android.content.Context;
 
-import com.georgebindragon.base.crash.release.ReleaseCrashHandler;
 import com.georgebindragon.base.function.FunctionProxy;
 
 /**
@@ -27,7 +26,7 @@ public final class CrashProxy
 	private static void initImp()
 	{
 		function = FunctionProxy.getFunction(ICrashHandler.class);
-		if (null == function) function = ReleaseCrashHandler.getInstance();
+		// if (null == function) function = ReleaseCrashHandler.getInstance();
 		isInit = true;
 	}
 

@@ -45,8 +45,8 @@ ext {
             //我的基础库  http://jcenter.bintray.com/com/georgebindragon/
             Utilsjava              : [group: myGroup, name: 'utils-java', version: '1.1.6'],
             UtilsRx                : [group: myGroup, name: 'utils-rx', version: '1.1.6'],
-            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.1.8'],
-            BaseApplication        : [group: myGroup, name: 'base-application', version: '1.2.5'],
+            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.1.9'],
+            BaseApplication        : [group: myGroup, name: 'base-application', version: '1.2.6'],
 
             //数据解析库  http://jcenter.bintray.com/com/google/protobuf/protobuf-lite/
             ProtobufLite           : "com.google.protobuf:protobuf-lite:3.0.1",
