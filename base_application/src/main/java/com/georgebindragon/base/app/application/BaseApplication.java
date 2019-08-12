@@ -95,6 +95,7 @@ public abstract class BaseApplication extends Application
 	{
 		//工具类 初始化
 		BaseUtils.init(application);
+
 		//注册开机广播和关机广播
 		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_BOOT_COMPLETED, (context, intent)
 				-> AppLifeCycleProxy.onAppReceiveBootCompleted());

@@ -85,7 +85,7 @@ public class APKUtil
 		return false;
 	}
 
-
+	@SuppressWarnings("unchecked")
 	public static Object invoke(String var0, String var1, Object var2, Class<?>[] var3, Object[] var4)
 	{
 		try
