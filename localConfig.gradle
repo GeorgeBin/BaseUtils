@@ -1,6 +1,6 @@
 ext {
 
-    useLocalModule = false //是否使用本地库
+    useLocalModule = false //是否使用本地库，true=使用本地库，false=使用远程库
 
     //配置内使用：
     Config = [
