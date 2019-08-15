@@ -32,7 +32,7 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 	private AudioManager                            audioManager;
 	private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener;
 
-	private AudioFocusMonitor()
+	public AudioFocusMonitor()
 	{
 		audioFocusChangeListener = this::onAudioFocusChange;
 	}
@@ -54,8 +54,8 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 	 * @param durationHint 需要申请的类型:AudioManager.AUDIOFOCUS_GAIN
 	 *                     {@link AudioManager#AUDIOFOCUS_GAIN}   //超长
 	 *                     {@link AudioManager#AUDIOFOCUS_GAIN_TRANSIENT}   //临时
-	 *                     {@link AudioManager#AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK}   //临时
-	 *                     {@link AudioManager#AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE}   //临时
+	 *                     {@link AudioManager#AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK}   //浮动
+	 *                     {@link AudioManager#AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE}   //独家焦点
 	 * @return 是否得到所需要的结果
 	 */
 	public boolean requestAudioFocus(int stream, int durationHint)
@@ -66,10 +66,48 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 		if (EmptyUtil.notEmpty(audioManager))
 		{
 			int result = audioManager.requestAudioFocus(audioFocusChangeListener, stream, durationHint);
-			request = result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
+			request = (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
 			LogProxy.d(TAG, "requestFocus-->获取焦点结果:" + request);
 		}
 		return request;
+	}
+
+	/**
+	 * @return 是否得到所需要的结果
+	 */
+	public boolean abandonAudioFocus()
+	{
+		boolean request = false;
+		if (EmptyUtil.notEmpty(audioManager))
+		{
+			int result = audioManager.abandonAudioFocus(audioFocusChangeListener);
+			request = (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
+			LogProxy.d(TAG, "abandonFocus-->释放焦点结果:" + request);
+		}
+		return request;
+	}
+
+	private void onAudioFocusChange(int focusChange)
+	{
+		LogProxy.d(TAG, "onAudioFocusChange-->focusChange=" + focusChange);
+		switch (focusChange)
+		{
+			case AudioManager.AUDIOFOCUS_GAIN:
+				LogProxy.d(TAG, "回调-->获取到焦点");
+				break;
+			case AudioManager.AUDIOFOCUS_LOSS:
+				LogProxy.d(TAG, "回调-->失去焦点");
+				break;
+			case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+				LogProxy.d(TAG, "回调-->失去临时焦点");
+				break;
+			case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+				LogProxy.d(TAG, "回调-->失去浮动焦点");
+				break;
+			default:
+				break;
+		}
+		notifyListeners(focusChange);
 	}
 
 	private void notifyListeners(int xxx)
@@ -81,22 +119,6 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 			{
 				if (EmptyUtil.notEmpty(listener)) listener.onAudioFocusChange(xxx);
 			}
-		}
-	}
-
-	private void onAudioFocusChange(int focusChange)
-	{
-		notifyListeners(focusChange);
-
-		if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)
-		{
-			LogProxy.d(TAG, "回调-->临时失去焦点");
-		} else if (focusChange == AudioManager.AUDIOFOCUS_GAIN)
-		{
-			LogProxy.d(TAG, "回调-->获取到焦点");
-		} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS)
-		{
-			LogProxy.d(TAG, "回调-->失去焦点");
 		}
 	}
 }
