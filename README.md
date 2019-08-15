@@ -4,6 +4,7 @@
 
 my base utils for java and android
 
+get new version: http://jcenter.bintray.com/com/georgebindragon/
 
 use:
 
@@ -11,15 +12,17 @@ if you want to use
  
 utils-java: 
  
-    implementation'com.georgebindragon:utils-java:1.1.6'
-
-utils-android:
-
-    implementation 'com.georgebindragon:utils-android:1.1.8'
+    implementation'com.georgebindragon:utils-java:1.1.8'
 
 utils-rx:
     
     implementation 'com.georgebindragon:utils-rx:1.1.6'
+    
+utils-android:
+
+    implementation 'com.georgebindragon:utils-android:1.2.0'
+
+
     
 base-application:
 
@@ -27,4 +30,4 @@ base-application:
     
     build.gradle-->allprojects-->repositories-->add here
     
-    implementation 'com.georgebindragon:base-application:1.2.5'
+    implementation 'com.georgebindragon:base-application:1.2.7'
