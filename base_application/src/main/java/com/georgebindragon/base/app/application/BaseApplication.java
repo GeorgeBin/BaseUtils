@@ -98,7 +98,6 @@ public abstract class BaseApplication extends Application
 		BaseUtils.init(application);
 
 		//注册开机广播和关机广播监听-->只会回调到主进程上
-
 		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_BOOT_COMPLETED, (context, intent) -> AppLifeCycleProxy.onAppReceiveBootCompleted());
 		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_SHUTDOWN, (context, intent) -> AppLifeCycleProxy.onAppReceiveShutdown());
 
