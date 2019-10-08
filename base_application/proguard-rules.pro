@@ -72,3 +72,9 @@
 
 
 -dontwarn retrofit2.-KotlinExtensions
+
+# QMUI 库的混淆
+-keep class **_FragmentFinder { *; }
+-keep class com.qmuiteam.qmui.arch.record.** { *; }
+-keep class androidx.fragment.app.* { *; }
+-keep class android.support.v4.app.* { *; }

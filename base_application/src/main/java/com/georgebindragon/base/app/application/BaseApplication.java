@@ -14,6 +14,7 @@ import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.system.software.AppUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 import com.georgebindragon.base.utils.StringUtil;
+import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 
 import java.util.Locale;
 
@@ -34,7 +35,7 @@ import androidx.multidex.MultiDex;
 
 public abstract class BaseApplication extends Application
 {
-	protected String TAG = "Application: " + getClass().getSimpleName() + "-->";
+	protected String TAG = "BaseApplication: " + getClass().getSimpleName() + "-->";
 
 	@SuppressLint("StaticFieldLeak")
 	private static Context context;
@@ -96,11 +97,9 @@ public abstract class BaseApplication extends Application
 		//工具类 初始化
 		BaseUtils.init(application);
 
-		//注册开机广播和关机广播
-		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_BOOT_COMPLETED, (context, intent)
-				-> AppLifeCycleProxy.onAppReceiveBootCompleted());
-		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_SHUTDOWN, (context, intent)
-				-> AppLifeCycleProxy.onAppReceiveShutdown());
+		//注册开机广播和关机广播监听-->只会回调到主进程上
+		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_BOOT_COMPLETED, (context, intent) -> AppLifeCycleProxy.onAppReceiveBootCompleted());
+		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_SHUTDOWN, (context, intent) -> AppLifeCycleProxy.onAppReceiveShutdown());
 
 		LogProxy.v(TAG, "打印一条log测试: 1");
 		LogProxy.setLogVisibility(isLogEnable());
@@ -111,6 +110,8 @@ public abstract class BaseApplication extends Application
 
 		// LogProxy.v(TAG, "log测试: 是否使用本地库"); //本地使用时再放开
 		LogProxy.i(TAG, "多进程中初始化");
+
+		QMUISwipeBackActivityManager.init(application);
 		initInMultiProcess(application);
 	}
 
