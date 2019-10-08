@@ -20,6 +20,10 @@ ext {
     Retrofit2Group = 'com.squareup.retrofit2'
     Retrofit2Version = '2.5.0'//版本号
 
+    //JakeWharton
+    JakeWharton = 'com.jakewharton'
+    ButterKnifeVersion = '10.2.0'//版本号
+
     //依赖内使用：
     Dependence = [
 
@@ -55,8 +59,16 @@ ext {
             //Rx库 http://jcenter.bintray.com/io/reactivex/rxjava2/
             RxJava                 : [group: RxJava2Group, name: 'rxjava', version: '2.2.8'],
             RxAndroid              : [group: RxJava2Group, name: 'rxandroid', version: '2.1.1'],
+
+            // http://jcenter.bintray.com/com/jakewharton
+
             // http://jcenter.bintray.com/com/jakewharton/rxrelay2/rxrelay/
             Rxrelay                : [group: 'com.jakewharton.rxrelay2', name: 'rxrelay', version: '2.1.0'],
+
+            // View绑定
+            RxBinding              : [group: 'com.jakewharton.rxbinding3', name: 'rxbinding-core', version: '3.0.0'],
+            ButterKnife            : [group: JakeWharton, name: 'butterknife', version: ButterKnifeVersion],
+            ButterKnifeCompiler    : [group: JakeWharton, name: 'butterknife-compiler', version: ButterKnifeVersion],
 
             //UI  http://jcenter.bintray.com/com/qmuiteam/
             Qmui_Ui                : [group: QmuiGroup, name: 'qmui', version: '1.3.3'],
