@@ -1,4 +1,4 @@
-package com.georgebindragon.base.system.reminder;
+package com.georgebindragon.base.system.reminder.sound;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -19,7 +19,7 @@ import com.georgebindragon.base.function.log.LogProxy;
  */
 
 
-abstract class SoundPlayer<K, V> extends MapManager<K, V>
+public abstract class SoundPlayer<K, V> extends MapManager<K, V>
 {
 	protected String TAG = "SoundPlayer: " + getClass().getSimpleName() + "-->";
 

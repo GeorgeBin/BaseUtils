@@ -1,4 +1,4 @@
-package com.georgebindragon.base.system.reminder;
+package com.georgebindragon.base.system.reminder.sound;
 
 import android.content.Context;
 import android.media.SoundPool;
