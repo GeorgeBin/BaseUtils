@@ -55,7 +55,7 @@ public abstract class BringToForeground implements IBaseReceiverCallBack
 		}
 	}
 
-	private void appBackToForeground(Context context)
+	protected void appBackToForeground(Context context)
 	{
 		if (null == context) context = BaseUtils.getContext();
 		try

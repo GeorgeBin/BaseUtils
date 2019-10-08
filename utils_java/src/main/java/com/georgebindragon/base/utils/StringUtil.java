@@ -22,6 +22,11 @@ public class StringUtil
 
 	public static final String NULL = "NULL";
 
+	public static String getSuccessString(boolean success)
+	{
+		return success ? "成功" : "失败";
+	}
+
 	public static String getPrintString(Object object)
 	{
 		return getPrintString(object, NULL);//返回可安全打印的字符串

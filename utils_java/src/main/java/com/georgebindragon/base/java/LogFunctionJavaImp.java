@@ -26,8 +26,7 @@ public class LogFunctionJavaImp extends LogFunctionBaseImp
 
 	public static LogFunctionJavaImp getInstance() { return ourInstance; }
 
-	private LogFunctionJavaImp()
-	{ }
+	private LogFunctionJavaImp() { }
 
 	@Override
 	public void logPrint(int level, String tag, String log)
@@ -71,5 +70,5 @@ public class LogFunctionJavaImp extends LogFunctionBaseImp
 	protected String defaultLogHead() { return ""; }
 
 	@Override
-	protected String defaultTAG() { return "RongChat"; }
+	protected String defaultTAG() { return "GeorgeBinDragon"; }
 }
