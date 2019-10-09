@@ -5,14 +5,14 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.georgebindragon.base.function.log.LogProxy;
-import com.georgebindragon.base.utils.EmptyUtil;
+import com.jakewharton.rxrelay2.BehaviorRelay;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 
 import java.util.Stack;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
+import io.reactivex.Observable;
 
 /**
  * 创建人：George
@@ -55,8 +55,9 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 		if (!activityStack.contains(activity))
 		{
 			activityStack.push(activity);
-			informListenersOnActivityChanged(currentActivity() == null ? null : currentActivity().getClass());
-			LogProxy.d(TAG, "addActivity-->activity=" + activity.getClass() + "\tsize=" + activityStack.size());
+
+			onActivityChanged();
+			LogProxy.d(TAG, "addActivity-->activity=" + activity.getClass().getSimpleName(), "size=" + activityStack.size());
 
 		} else
 		{
@@ -75,8 +76,8 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 		if (activity != null && activityStack.contains(activity))
 		{
 			activityStack.remove(activity);
-			informListenersOnActivityChanged(currentActivity() == null ? null : currentActivity().getClass());
-			LogProxy.d(TAG, "deleteActivity-->activity=" + activity.getClass() + "\tsize=" + activityStack.size());
+			onActivityChanged();
+			LogProxy.d(TAG, "deleteActivity-->activity=" + activity.getClass().getSimpleName(), "size=" + activityStack.size());
 		}
 	}
 
@@ -105,7 +106,7 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	 *
 	 * @return 最上层
 	 */
-	public Activity currentActivity()
+	public Activity getCurrentActivity()
 	{
 		Activity activity = null;
 		if (!activityStack.empty()) activity = activityStack.peek();
@@ -124,7 +125,6 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 		{
 			activity.finish();
 			deleteActivity(activity);
-			activity = null;
 		}
 	}
 
@@ -135,7 +135,7 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	 */
 	public void deleteAllActivityExceptOne(Class<? extends Activity> cls)
 	{
-		LogProxy.d(TAG, "deleteAllActivityExceptOne-->the one=" + (cls == null ? "NULL" : cls.getClass()));
+		LogProxy.d(TAG, "deleteAllActivityExceptOne-->the one=" + (cls == null ? "NULL" : cls.getSimpleName()));
 		if (null != cls && !activityStack.isEmpty())
 		{
 			for (int i = activityStack.size() - 1; i >= 0; i--)
@@ -156,7 +156,8 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	 */
 	public void finishAllActivityExceptOne(Class<? extends Activity> cls)
 	{
-		LogProxy.d(TAG, "finishAllActivityExceptOne-->the one=" + (cls == null ? "NULL" : cls.getClass()));
+		LogProxy.d(TAG, "finishAllActivityExceptOne-->the one=" + (cls == null ? "NULL" : cls.getSimpleName()));
+
 		if (null != cls && !activityStack.isEmpty())
 		{
 			for (int i = activityStack.size() - 1; i >= 0; i--)
@@ -176,43 +177,42 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	public void finishAllActivity()
 	{
 		LogProxy.d(TAG, "finishAllActivity");
+
 		while (!activityStack.empty())
 		{
-			Activity activity = currentActivity();
+			Activity activity = getCurrentActivity();
 			finishActivity(activity);
 		}
 	}
 
-	//监听回调
-	private CopyOnWriteArrayList<ActivityChangedListener> activityChangedListenerList;
+	/*------------------------------------------------------------------- Activity 列表变化 回调 -------------------------------------------------------------------*/
 
-	public void addActivityChangedListener(ActivityChangedListener activityChangedListener)
+	private BehaviorRelay<Activity> topActivity = BehaviorRelay.create();
+
+	private void onActivityChanged()
 	{
-		if (EmptyUtil.isEmpty(activityChangedListener)) return;
-		if (EmptyUtil.isEmpty(activityChangedListenerList))
+		Activity currentActivity = getCurrentActivity();
+		if (null != currentActivity && currentActivity != lastActivity)
 		{
-			activityChangedListenerList = new CopyOnWriteArrayList<>();
-		}
-		activityChangedListenerList.add(activityChangedListener);
-	}
-
-	public void removeActivityChangedListener(ActivityChangedListener activityChangedListener)
-	{
-		if (EmptyUtil.isEmpty(activityChangedListenerList)) return;
-		activityChangedListenerList.remove(activityChangedListener);
-	}
-
-	private void informListenersOnActivityChanged(Class<? extends Activity> activityClass)
-	{
-		final CopyOnWriteArrayList<ActivityChangedListener> listeners = activityChangedListenerList;
-		if (EmptyUtil.notEmpty(listeners))
-		{
-			for (ActivityChangedListener listener : listeners)
-			{
-				if (EmptyUtil.notEmpty(listener)) listener.onActivityListChanged(activityClass);
-			}
+			lastActivity = currentActivity;
+			topActivity.accept(lastActivity);
 		}
 	}
+
+	private Activity lastActivity = null;
+
+	/**
+	 * 获得当前的activity(即最上层)
+	 *
+	 * @return 最上层
+	 */
+	public Observable<Activity> getCurrentActivityObservable()
+	{
+		return topActivity;
+	}
+
+	/*------------------------------------------------------------------- Activity 生命周期 回调 -------------------------------------------------------------------*/
+
 
 	@Override
 	public void onActivityCreated(Activity activity, Bundle savedInstanceState)
@@ -256,13 +256,4 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 		deleteActivity(activity);
 	}
 
-	public interface ActivityChangedListener
-	{
-		/**
-		 * 当app内已经实例化的activity列表的变动时回调
-		 *
-		 * @param currentActivityClass 返回的是当前最顶层的页面
-		 */
-		void onActivityListChanged(Class<? extends Activity> currentActivityClass);
-	}
 }

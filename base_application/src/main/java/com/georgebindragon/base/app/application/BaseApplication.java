@@ -110,7 +110,7 @@ public abstract class BaseApplication extends Application
 		// LogProxy.v(TAG, "log测试: 是否使用本地库"); //本地使用时再放开
 		LogProxy.i(TAG, "多进程中初始化");
 
-		ActivitiesManager.getInstance().init(application);
+		ActivitiesManager.getInstance().init(application);//Activity 管理
 		initInMultiProcess(application);
 	}
 
