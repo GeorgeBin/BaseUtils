@@ -14,7 +14,6 @@ import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.system.software.AppUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 import com.georgebindragon.base.utils.StringUtil;
-import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 
 import java.util.Locale;
 
@@ -111,7 +110,7 @@ public abstract class BaseApplication extends Application
 		// LogProxy.v(TAG, "log测试: 是否使用本地库"); //本地使用时再放开
 		LogProxy.i(TAG, "多进程中初始化");
 
-		QMUISwipeBackActivityManager.init(application);
+		ActivitiesManager.getInstance().init(application);
 		initInMultiProcess(application);
 	}
 

@@ -1,12 +1,18 @@
 package com.georgebindragon.base.app.application;
 
 import android.app.Activity;
+import android.app.Application;
+import android.os.Bundle;
 
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.utils.EmptyUtil;
+import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 
 import java.util.Stack;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 
 /**
  * 创建人：George
@@ -20,19 +26,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 修改备注：
  */
 
-public class ActivitiesManager
+public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 {
-	public static final String            TAG         = "ActivitiesManager-->";
-	private static      ActivitiesManager ourInstance = new ActivitiesManager();
+	private static final String TAG = "ActivitiesManager-->";
+
+	private static ActivitiesManager ourInstance = new ActivitiesManager();
 
 	public static ActivitiesManager getInstance() { return ourInstance; }
 
-	private static Stack<Activity> activityStack;
+	private ActivitiesManager() { }
 
-	private ActivitiesManager()
+	@MainThread
+	public void init(@NonNull Application application)
 	{
-		activityStack = new Stack<>();
+		QMUISwipeBackActivityManager.init(application);
+		if (ourInstance != null) application.registerActivityLifecycleCallbacks(ourInstance);
 	}
+
+	private static Stack<Activity> activityStack = new Stack<>();
 
 	/**
 	 * 将activity推入栈内
@@ -201,6 +212,48 @@ public class ActivitiesManager
 				if (EmptyUtil.notEmpty(listener)) listener.onActivityListChanged(activityClass);
 			}
 		}
+	}
+
+	@Override
+	public void onActivityCreated(Activity activity, Bundle savedInstanceState)
+	{
+		addActivity(activity);
+	}
+
+	@Override
+	public void onActivityStarted(Activity activity)
+	{
+
+	}
+
+	@Override
+	public void onActivityResumed(Activity activity)
+	{
+
+	}
+
+	@Override
+	public void onActivityPaused(Activity activity)
+	{
+
+	}
+
+	@Override
+	public void onActivityStopped(Activity activity)
+	{
+
+	}
+
+	@Override
+	public void onActivitySaveInstanceState(Activity activity, Bundle outState)
+	{
+
+	}
+
+	@Override
+	public void onActivityDestroyed(Activity activity)
+	{
+		deleteActivity(activity);
 	}
 
 	public interface ActivityChangedListener

@@ -45,7 +45,6 @@ public abstract class BaseActivityPro extends BaseActivity
 
 		super.onCreate(savedInstanceState);
 
-		ActivitiesManager.getInstance().addActivity(this);
 		setContentView(getContentView());
 
 		initView();
@@ -85,7 +84,6 @@ public abstract class BaseActivityPro extends BaseActivity
 	{
 		LogProxy.d(TAG, "onDestroy");
 
-		ActivitiesManager.getInstance().deleteActivity(this);
 		RxCommonUtil.dispose(disposableList);//注销
 
 		super.onDestroy();
@@ -98,7 +96,6 @@ public abstract class BaseActivityPro extends BaseActivity
 	{
 		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);//页面切换方式
 
-		ActivitiesManager.getInstance().deleteActivity(this);
 		super.finish();
 	}
 
