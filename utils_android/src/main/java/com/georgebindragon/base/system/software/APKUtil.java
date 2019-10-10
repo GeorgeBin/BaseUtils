@@ -27,11 +27,6 @@ import java.lang.reflect.Method;
 public class APKUtil
 {
 	private static final String TAG = "APKUtil-->";
-//
-//	public static void installAPKByAndroid()
-//	{
-//
-//	}
 
 	public static boolean installAPKByAndroid(Context context, File apkFile)
 	{

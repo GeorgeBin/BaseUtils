@@ -1,5 +1,9 @@
 package com.georgebindragon.base.data.basic;
 
+import com.georgebindragon.base.function.log.LogProxy;
+
+import java.util.Random;
+
 /**
  * 创建人：George
  * 类名称：NumberUtil
@@ -23,5 +27,25 @@ public class NumberUtil
 		{
 			return Math.random();
 		}
+	}
+
+	public static int getRandom(int max, int min)
+	{
+		try
+		{
+			if (max < min)
+			{
+				int temp = max;
+				max = min;
+				min = temp;
+			}
+			Random rand = new Random();
+			//将被赋值为一个 MIN 和 MAX 范围内的随机数
+			return rand.nextInt(max - min + 1) + min;
+		} catch (Exception e)
+		{
+			LogProxy.e(TAG, "getRandom", e);
+		}
+		return max;
 	}
 }
