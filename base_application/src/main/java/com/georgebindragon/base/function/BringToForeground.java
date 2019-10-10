@@ -40,7 +40,7 @@ public abstract class BringToForeground implements IBaseReceiverCallBack
 		UtilsActions.getInstance().listenSomeKey(getClickBroadcast(), this);
 	}
 
-	abstract String getClickBroadcastString();
+	protected abstract String getClickBroadcastString();
 
 	private String getClickBroadcast()
 	{
