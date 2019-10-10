@@ -2,14 +2,13 @@ package com.georgebindragon.base.app.ui.activity.pro;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.georgebindragon.base.app.R;
-import com.georgebindragon.base.app.application.ActivitiesManager;
 import com.georgebindragon.base.app.ui.activity.base.BaseActivity;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.rx.utils.RxCommonUtil;
+import com.georgebindragon.base.system.software.ActivityUtil;
 import com.georgebindragon.base.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -197,26 +196,7 @@ public abstract class BaseActivityPro extends BaseActivity
 	{
 		LogProxy.i(TAG, "jumpActivity 1-->intent=" + StringUtil.getPrintString(intent), "needFinish=" + needFinish);
 
-		jumpActivity(intent);
+		ActivityUtil.jumpActivity(this,intent);
 		if (needFinish) finish();
-	}
-
-	public void jumpActivity(Intent intent)
-	{
-		LogProxy.i(TAG, "jumpActivity 0-->intent=" + StringUtil.getPrintString(intent));
-
-		if (null != intent)
-		{
-			if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null)
-			{
-				try
-				{
-					startActivity(intent);
-				} catch (Exception e)
-				{
-					LogProxy.e(TAG, "jumpActivity", e);
-				}
-			}
-		}
 	}
 }
