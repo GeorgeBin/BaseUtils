@@ -37,41 +37,13 @@ public class ActivityUtil
 			{
 				try
 				{
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 					context.startActivity(intent);
 					return true;
 				} catch (Exception e) { LogProxy.e(TAG, "jumpActivity", e); }
 			}
-		}
-		return false;
-	}
-
-	public static boolean bringMyselfBackToForeground(Context context)
-	{
-		LogProxy.i(TAG, "bringMyselfBackToForeground-->");
-
-		if (null == context) context = BaseUtils.getContext();
-		if (EmptyUtil.notEmpty(context))
-		{
-			return bringAppBackToForeground(context, context.getPackageName());
-		}
-		return false;
-	}
-
-	public static boolean bringAppBackToForeground(Context context, String packageName)
-	{
-		if (null == context) context = BaseUtils.getContext();
-		try
-		{
-			if (EmptyUtil.notEmpty(context, packageName))
-			{
-				Intent  intent  = context.getPackageManager().getLaunchIntentForPackage(packageName);
-				boolean success = jumpActivity(context, intent);
-				LogProxy.i(TAG, "bringAppBackToForeground-->跳转=" + (success ? "成功" : "失败"));
-				return success;
-			}
-		} catch (Exception e)
-		{
-			LogProxy.e(TAG, "bringAppBackToForeground", e);
 		}
 		return false;
 	}
