@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Process;
 import android.text.TextUtils;
 
+import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.utils.EmptyUtil;
 import com.georgebindragon.base.utils.StringUtil;
@@ -55,6 +56,11 @@ public class AppUtil
 			return context.getApplicationContext().getPackageName();
 		}
 		return "";
+	}
+
+	public static String getPackageName()
+	{
+		return getPackageName(BaseUtils.getContext());
 	}
 
 	private static String getProcessName(Context context, int pid)
