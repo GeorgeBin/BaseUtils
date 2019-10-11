@@ -1,15 +1,18 @@
 package com.georgebindragon.base.function;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
 import com.georgebindragon.base.BaseUtils;
+import com.georgebindragon.base.app.application.ActivitiesManager;
 import com.georgebindragon.base.data.basic.NumberUtil;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.receiver.callbacks.IBaseReceiverCallBack;
 import com.georgebindragon.base.system.software.ActivityUtil;
+import com.georgebindragon.base.system.software.WindowsUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 import com.georgebindragon.base.utils.StringUtil;
 
@@ -71,8 +74,21 @@ public abstract class BringToForeground implements IBaseReceiverCallBack
 			String action = intent.getAction();
 			if (null != action && action.length() > 0 && action.equalsIgnoreCase(getClickBroadcast()))
 			{
-				ActivityUtil.bringMyselfBackToForeground(context);
+				bringMyselfBackToForeground(context);
 			}
+		}
+	}
+
+	protected void bringMyselfBackToForeground(Context context)
+	{
+		Activity currentActivity = ActivitiesManager.getInstance().getCurrentActivity();
+		if (null != currentActivity)
+		{
+			int taskId = currentActivity.getTaskId();
+			WindowsUtil.moveAppToForeground(context, taskId);
+		} else
+		{
+			ActivityUtil.bringMyselfBackToForeground(context);//要替换为另外的调用
 		}
 	}
 }
