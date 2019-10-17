@@ -15,8 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.georgebindragon.application.sample.bean.GroupBean;
-import com.georgebindragon.application.sample.media.AlertPlayer_Media;
-import com.georgebindragon.application.sample.media.AlertPlayer_SoundPool;
+import com.georgebindragon.application.sample.media.AlertPlayer;
 import com.georgebindragon.application.sample.mvi.main.MainPresenter;
 import com.georgebindragon.application.sample.mvi.main.MainView;
 import com.georgebindragon.application.sample.mvi.main.MainViewState;
@@ -136,8 +135,7 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 				LogProxy.d(TAG, "OnSeekBarChangeListener-->onStopTrackingTouch", "progress=" + progress);
 
 				float volume = (float) progress / (float) max;
-				AlertPlayer_Media.getInstance().setVolume(volume);
-				AlertPlayer_SoundPool.getInstance().setVolume(volume);
+				AlertPlayer.getInstance().setVolume(volume);
 			}
 		});
 
@@ -187,17 +185,16 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 
 	private void initSoundPlayer()
 	{
-		AlertPlayer_Media.getInstance().init(this);
-		AlertPlayer_SoundPool.getInstance().init(this);
+		AlertPlayer.getInstance().initPlayer_Auto();
 	}
 
 	int count = 0;
 
 	private void onButtonClick_SoundPlayer()
 	{
-		AlertPlayer_Media.getInstance().playNext(count);
+		AlertPlayer.getInstance().playNext(count);
 		//		AlertPlayer_SoundPool.getInstance().playNext(count);
-		//		AlertPlayer_Media.getInstance().play_Error();
+		//		AlertPlayer.getInstance().play_Error();
 		//		AlertPlayer_SoundPool.getInstance().play_Error();
 		count++;
 	}
