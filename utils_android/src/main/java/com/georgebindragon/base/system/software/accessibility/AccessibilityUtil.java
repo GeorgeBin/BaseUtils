@@ -1,21 +1,21 @@
 package com.georgebindragon.base.system.software.accessibility;
 
-import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.provider.Settings;
-import android.text.TextUtils;
+import android.view.accessibility.AccessibilityManager;
 
+import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.utils.EmptyUtil;
+import com.georgebindragon.base.utils.StringUtil;
 
-import java.io.File;
+import java.util.List;
 
 /**
  * 创建人：George
- * 类名称：AccessibilityUtil
- * 类概述：
- * 详细描述：
  *
- *
+ * 描述：
  *
  * 修改人：
  * 修改时间：
@@ -27,38 +27,38 @@ public class AccessibilityUtil
 {
 	private static final String TAG = "AccessibilityUtil-->";
 
-	//判断服务是否打开
-	public static boolean isPackageAccessibilitySettingsOn(Context context, String packageName, Class<? extends AccessibilityService> clasz)
+	// 判断特定的服务是否打开
+	public static boolean isApplicationAccessibilityOn(Context context, String packageName, String className)
 	{
-		final String                   service              = packageName + File.separator + clasz.getCanonicalName();
-		TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+		LogProxy.v(TAG, "isPackageAccessibilitySettingsOn-->packageName=" + StringUtil.getPrintString(packageName)
+				, "service=" + StringUtil.getPrintString(className));
+
+		if (null == context) context = BaseUtils.getContext();
 		if (isSystemAccessibilityEnabled(context))
 		{
-			LogProxy.v(TAG, "***ACCESSIBILITY IS ENABLED*** -----------------");
-			String settingValue = Settings.Secure.getString(context.getApplicationContext().getContentResolver(),
-					Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-			if (settingValue != null)
+			// 判断方法1
+			String string = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+			if (EmptyUtil.notEmpty(string) && string.contains(packageName) && string.contains(className)) return true;
+
+			// 判断方法2
+			AccessibilityManager           am              = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+			List<AccessibilityServiceInfo> serviceInfoList = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
+			for (AccessibilityServiceInfo info : serviceInfoList)
 			{
-				mStringColonSplitter.setString(settingValue);
-				while (mStringColonSplitter.hasNext())
+				if (null != info)
 				{
-					String accessibilityService = mStringColonSplitter.next();
-					LogProxy.v(TAG, "accessibilityService=" + accessibilityService + " " + service);
-					if (accessibilityService.equalsIgnoreCase(service))
-					{
-						LogProxy.v(TAG, "We've found the correct setting - accessibility is switched on!");
-						return true;
-					}
+					String id = info.getId();
+					if (EmptyUtil.notEmpty(id) && id.contains(packageName) && id.contains(className)) return true;
 				}
 			}
 		} else
 		{
-			LogProxy.v(TAG, "***ACCESSIBILITY IS DISABLED***");
+			LogProxy.v(TAG, "accessibility is not enable in system! ");
 		}
 		return false;
 	}
 
-	//判断服务是否打开
+	// 判断系统中“无障碍” 是否可用
 	public static boolean isSystemAccessibilityEnabled(Context mContext)
 	{
 		int accessibilityEnabled = 0;
@@ -70,7 +70,7 @@ public class AccessibilityUtil
 		{
 			LogProxy.e(TAG, "isSystemAccessibilityEnabled", e);
 		}
-		LogProxy.d(TAG, "isSystemAccessibilityEnabled", "accessibilityEnabled = " + accessibilityEnabled);
+		LogProxy.v(TAG, "isSystemAccessibilityEnabled-->accessibilityEnabled=" + accessibilityEnabled);
 		return accessibilityEnabled == 1;
 	}
 }
