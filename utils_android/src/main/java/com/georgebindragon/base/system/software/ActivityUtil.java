@@ -49,7 +49,7 @@ public class ActivityUtil
 	}
 
 
-	public boolean launchApp(Context context, String packageName)
+	public static boolean launchApp(Context context, String packageName)
 	{
 		try
 		{
