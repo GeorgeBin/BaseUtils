@@ -47,4 +47,27 @@ public class ActivityUtil
 		}
 		return false;
 	}
+
+
+	public boolean launchApp(Context context, String packageName)
+	{
+		try
+		{
+			if (EmptyUtil.notEmpty(packageName))
+			{
+				if (null == context) context = BaseUtils.getContext();
+				PackageManager packageManager = context.getPackageManager();
+				if (null != packageManager)
+				{
+					Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+					return jumpActivity(context, intent);
+				}
+			}
+		} catch (Exception e)
+		{
+			LogProxy.e(TAG, "launchApp", e);
+		}
+		return false;
+	}
+
 }
