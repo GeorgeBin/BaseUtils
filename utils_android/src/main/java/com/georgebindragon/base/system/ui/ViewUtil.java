@@ -60,4 +60,16 @@ public class ViewUtil
 			editText.setSelection((selectionEnd > length ? length : selectionEnd));//执行上面的代码后光标会处于输入框的最前方-->重置光标位置
 		}
 	}
+
+
+	public static boolean isInView(View view, float x, float y)
+	{
+		if (null == view) return false;
+
+		int[] point = new int[2];
+		view.getLocationOnScreen(point);
+
+		return x >= point[0] && x <= (point[0] + view.getWidth()) && y >= point[1] && y <= (point[1] + view.getHeight());
+	}
+
 }
