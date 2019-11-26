@@ -1,8 +1,10 @@
 package com.georgebindragon.base.data.basic;
 
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.utils.EmptyUtil;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * 创建人：George
@@ -17,6 +19,39 @@ import java.util.Random;
 public class NumberUtil
 {
 	private static final String TAG = "NumberUtil-->";
+
+
+	public static boolean isNumber(String intString)
+	{
+		if (EmptyUtil.isEmpty(intString)) return false;
+		Pattern pattern = Pattern.compile("^-?\\d+(\\.\\d+)?$");
+		return pattern.matcher(intString).matches();
+	}
+
+	public static boolean isInt(String intString)
+	{
+		try
+		{
+			Integer.parseInt(intString);
+			return true;
+		} catch (Exception e)
+		{
+			LogProxy.e(TAG, "isInt", e);
+			return false;
+		}
+	}
+
+	public static int parseInt(String intString)
+	{
+		try
+		{
+			return Integer.parseInt(intString);
+		} catch (Exception e)
+		{
+			LogProxy.e(TAG, "parseInt", e);
+			return -1;
+		}
+	}
 
 	public static double getRandom(int max)
 	{
