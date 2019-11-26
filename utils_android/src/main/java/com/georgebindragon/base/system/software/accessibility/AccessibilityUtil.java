@@ -34,43 +34,21 @@ public class AccessibilityUtil
 				, "service=" + StringUtil.getPrintString(className));
 
 		if (null == context) context = BaseUtils.getContext();
-		if (isSystemAccessibilityEnabled(context))
-		{
-			// 判断方法1
-			String string = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-			if (EmptyUtil.notEmpty(string) && string.contains(packageName) && string.contains(className)) return true;
+		// 判断方法1
+		String string = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+		if (EmptyUtil.notEmpty(string) && string.contains(packageName) && string.contains(className)) return true;
 
-			// 判断方法2
-			AccessibilityManager           am              = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-			List<AccessibilityServiceInfo> serviceInfoList = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
-			for (AccessibilityServiceInfo info : serviceInfoList)
-			{
-				if (null != info)
-				{
-					String id = info.getId();
-					if (EmptyUtil.notEmpty(id) && id.contains(packageName) && id.contains(className)) return true;
-				}
-			}
-		} else
+		// 判断方法2
+		AccessibilityManager           am              = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+		List<AccessibilityServiceInfo> serviceInfoList = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
+		for (AccessibilityServiceInfo info : serviceInfoList)
 		{
-			LogProxy.v(TAG, "accessibility is not enable in system! ");
+			if (null != info)
+			{
+				String id = info.getId();
+				if (EmptyUtil.notEmpty(id) && id.contains(packageName) && id.contains(className)) return true;
+			}
 		}
 		return false;
-	}
-
-	// 判断系统中“无障碍” 是否可用
-	public static boolean isSystemAccessibilityEnabled(Context mContext)
-	{
-		int accessibilityEnabled = 0;
-		try
-		{
-			accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
-					Settings.Secure.ACCESSIBILITY_ENABLED);
-		} catch (Settings.SettingNotFoundException e)
-		{
-			LogProxy.e(TAG, "isSystemAccessibilityEnabled", e);
-		}
-		LogProxy.v(TAG, "isSystemAccessibilityEnabled-->accessibilityEnabled=" + accessibilityEnabled);
-		return accessibilityEnabled == 1;
 	}
 }
