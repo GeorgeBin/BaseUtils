@@ -20,7 +20,7 @@ utils-rx:
     
 utils-android:
 
-    implementation 'com.georgebindragon:utils-android:1.2.3'
+    implementation 'com.georgebindragon:utils-android:1.2.4'
 
 
     
@@ -30,4 +30,4 @@ base-application:
     
     build.gradle-->allprojects-->repositories-->add here
     
-    implementation 'com.georgebindragon:base-application:1.3.0'
+    implementation 'com.georgebindragon:base-application:1.3.1'
