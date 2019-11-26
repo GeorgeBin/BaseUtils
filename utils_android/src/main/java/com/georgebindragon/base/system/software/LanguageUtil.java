@@ -92,7 +92,7 @@ public class LanguageUtil
 		return base;
 	}
 
-	public Configuration wrapLanguageConfiguration(Configuration configuration, Locale newLocale)
+	public static Configuration wrapLanguageConfiguration(Configuration configuration, Locale newLocale)
 	{
 		if (null != newLocale)
 		{
