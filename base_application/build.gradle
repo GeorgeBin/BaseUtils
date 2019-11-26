@@ -69,7 +69,11 @@ dependencies {
     //腾讯 UI库
     api Dependence.Qmui_Ui
     api Dependence.Qmui_Lint
+    api Dependence.Qmui_Lint2
+
     api Dependence.Qmui_Arch
+    api Dependence.Qmui_ArchAnnotation
+    // annotationProcessor 'com.qmuiteam:arch-compiler:0.7.0'
 
     //RecyclerView Adapter
     api Dependence.CymChad_BaseAdapter
