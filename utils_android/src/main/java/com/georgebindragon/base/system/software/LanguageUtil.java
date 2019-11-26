@@ -2,7 +2,6 @@ package com.georgebindragon.base.system.software;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -93,30 +92,42 @@ public class LanguageUtil
 		return base;
 	}
 
+	public Configuration wrapLanguageConfiguration(Configuration configuration, Locale newLocale)
+	{
+		if (null != newLocale)
+		{
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+			{
+				configuration.setLocale(newLocale);
+				LocaleList localeList = new LocaleList(newLocale);
+				LocaleList.setDefault(localeList);
+				configuration.setLocales(localeList);
+			} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+			{
+				configuration.setLocale(newLocale);
+			}
+		}
+
+		LogProxy.i(TAG, "wrapLanguageConfiguration-->" + StringUtil.getPrintString(newLocale));
+		return configuration;
+	}
+
 	public static boolean setLanguage(Locale newLocale)
 	{
 		Configuration  config = getSystemRes().getConfiguration();
 		DisplayMetrics dm     = getSystemRes().getDisplayMetrics();
 
-		Locale oldLocale = getAppLanguage();//app当前语言
-
 		if (null == newLocale) newLocale = getSystemLanguage();//null 则取系统语言
-
-		if (!newLocale.equals(oldLocale))//有变化
+		config.locale = newLocale;   //设置res内获取的为
+		Locale.setDefault(newLocale);//这个可以让从xml直接获取资源的字段，转换语言
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 		{
-			config.locale = newLocale;   //设置res内获取的为
-			Locale.setDefault(newLocale);//这个可以让从xml直接获取资源的字段，转换语言
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-			{
-				config.setLayoutDirection(newLocale);//布局方向
-			}
-			getSystemRes().updateConfiguration(config, dm);//更新配置
-			//语言变更后要做的事情
-
-			LogProxy.i(TAG, "setLanguage newLocale=" + StringUtil.getPrintString(newLocale));
-			return true;
+			config.setLayoutDirection(newLocale);//布局方向
 		}
-		return false;
+		getSystemRes().updateConfiguration(config, dm);//更新配置
+		//语言变更后要做的事情
+		LogProxy.i(TAG, "setLanguage newLocale=" + StringUtil.getPrintString(newLocale));
+		return true;
 	}
 
 	public static Resources getSystemRes()
