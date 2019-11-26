@@ -56,6 +56,11 @@ public abstract class BringToForeground implements IBaseReceiverCallBack
 		return ClickBroadcast;
 	}
 
+	public PendingIntent getBroadcastPendingIntent()
+	{
+		return getBroadcastPendingIntent(null, null);
+	}
+
 	public PendingIntent getBroadcastPendingIntent(Context context, Intent intent)
 	{
 		if (null == context) context = BaseUtils.getContext();
@@ -88,7 +93,7 @@ public abstract class BringToForeground implements IBaseReceiverCallBack
 			WindowsUtil.moveAppToForeground(context, taskId);
 		} else
 		{
-			ActivityUtil.bringMyselfBackToForeground(context);//要替换为另外的调用
+			ActivityUtil.launchApp(context, context.getPackageName());
 		}
 	}
 }
