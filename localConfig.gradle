@@ -30,8 +30,8 @@ ext {
             //我的基础库  http://jcenter.bintray.com/com/georgebindragon/
             Utilsjava              : [group: myGroup, name: 'utils-java', version: '1.2.0'],
             UtilsRx                : [group: myGroup, name: 'utils-rx', version: '1.1.7'],
-            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.2.3'],
-            BaseApplication        : [group: myGroup, name: 'base-application', version: '1.3.0'],
+            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.2.4'],
+            BaseApplication        : [group: myGroup, name: 'base-application', version: '1.3.1'],
 
 
             //AndroidX   https://dl.google.com/dl/android/maven2/index.html
