@@ -1,28 +1,29 @@
-<manifest package="com.georgebindragon.base.android"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.georgebindragon.base.android">
 
 
     <!-- 网络状态 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--蓝牙-->
 
     <!--4.x 下, 打开蓝牙Sco需要-->
-    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <!--蓝牙 普通权限-->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <!--蓝牙 控制-->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <!--震动-->
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 
     <application>
 
         <receiver android:name="com.georgebindragon.base.receiver.UtilsReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
+                <!--    屏蔽开机启动广播，App自行实现，因为可能会有回调不及时的问题    -->
+                <!-- <action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
 

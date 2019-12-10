@@ -33,8 +33,10 @@ public class UtilsReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
+		LogProxy.i(TAG, "onReceive");
+
 		UtilsActions.getInstance().onBroadcastReceived(context, intent);
-		BroadcastReceiverUtil.getBroadcastIntentDetail(intent);
-		LogProxy.i(TAG,"onReceive");
+
+		BroadcastReceiverUtil.getBroadcastIntentDetail(TAG, intent);
 	}
 }

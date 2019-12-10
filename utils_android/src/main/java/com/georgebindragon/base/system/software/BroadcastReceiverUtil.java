@@ -32,16 +32,22 @@ public class BroadcastReceiverUtil
 
 	public static void getBroadcastIntentDetail(Intent intent)
 	{
+		getBroadcastIntentDetail(TAG, intent);
+	}
+
+	public static void getBroadcastIntentDetail(String tag, Intent intent)
+	{
 		boolean logEnable = LogProxy.isLogEnable();
 		System.out.println("getBroadcastIntentDetail-->log是否可见: " + (logEnable ? "可见, 进行打印" : "不可见, 不调用分析打印"));
 		if (!logEnable) return;
+		if (EmptyUtil.isEmpty(tag)) tag = TAG;
 
 		try
 		{
 			if (EmptyUtil.isEmpty(intent)) return;
 
 			String action = intent.getAction();
-			LogProxy.d(TAG, "getBroadcastIntentDetail-->action=" + StringUtil.getPrintString(action));
+			LogProxy.d(tag, "getBroadcastIntentDetail-->action=" + StringUtil.getPrintString(action));
 			if (null == action) return;
 
 			Bundle extras = intent.getExtras();
@@ -56,12 +62,12 @@ public class BroadcastReceiverUtil
 				String keyInfo   = "key" + (EmptyUtil.isEmpty(key) ? "" : "(" + key.getClass().getSimpleName() + ")") + "=" + StringUtil.getPrintString(key);
 				String valueInfo = "value" + (EmptyUtil.isEmpty(value) ? "" : "(" + value.getClass().getSimpleName() + ")") + "=" + StringUtil.getPrintString(value);
 
-				LogProxy.d(TAG, "getBroadcastIntentDetail-->extras：Bundle：" + keyInfo + "\t\t" + valueInfo);
+				LogProxy.d(tag, "getBroadcastIntentDetail-->extras：Bundle：" + keyInfo + "\t\t" + valueInfo);
 			}
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			LogProxy.e(TAG, "getBroadcastIntentDetail", e);
+			LogProxy.e(tag, "getBroadcastIntentDetail", e);
 		}
 	}
 
