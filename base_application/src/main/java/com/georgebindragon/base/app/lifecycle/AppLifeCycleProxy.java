@@ -48,11 +48,6 @@ public class AppLifeCycleProxy
 		if (null != getImp()) getImp().onAppStart();
 	}
 
-	public static void onAppReceiveBootCompleted()
-	{
-		if (null != getImp()) getImp().onAppReceiveBootCompleted();
-	}
-
 	public static void onAppReceiveShutdown()
 	{
 		if (null != getImp()) getImp().onAppReceiveShutdown();

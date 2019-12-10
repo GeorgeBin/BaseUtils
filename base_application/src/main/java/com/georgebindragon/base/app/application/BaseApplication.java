@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.app.lifecycle.AppLifeCycleProxy;
+import com.georgebindragon.base.app.lifecycle.IAppLifeCycle;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.system.software.AppUtil;
@@ -58,7 +59,15 @@ public abstract class BaseApplication extends Application
 		Log.d(TAG, "onCreate");
 
 		initBase(this);
-		checkMainProcess(this);
+
+		initInMultiProcess(this);
+
+		if (isMainProcess())
+		{
+			LogProxy.i(TAG, "主进程中初始化");
+			initInMainProcess(this);
+			AppLifeCycleProxy.onAppStart();
+		}
 	}
 
 	@Override
@@ -68,25 +77,22 @@ public abstract class BaseApplication extends Application
 		super.onTerminate();
 	}
 
-	private void checkMainProcess(Application application)
+	protected boolean isMainProcess()
 	{
 		String packageName = AppUtil.getPackageName(this);
 		String processName = AppUtil.getProcessName(Process.myPid());
 
 		LogProxy.d(TAG, "packageName=" + packageName, "processName=" + processName);
 
-		if (EmptyUtil.notEmpty(packageName, processName))
+		if (EmptyUtil.notEmpty(packageName))
 		{
-			LogProxy.i(TAG, "当前进程名: " + StringUtil.getPrintString(processName));
-
-			if (packageName.equals(processName))//确认包名和进程名相同
+			if (packageName.equalsIgnoreCase(processName))//确认包名和进程名相同
 			{
-
-				LogProxy.i(TAG, "主进程中初始化");
-				initInMainProcess(application);
-				AppLifeCycleProxy.onAppStart();
+				LogProxy.i(TAG, "主进程");
+				return true;
 			}
 		}
+		return false;
 	}
 
 	protected void initBase(Application application)
@@ -95,24 +101,30 @@ public abstract class BaseApplication extends Application
 		BaseUtils.init(application);
 
 		//注册开机广播和关机广播监听-->只会回调到主进程上
-		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_BOOT_COMPLETED, (context, intent) -> AppLifeCycleProxy.onAppReceiveBootCompleted());
-		UtilsActions.getInstance().listenSomeKey(Intent.ACTION_SHUTDOWN, (context, intent) -> AppLifeCycleProxy.onAppReceiveShutdown());
+		if (isMainProcess())
+		{
+			initBaseInMainProcess(application);
+			AppLifeCycleProxy.setImp(getAppLifeCycleImp());// 先设置回调
+			// UtilsActions.getInstance().listenSomeKey(Intent.ACTION_BOOT_COMPLETED, (context, intent) -> AppLifeCycleProxy.onAppReceiveBootCompleted());
+			UtilsActions.getInstance().listenSomeKey(Intent.ACTION_SHUTDOWN, (context, intent) -> AppLifeCycleProxy.onAppReceiveShutdown());
+		}
 
-		LogProxy.v(TAG, "打印一条log测试: 1");
 		LogProxy.setLogVisibility(isLogEnable());
-		LogProxy.v(TAG, "打印一条log测试: 2");
+		LogProxy.v(TAG, "打印log测试");
 
 		Locale defaultLocale = Locale.getDefault();
 		LogProxy.i(TAG, "此时Locale.getDefault()= " + StringUtil.getPrintString(defaultLocale));
 
-		// LogProxy.v(TAG, "log测试: 是否使用本地库"); //本地使用时再放开
 		LogProxy.i(TAG, "多进程中初始化");
 
 		ActivitiesManager.getInstance().init(application);//Activity 管理
-		initInMultiProcess(application);
 	}
 
 	protected abstract boolean isLogEnable();//是否在控制栏打印log
+
+	protected abstract IAppLifeCycle getAppLifeCycleImp();//获取生命周期的回调
+
+	protected abstract void initBaseInMainProcess(Application application);//需要在主进程中初始化的
 
 	protected abstract void initInMultiProcess(Application application);//需要在多进程中初始化的
 
