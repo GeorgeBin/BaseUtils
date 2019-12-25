@@ -18,10 +18,8 @@ import java.util.TreeSet;
 
 /**
  * 创建人：George
- * 类名称：AlarmMonitorManager
- * 类概述：
- * 详细描述：
  *
+ * 描述：Android系统alarm的管理，根据ID进行区分，可以设置不同的参数
  *
  * 修改人：
  * 修改时间：

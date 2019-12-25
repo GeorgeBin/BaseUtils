@@ -13,9 +13,8 @@ import com.georgebindragon.base.utils.EmptyUtil;
 
 /**
  * 创建人：George
- * 类名称：PowerSwitchReceiver
- * 类概述：组别旋钮广播
- * 监听广播：
+ *
+ * 概述：各种广播的监听器
  *
  * 修改人：
  * 修改时间：

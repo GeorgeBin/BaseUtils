@@ -17,10 +17,8 @@ import java.util.Queue;
 
 /**
  * 创建人：George
- * 类名称：PhoneCallMonitor
- * 类概述：电话呼叫状态的监听器
- * 详细描述：
  *
+ * 描述：电话状态监听器：监听电话状态
  *
  * 修改人：
  * 修改时间：
