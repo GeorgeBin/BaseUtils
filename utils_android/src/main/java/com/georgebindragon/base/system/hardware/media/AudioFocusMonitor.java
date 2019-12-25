@@ -3,6 +3,7 @@ package com.georgebindragon.base.system.hardware.media;
 import android.content.Context;
 import android.media.AudioManager;
 
+import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.monitor.BaseListenerMonitor;
 import com.georgebindragon.base.utils.EmptyUtil;
@@ -11,11 +12,8 @@ import java.util.Queue;
 
 /**
  * 创建人：George
- * 类名称：AudioFocusMonitor
- * 类概述：
- * 详细描述：
  *
- *
+ * 描述：音频焦点监听器：变化监听回调、申请、释放
  *
  * 修改人：
  * 修改时间：
@@ -29,13 +27,9 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 
 	public static AudioFocusMonitor getInstance() { return ourInstance; }
 
-	private AudioManager                            audioManager;
 	private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener;
 
-	public AudioFocusMonitor()
-	{
-		audioFocusChangeListener = this::onAudioFocusChange;
-	}
+	public AudioFocusMonitor() { audioFocusChangeListener = this::onAudioFocusChange; }
 
 	/**
 	 * 注册监听器
@@ -45,7 +39,8 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 	 */
 	public boolean initMonitor(Context context)
 	{
-		audioManager = AudioManagerUtil.getAudioManager(context);
+		if (null == context) context = BaseUtils.getContext();
+		AudioManager audioManager = AudioManagerUtil.getAudioManager(context);
 		return EmptyUtil.notEmpty(audioManager);
 	}
 
@@ -63,6 +58,7 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 		boolean request = false;
 		if (0 <= stream && stream <= 10) {/* 正常的 */} else {stream = AudioManager.STREAM_MUSIC;}
 		if (1 <= durationHint && durationHint <= 4) {/* 正常的音频焦点类型 */} else {durationHint = AudioManager.AUDIOFOCUS_GAIN;}
+		AudioManager audioManager = AudioManagerUtil.getAudioManager();
 		if (EmptyUtil.notEmpty(audioManager))
 		{
 			int result = audioManager.requestAudioFocus(audioFocusChangeListener, stream, durationHint);
@@ -77,7 +73,8 @@ public class AudioFocusMonitor extends BaseListenerMonitor<AudioManager.OnAudioF
 	 */
 	public boolean abandonAudioFocus()
 	{
-		boolean request = false;
+		boolean      request      = false;
+		AudioManager audioManager = AudioManagerUtil.getAudioManager();
 		if (EmptyUtil.notEmpty(audioManager))
 		{
 			int result = audioManager.abandonAudioFocus(audioFocusChangeListener);
