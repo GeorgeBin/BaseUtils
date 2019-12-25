@@ -36,7 +36,7 @@ public class BatteryUtil
 			Intent batteryInfoIntent = BaseUtils.getContext().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 			percent = getBatteryPercentFromIntent(batteryInfoIntent);
 
-			if (percent < 0)
+			if (percent <= 0)
 			{
 				if (Build.VERSION.SDK_INT >= 21)
 				{
@@ -50,10 +50,9 @@ public class BatteryUtil
 						int ENERGY_COUNTER  = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER);
 
 						percent = CAPACITY;
-						LogProxy.i(TAG, "getBatteryPercent-->CAPACITY=" + CAPACITY);
-
-						LogProxy.i(TAG, "getBatteryPercent-->CURRENT_AVERAGE=" + CURRENT_AVERAGE, "ENERGY_COUNTER=" + ENERGY_COUNTER);
-						LogProxy.i(TAG, "getBatteryPercent-->CHARGE_COUNTER=" + CHARGE_COUNTER, "CURRENT_NOW=" + CURRENT_NOW);
+						LogProxy.i(TAG, "getBatteryPercent-->CAPACITY=" + CAPACITY
+								, "CURRENT_AVERAGE=" + CURRENT_AVERAGE, "ENERGY_COUNTER=" + ENERGY_COUNTER
+								, "CHARGE_COUNTER=" + CHARGE_COUNTER, "CURRENT_NOW=" + CURRENT_NOW);
 					}
 				}
 			}
@@ -84,6 +83,28 @@ public class BatteryUtil
 				}
 			}
 			return level;
+		}
+		return -1;
+	}
+
+	/**
+	 * {@link BatteryManager#BATTERY_STATUS_UNKNOWN }=1
+	 * {@link BatteryManager#BATTERY_STATUS_CHARGING }=2
+	 * {@link BatteryManager#BATTERY_STATUS_DISCHARGING }=3
+	 * {@link BatteryManager#BATTERY_STATUS_NOT_CHARGING }=4
+	 * {@link BatteryManager#BATTERY_STATUS_FULL }=5
+	 *
+	 * @param intent 电池电量变化广播
+	 * @return 电池当前状态
+	 */
+	public static int getBatteryStatusFromIntent(Intent intent)
+	{
+		if (EmptyUtil.notEmpty(intent) && Intent.ACTION_BATTERY_CHANGED.equalsIgnoreCase(intent.getAction()))
+		{
+
+			int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);//获取当前状态
+			LogProxy.i(TAG, "getBatteryStatusFromIntent-->status=" + status);
+			return status;
 		}
 		return -1;
 	}
