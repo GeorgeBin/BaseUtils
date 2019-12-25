@@ -212,7 +212,10 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	}
 
 	/*------------------------------------------------------------------- Activity 生命周期 回调 -------------------------------------------------------------------*/
+	private static final int BaseCount = 0;
+	private              int count     = BaseCount;
 
+	public boolean isAppForeground() { return count > BaseCount; }
 
 	@Override
 	public void onActivityCreated(Activity activity, Bundle savedInstanceState)
@@ -229,13 +232,15 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	@Override
 	public void onActivityResumed(Activity activity)
 	{
-
+		count++;
+		LogProxy.i(TAG, "onActivityResumed-->count=" + count);
 	}
 
 	@Override
 	public void onActivityPaused(Activity activity)
 	{
-
+		count--;
+		LogProxy.i(TAG, "onActivityResumed-->count=" + count);
 	}
 
 	@Override
