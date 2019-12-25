@@ -1,5 +1,7 @@
 package com.georgebindragon.base.data.trans;
 
+import com.georgebindragon.base.data.basic.BytesUtil;
+
 /**
  * 2017/3/7.
  */
@@ -52,20 +54,35 @@ public class DigitalTransUtil
 	// 自己写的算法-->需要校验
 	public static byte[] algorismToBytes(int algorism, int maxLength)
 	{
-		int ff = 0xff;
-		if (maxLength > 0)
+		return intToBytes(algorism, maxLength);
+	}
+
+	public static byte[] intToBytes(int number, int maxLength)
+	{
+		if (maxLength > 0 && maxLength <= 4)
 		{
 			byte[] result = new byte[maxLength];
+
 			for (int i = maxLength - 1, j = 0; i >= 0; i--)
 			{
-				result[i] = (byte) ((algorism >> (8 * j)) & ff);
+				result[i] = (byte) ((number >> (8 * j)) & 0xFF);
 				j++;
 			}
 			return result;
-		} else
+		} else if (maxLength > 4)
 		{
-			return null;
+			byte[] result1 = new byte[maxLength - 4];//用于补0
+			byte[] result2 = new byte[4];
+
+			for (int i = 4 - 1, j = 0; i >= 0; i--)
+			{
+				result2[i] = (byte) ((number >> (8 * j)) & 0xFF);
+				j++;
+			}
+			return BytesUtil.addBytes(result1, result2);
 		}
+
+		return null;
 	}
 
 	// 十六进制转~
@@ -364,9 +381,9 @@ public class DigitalTransUtil
 	}
 
 	/**
-	 *十六进制串转化为byte数组
+	 * 十六进制串转化为byte数组
 	 *
-	 * @param hex  十六进制串
+	 * @param hex 十六进制串
 	 * @return byte数组
 	 * @throws IllegalArgumentException 解析错误
 	 */
