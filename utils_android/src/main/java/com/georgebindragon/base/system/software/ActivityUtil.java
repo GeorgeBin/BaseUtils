@@ -3,6 +3,7 @@ package com.georgebindragon.base.system.software;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 
 import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
@@ -31,21 +32,39 @@ public class ActivityUtil
 
 		if (null == context) context = BaseUtils.getContext();
 
-		if (EmptyUtil.notEmpty(context, intent))
+		if (EmptyUtil.notEmpty(context, intent) && hasActivityIntent(context, intent))
 		{
-			if (context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null)
+			try
 			{
-				try
-				{
-					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-					intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-					context.startActivity(intent);
-					return true;
-				} catch (Exception e) { LogProxy.e(TAG, "jumpActivity", e); }
-			}
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+				context.startActivity(intent);
+				return true;
+			} catch (Exception e) { LogProxy.e(TAG, "jumpActivity", e); }
 		}
 		return false;
+	}
+
+	public static boolean hasActivityIntent(Context context, Intent intent)
+	{
+		LogProxy.i(TAG, "hasActivityIntent-->intent=" + StringUtil.getPrintString(intent));
+
+		return getIntentResolveInfo(context, intent) != null;
+	}
+
+	public static ResolveInfo getIntentResolveInfo(Context context, Intent intent)
+	{
+		LogProxy.i(TAG, "getIntentResolveInfo-->intent=" + StringUtil.getPrintString(intent));
+		try
+		{
+			if (null == context) context = BaseUtils.getContext();
+			if (EmptyUtil.notEmpty(context, intent))
+			{
+				return context.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+			}
+		} catch (Exception e) { LogProxy.e(TAG, "getIntentResolveInfo", e); }
+		return null;
 	}
 
 
