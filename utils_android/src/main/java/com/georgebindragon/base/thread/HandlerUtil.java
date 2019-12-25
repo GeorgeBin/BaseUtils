@@ -8,12 +8,8 @@ import com.georgebindragon.base.utils.EmptyUtil;
 
 /**
  * 创建人：George
- * 类名称：HandlerUtil
- * 类概述：Handler的方法类
- * 详细描述：
  *
- *
- *
+ * 描述：Handler工具类
  *
  * 修改人：
  * 修改时间：
@@ -60,19 +56,18 @@ public class HandlerUtil
 
 	public static Handler postDelayedRunnable(Handler handler, Runnable runnable, long delayMillis)
 	{
-		Handler handler2 = otherHandler;
 		if (EmptyUtil.notEmpty(runnable))
 		{
-			if (EmptyUtil.notEmpty(handler)) handler2 = handler;
+			if (EmptyUtil.isEmpty(handler)) handler = otherHandler;
 
 			if (delayMillis > 0)
 			{
-				handler2.postDelayed(runnable, delayMillis);
+				handler.postDelayed(runnable, delayMillis);
 			} else
 			{
-				handler2.post(runnable);
+				handler.post(runnable);
 			}
-			return handler2;
+			return handler;
 		} else
 		{
 			LogProxy.e(TAG, "postDelayedRunnable-->参数错误");
