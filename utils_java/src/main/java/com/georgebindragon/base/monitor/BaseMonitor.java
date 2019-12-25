@@ -2,10 +2,8 @@ package com.georgebindragon.base.monitor;
 
 /**
  * 创建人：George
- * 类名称：BaseMonitor
- * 类概述：
- * 详细描述：
  *
+ * 描述：基础监控器
  *
  * 修改人：
  * 修改时间：

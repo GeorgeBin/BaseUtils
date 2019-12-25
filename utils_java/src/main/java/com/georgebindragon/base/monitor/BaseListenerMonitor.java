@@ -9,10 +9,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * 创建人：George
- * 类名称：BaseListenerMonitor
- * 类概述：
- * 详细描述：
  *
+ * 描述：单一事件的监控 + 可设置多个监听器
  *
  * 修改人：
  * 修改时间：
@@ -75,6 +73,8 @@ public class BaseListenerMonitor<T> extends BaseMonitor
 	{
 		LogProxy.v(TAG, "notifyListenerListChanged, size=" + (null == listenerList ? "0" : listenerList.size()));
 	}
+
+	//	通知到监听器的示例
 
 	//	private void notifyListeners(int xxx, String xxxx)
 	//	{

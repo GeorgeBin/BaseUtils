@@ -6,9 +6,11 @@ import com.georgebindragon.base.utils.StringUtil;
 
 /**
  * 创建人：George
- * 类名称：BaseListenerMonitorManager
- * 类概述：
- * 详细描述：
+ *
+ * 描述：Monitor的管理类，如果 Monitor 不能满足需求的时候（例如：需要监听多个事件，根据需求监听）
+ * 例如：
+ * 1. 网络连接的变化、蓝牙连接的变化、音频焦点变化、电话通话状态变化，为单一事件，使用 Monitor 即可
+ * 2. 根据不同ID设置闹钟、所有广播的监听，不是单一事件，使用 MonitorManager
  *
  *
  * 修改人：

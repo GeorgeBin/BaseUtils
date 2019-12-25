@@ -2,10 +2,8 @@ package com.georgebindragon.base.monitor;
 
 /**
  * 创建人：George
- * 类名称：BaseCallBackMonitor
- * 类概述：
- * 详细描述：
  *
+ * 描述：单一事件的监控 + 只能设置一个监听器
  *
  * 修改人：
  * 修改时间：
@@ -26,6 +24,8 @@ public class BaseCallBackMonitor<T> extends BaseMonitor
 	{
 		this.callback = null;
 	}
+
+	//	通知到监听器的示例
 
 	//	private void onCallBack(int xxx, String xxxx)
 	//	{

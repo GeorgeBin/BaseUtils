@@ -4,10 +4,8 @@ import com.georgebindragon.base.function.MapManager;
 
 /**
  * 创建人：George
- * 类名称：BaseMonitorManager
- * 类概述：
- * 详细描述：
  *
+ * 描述：
  *
  * 修改人：
  * 修改时间：
