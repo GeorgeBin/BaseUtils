@@ -45,11 +45,12 @@ public class PhoneCallMonitor extends BaseListenerMonitor<PhoneCallMonitor.Phone
 			if (EmptyUtil.notEmpty(extras))
 			{
 				String incoming_number = extras.getString("incoming_number");
-				String stateString = extras.getString("state");
+				String stateString     = extras.getString("state");
 
 				int state;
 				if (EmptyUtil.notEmpty(stateString))
 				{
+					stateString = stateString.toUpperCase();
 					switch (stateString)
 					{
 						case "RINGING":
