@@ -67,6 +67,12 @@ public class BaseListenerMonitor<T> extends BaseMonitor
 	public void clearListeners()
 	{
 		listenerList = new ConcurrentLinkedQueue<>();
+		notifyListenerListChanged();
+	}
+
+	public void onThisMonitorRemoved()
+	{
+		LogProxy.i(TAG, "onThisMonitorRemoved-->");
 	}
 
 	protected void notifyListenerListChanged()

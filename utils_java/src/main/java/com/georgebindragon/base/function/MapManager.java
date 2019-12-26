@@ -4,37 +4,18 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
  * 创建人：George
- * 类名称：FunctionManager
- * 类概述：
- * 详细描述：
+ *
+ * 描述：Map管理的一种实现：使用 ConcurrentHashMap
  *
  * 修改人：
  * 修改时间：
  * 修改备注：
  */
 
-public class MapManager<K,V>
+public class MapManager<K, V>
 {
 	protected String TAG = "MapManager: " + getClass().getSimpleName() + "-->";
-
-	//
-	//	private static MapManager instance;
-	//
-	//	public static MapManager getInstance()
-	//	{
-	//		if (null == instance)
-	//		{
-	//			synchronized (MapManager.class)
-	//			{
-	//				if (null == instance) { instance = new MapManager(); }
-	//			}
-	//		}
-	//		return instance;
-	//	}
-	//
-	//	private MapManager() { }
 
 	protected Map<K, V> map = new ConcurrentHashMap<>();
 

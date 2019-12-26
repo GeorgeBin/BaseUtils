@@ -107,6 +107,8 @@ public abstract class BaseListenerMonitorManager<K, V extends BaseListenerMonito
 		if (EmptyUtil.notEmpty(key))
 		{
 			unregisterMonitor(key);
+			V monitor = getMonitor(key);
+			if (null != monitor) monitor.onThisMonitorRemoved();
 		}
 	}
 
