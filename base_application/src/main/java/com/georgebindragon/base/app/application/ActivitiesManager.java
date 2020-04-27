@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.georgebindragon.base.abilities.callbacks.ICallBack;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.jakewharton.rxrelay2.BehaviorRelay;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
@@ -41,6 +42,8 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	{
 		QMUISwipeBackActivityManager.init(application);
 		if (ourInstance != null) application.registerActivityLifecycleCallbacks(ourInstance);
+		lastAppForeground = false;
+		onChange();
 	}
 
 	private static Stack<Activity> activityStack = new Stack<>();
@@ -211,11 +214,38 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 		return topActivity;
 	}
 
-	/*------------------------------------------------------------------- Activity 生命周期 回调 -------------------------------------------------------------------*/
+	/*------------------------------------------------------------------- 应用是否为前台应用 -------------------------------------------------------------------*/
+
 	private static final int BaseCount = 0;
-	private              int count     = BaseCount;
+
+	private int     count             = BaseCount;
+	private boolean lastAppForeground = false;
 
 	public boolean isAppForeground() { return count > BaseCount; }
+
+	private AppForegroundChangeCallBack callBack;
+
+	private void onChange()
+	{
+		boolean appForeground = isAppForeground();
+		if (lastAppForeground != appForeground)
+		{
+			if (null != callBack) callBack.onAppForegroundChange(appForeground);
+			lastAppForeground = appForeground;
+		}
+	}
+
+	public void setOnAppForegroundChangeCallBack(AppForegroundChangeCallBack appForegroundChangeCallBack)
+	{
+		callBack = appForegroundChangeCallBack;
+	}
+
+	public interface AppForegroundChangeCallBack extends ICallBack
+	{
+		void onAppForegroundChange(boolean isForeground);
+	}
+
+	/*------------------------------------------------------------------- Activity 生命周期 回调 -------------------------------------------------------------------*/
 
 	@Override
 	public void onActivityCreated(Activity activity, Bundle savedInstanceState)
@@ -233,6 +263,7 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	public void onActivityResumed(Activity activity)
 	{
 		count++;
+		onChange();
 		LogProxy.i(TAG, "onActivityResumed-->count=" + count);
 	}
 
@@ -240,6 +271,7 @@ public class ActivitiesManager implements Application.ActivityLifecycleCallbacks
 	public void onActivityPaused(Activity activity)
 	{
 		count--;
+		onChange();
 		LogProxy.i(TAG, "onActivityResumed-->count=" + count);
 	}
 
