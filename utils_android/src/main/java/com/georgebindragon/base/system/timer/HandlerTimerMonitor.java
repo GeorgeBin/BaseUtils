@@ -33,12 +33,15 @@ public class HandlerTimerMonitor extends BaseTimerMonitor
 	protected void onTimerTrigger()
 	{
 		super.onTimerTrigger();
-		if (needRepeat)
+		if (null != getListenerList() && getListenerList().size() > 0)
 		{
-			startTimer();
-		} else
-		{
-			stopTimer();
+			if (needRepeat)
+			{
+				startTimer();
+			} else
+			{
+				stopTimer();
+			}
 		}
 	}
 
