@@ -34,14 +34,7 @@ public class PhoneSignalMonitor extends BaseListenerMonitor<PhoneSignalMonitor.P
 
 	public void init()
 	{
-		listenToSignalStrengths();
 		LogProxy.d(TAG, "init-->注册");
-	}
-
-	public void destroy()
-	{
-		stopListenToSignalStrengths();
-		LogProxy.d(TAG, "destroy-->注销完成");
 	}
 
 	private void listenToSignalStrengths()
@@ -56,6 +49,26 @@ public class PhoneSignalMonitor extends BaseListenerMonitor<PhoneSignalMonitor.P
 		LogProxy.i(TAG, "stopListenToSignalStrengths-->");
 		TelephonyManager telephonyManager = (TelephonyManager) BaseUtils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
 		if (null != telephonyManager) telephonyManager.listen(MyPhoneStateListener.getInstance(), PhoneStateListener.LISTEN_NONE);
+	}
+
+	@Override
+	protected void notifyListenerListChanged()
+	{
+		super.notifyListenerListChanged();
+		if (null != getListenerList() && getListenerList().size() > 0)
+		{
+			listenToSignalStrengths();
+		} else
+		{
+			stopListenToSignalStrengths();
+		}
+	}
+
+	@Override
+	public void onThisMonitorRemoved()
+	{
+		super.onThisMonitorRemoved();
+		stopListenToSignalStrengths();
 	}
 
 	private void notifyListeners(int level, int dbm, int asu, int newStrength)
