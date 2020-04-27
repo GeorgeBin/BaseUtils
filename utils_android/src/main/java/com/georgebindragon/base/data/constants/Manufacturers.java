@@ -35,6 +35,7 @@ public class Manufacturers
 	public static final String MANUFACTURER_Sony    = "Sony";//索尼
 	public static final String MANUFACTURER_Letv    = "Letv";//乐视
 	public static final String MANUFACTURER_LENOVO  = "LENOVO";//联想
+	public static final String MANUFACTURER_OnePlus = "OnePlus";//一加
 
 	//其他厂商
 	//常见的分辨不出来的厂商
@@ -70,7 +71,7 @@ public class Manufacturers
 	public static boolean isNormalCellPhone()
 	{
 		return isSomeManufacturer(Manufacturer_Xiaomi, Manufacturer_Huawei, Manufacturer_samsung, MANUFACTURER_Meizu, MANUFACTURER_OPPO, MANUFACTURER_vivo, MANUFACTURER_ZTE,
-				MANUFACTURER_YuLong, MANUFACTURER_LG, MANUFACTURER_Sony, MANUFACTURER_Letv, MANUFACTURER_LENOVO);
+				MANUFACTURER_YuLong, MANUFACTURER_LG, MANUFACTURER_Sony, MANUFACTURER_Letv, MANUFACTURER_LENOVO,MANUFACTURER_OnePlus);
 	}
 
 	public static boolean isXiaomi()
