@@ -1,12 +1,20 @@
 package com.georgebindragon.base.system.hardware.battery;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.os.PowerManager;
+import android.provider.Settings;
 
 import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.system.software.ActivityUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 
 import static android.content.Context.BATTERY_SERVICE;
@@ -108,4 +116,71 @@ public class BatteryUtil
 		}
 		return -1;
 	}
+
+
+	public static boolean isIgnoringBatteryOptimizations(Context context, String packageName)
+	{
+		try
+		{
+			if (null == context) context = BaseUtils.getContext();
+			if (EmptyUtil.notEmpty(packageName) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+			{
+				PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+				if (pm != null) return pm.isIgnoringBatteryOptimizations(packageName);
+			} else return true;
+		} catch (Exception e) { LogProxy.e(TAG, "isIgnoringBatteryOptimizations", e); }
+
+		return false;
+	}
+
+	@SuppressLint("BatteryLife") // 这个提示是告诉我们，Google play store 不让直接申请添加白名单
+	public static void gotoSettingIgnoringBatteryOptimizations_WithoutResult(String packageName)
+	{
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+		{
+			try
+			{
+				Intent intent = new Intent();
+				intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+				intent.setData(Uri.parse("package:" + packageName));
+				PackageManager pm = BaseUtils.getContext().getPackageManager();
+				if (null != pm && intent.resolveActivity(pm) != null)
+				{
+					ActivityUtil.jumpActivity(BaseUtils.getContext(), intent);
+				} else
+				{
+					LogProxy.d(TAG, "Market client not available.");
+				}
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@SuppressLint("BatteryLife") // 这个提示是告诉我们，Google play store 不让直接申请添加白名单
+	public static void gotoSettingIgnoringBatteryOptimizations(Activity activity, String packageName, int requestCode)
+	{
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+		{
+			try
+			{
+				Intent intent = new Intent();
+				intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+				intent.setData(Uri.parse("package:" + packageName));
+				PackageManager pm = activity.getPackageManager();
+				if (null != pm && intent.resolveActivity(pm) != null)
+				{
+					activity.startActivityForResult(intent, requestCode);
+				} else
+				{
+					LogProxy.d(TAG, "Market client not available.");
+				}
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
