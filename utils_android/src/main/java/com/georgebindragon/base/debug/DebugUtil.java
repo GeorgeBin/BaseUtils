@@ -1,6 +1,9 @@
 package com.georgebindragon.base.debug;
 
 
+import android.content.pm.ApplicationInfo;
+
+import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.android.BuildConfig;
 
 /**
@@ -24,8 +27,19 @@ public class DebugUtil
 		return BuildConfig.DEBUG;//做为库, 一直是complete版本, 所以一直返回false
 	}
 
+	public static boolean isDebug()
+	{
+		return BaseUtils.getContext().getApplicationInfo() != null
+				&& (BaseUtils.getContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+	}
+
 	public static void makeACrash()
 	{
-		if(isBuildDebug()) throw new RuntimeException("Boom!");//谨慎使用, 只能在debug版本里出现
+		throw new RuntimeException("Boom!");//谨慎使用, 只能在debug版本里出现
+	}
+
+	public static void makeADebugCrash()
+	{
+		if (isDebug()) makeACrash();// 只能在debug版本里生效
 	}
 }
