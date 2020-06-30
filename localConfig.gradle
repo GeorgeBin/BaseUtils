@@ -22,7 +22,9 @@ ext {
 
     //JakeWharton
     JakeWharton = 'com.jakewharton'
-    ButterKnifeVersion = '10.2.0'//版本号
+    //版本号
+    ButterKnifeVersion = '10.2.0'
+    PhoenixVersion = '2.0.0'
 
     //依赖内使用：
     Dependence = [
@@ -69,6 +71,7 @@ ext {
             RxBinding              : [group: 'com.jakewharton.rxbinding3', name: 'rxbinding-core', version: '3.0.0'],
             ButterKnife            : [group: JakeWharton, name: 'butterknife', version: ButterKnifeVersion],
             ButterKnifeCompiler    : [group: JakeWharton, name: 'butterknife-compiler', version: ButterKnifeVersion],
+            Phoenix                : [group: JakeWharton, name: 'process-phoenix', version: PhoenixVersion],
 
             //UI  http://jcenter.bintray.com/com/qmuiteam/
             Qmui_Ui                : [group: QmuiGroup, name: 'qmui', version: '1.4.5'],
