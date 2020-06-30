@@ -7,7 +7,6 @@ import com.georgebindragon.base.algorithm.MD5Util;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.utils.EmptyUtil;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
@@ -39,10 +38,16 @@ public class CommonFileUtil
 		copyThread.start();
 	}
 
-	//拷贝Assets文件到某处
+	//拷贝Assets文件到某处（默认覆盖）
 	public static void copyAssetsFileToPath(Context context, String sourceMD5, String sourceAssetsFileName, String savePath, final ResultCallBack copyResultCallBack)
 	{
-		LogProxy.d(TAG, "copyAssetsFileToPath");
+		copyAssetsFileToPath(context, true, sourceMD5, sourceAssetsFileName, savePath, copyResultCallBack);
+	}
+
+	//拷贝Assets文件到某处
+	public static void copyAssetsFileToPath(Context context, boolean cover, String sourceMD5, String sourceAssetsFileName, String savePath,
+	                                        final ResultCallBack copyResultCallBack)
+	{
 
 		boolean destFileExists = FileCheckUtil.isFileExists(savePath);
 		LogProxy.d(TAG, "copyAssetsFileToPath-->目标是否已经存在? =" + (destFileExists ? "存在" : "不存在"));
@@ -59,6 +64,12 @@ public class CommonFileUtil
 					return;
 				}
 			}
+			if (!cover)
+			{
+				if (null != copyResultCallBack) copyResultCallBack.onResult(false);
+				LogProxy.d(TAG, "copyAssetsFileToPath-->文件存在-->但MD5值不同，不覆盖，则返回false");
+				return; // 如果不能覆盖，则返回
+			}
 		}
 
 		LogProxy.d(TAG, "copyAssetsFileToPath-->需要复制");
@@ -66,19 +77,15 @@ public class CommonFileUtil
 		boolean createDir = FileCreateUtil.createFile(savePath);
 		if (createDir)
 		{
-			File file = new File(savePath);
-			if (!file.exists())
+			try
 			{
-				try
-				{
-					InputStream      assetsInputStream = AndroidFileUtil.getAssetsInputStream(context, sourceAssetsFileName);
-					FileOutputStream out               = new FileOutputStream(savePath);
-					FileCopyUtil.copyWithStream(assetsInputStream, out, copyResultCallBack);
-				} catch (Exception e)
-				{
-					e.printStackTrace();
-					LogProxy.d(TAG, "copyAssetsFileToPath-->close-->" + e.getMessage());
-				}
+				InputStream      assetsInputStream = AndroidFileUtil.getAssetsInputStream(context, sourceAssetsFileName);
+				FileOutputStream out               = new FileOutputStream(savePath);
+				FileCopyUtil.copyWithStream(assetsInputStream, out, copyResultCallBack);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				LogProxy.d(TAG, "copyAssetsFileToPath-->close-->" + e.getMessage());
 			}
 		}
 	}
