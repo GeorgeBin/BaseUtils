@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.georgebindragon.base.BaseUtils;
+import com.georgebindragon.base.utils.EmptyUtil;
 
 /**
  * 创建人：George
@@ -37,6 +38,15 @@ public class ViewUtil
 	}
 
 
+	public static void setTextAndSelection(EditText editText, String info)
+	{
+		if (null != editText)
+		{
+			editText.setText(info);
+			editText.setSelection(EmptyUtil.isEmpty(info) ? 0 : info.length());
+		}
+	}
+
 	//设置密码可见和不可见
 	public static void setPasswordVisibility(EditText editText, boolean setVisible)
 	{
@@ -57,7 +67,7 @@ public class ViewUtil
 
 			int length = editText.getText().toString().length();
 
-			editText.setSelection((selectionEnd > length ? length : selectionEnd));//执行上面的代码后光标会处于输入框的最前方-->重置光标位置
+			editText.setSelection((Math.min(selectionEnd, length)));//执行上面的代码后光标会处于输入框的最前方-->重置光标位置
 		}
 	}
 
