@@ -43,6 +43,7 @@ dependencies {
 
     //内存泄漏检测
     debugApi Dependence.Leakcanary
+    debugApi 'cat.ereza:customactivityoncrash:2.3.0' // crash提示，只在debug版本上用，便于查看崩溃内容
 
     //--------------基础库--------------
 
@@ -59,6 +60,9 @@ dependencies {
     api Dependence.RxAndroid
     api Dependence.Rxrelay
 
+    //--------------生命周期--------------
+
+    api Dependence.Phoenix
 
     //--------------UI库--------------
 
