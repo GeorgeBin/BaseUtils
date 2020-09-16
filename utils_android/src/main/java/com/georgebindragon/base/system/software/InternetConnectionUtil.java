@@ -175,15 +175,7 @@ public class InternetConnectionUtil
 
 	public static boolean is23G(Context context)
 	{
-		try
-		{
-			int mobileSubtype = getMobileSubtype(context);
-			if (mobileSubtype >= 0 && mobileSubtype != TelephonyManager.NETWORK_TYPE_LTE && mobileSubtype != 20)
-			{
-				return true;
-			}
-		} catch (Exception e) { LogProxy.e(TAG, "is23G", e); }
-		return false;
+		return is2G(context) || is3G(context);
 	}
 
 	public static boolean is4G(Context context)
