@@ -110,6 +110,7 @@ public class InternetConnectionMonitor extends BaseListenerMonitor<InternetConne
 		 *                    {@link InternetConnectionUtil#CTWAP      }
 		 *                    {@link InternetConnectionUtil#CTNET       }
 		 *                    {@link InternetConnectionUtil#MOBILE      }
+		 *                    {@link InternetConnectionUtil#Unknown      }
 		 *                    {@link InternetConnectionUtil#LTE         }
 		 */
 		void onInternetConnectionChange(boolean isConnected, int type);

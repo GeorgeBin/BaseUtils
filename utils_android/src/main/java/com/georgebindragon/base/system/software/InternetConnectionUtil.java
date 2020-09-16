@@ -24,12 +24,12 @@ public class InternetConnectionUtil
 	@SuppressLint("MissingPermission")
 	public static boolean isNetworkAvailable(Context context)
 	{
-		ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (EmptyUtil.notEmpty(manager))
+		ConnectivityManager manager = getConnectivityManager(context);
+		if (null != manager)
 		{
 			NetworkInfo networkinfo = manager.getActiveNetworkInfo();
 			boolean     result      = (EmptyUtil.notEmpty(networkinfo) && networkinfo.isAvailable());
-			LogProxy.d(TAG , "isNetworkAvailable=" + result);
+			LogProxy.d(TAG, "isNetworkAvailable=" + result);
 			return result;
 		}
 		return false;
@@ -37,7 +37,6 @@ public class InternetConnectionUtil
 
 	public static boolean isAirPlaneModeOn(Context context)
 	{
-
 		if (Build.VERSION.SDK_INT >= 17)
 		{
 			int mode = 0;
@@ -65,8 +64,14 @@ public class InternetConnectionUtil
 	public static final int CMNET       = 6;
 	public static final int CTWAP       = 7;
 	public static final int CTNET       = 8;
-	public static final int MOBILE      = 9;
 	public static final int LTE         = 10;
+
+	public static final int Ethernet = 9;
+
+	public static final int Unknown = 21;
+
+	@Deprecated
+	public static final int MOBILE = Unknown;
 
 	public static boolean isConnected(Context context)
 	{
@@ -84,69 +89,87 @@ public class InternetConnectionUtil
 	{
 		try
 		{
-			ConnectivityManager manager = getConnectivityManager(context);
-			if (null != manager)
-			{
-				final NetworkInfo netInfo = manager.getActiveNetworkInfo();
-				return netInfo.getType() != ConnectivityManager.TYPE_WIFI;
-			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+			return isConnected(context) && !isWifi(context) && !isEthernet(context);
+		} catch (Exception e) { LogProxy.e(TAG, "isMobile", e); }
 
 		return false;
+	}
+
+	public static boolean isEthernet(Context context)
+	{
+		try
+		{
+			int type = getNetType(context);
+			return type == Ethernet;
+		} catch (Exception e) { LogProxy.e(TAG, "isEthernet", e); }
+
+		return false;
+	}
+
+	private static int getMobileSubtype(Context context)
+	{
+		try
+		{
+			if (isMobile(context))
+			{
+				ConnectivityManager manager = getConnectivityManager(context);
+				if (null != manager)
+				{
+					final NetworkInfo netInfo = manager.getActiveNetworkInfo();
+					if (null != netInfo)
+					{
+						return netInfo.getSubtype();
+					}
+				}
+			}
+		} catch (Exception e) { LogProxy.e(TAG, "getMobileSubtype", e); }
+		return -1;
 	}
 
 	public static boolean is2G(Context context)
 	{
 		try
 		{
-			ConnectivityManager manager = getConnectivityManager(context);
-			if (null != manager)
+			int mobileSubtype = getMobileSubtype(context);
+			if (mobileSubtype >= 0)
 			{
-				final NetworkInfo netInfo = manager.getActiveNetworkInfo();
-				if (netInfo.getType() == ConnectivityManager.TYPE_WIFI)
-				{
-					return false;
-				}
-				if (netInfo.getSubtype() == TelephonyManager.NETWORK_TYPE_EDGE || netInfo.getSubtype() == TelephonyManager.NETWORK_TYPE_GPRS || netInfo.getSubtype() == TelephonyManager.NETWORK_TYPE_CDMA)
+				if (mobileSubtype == TelephonyManager.NETWORK_TYPE_GPRS
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_EDGE
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_CDMA
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_1xRTT
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_IDEN
+				)
 				{
 					return true;
 				}
 			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
+		} catch (Exception e) { LogProxy.e(TAG, "is2G", e); }
 		return false;
 	}
 
 
 	public static boolean is3G(Context context)
 	{
-
 		try
 		{
-			ConnectivityManager manager = getConnectivityManager(context);
-			if (null != manager)
+			int mobileSubtype = getMobileSubtype(context);
+			if (mobileSubtype >= 0)
 			{
-				final NetworkInfo netInfo = manager.getActiveNetworkInfo();
-				if (netInfo.getType() == ConnectivityManager.TYPE_WIFI)
-				{
-					return false;
-				}
-				if (netInfo.getSubtype() >= TelephonyManager.NETWORK_TYPE_EVDO_0 && netInfo.getSubtype() < TelephonyManager.NETWORK_TYPE_LTE)
+				if (mobileSubtype == TelephonyManager.NETWORK_TYPE_UMTS
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_EVDO_0
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_EVDO_A
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_HSDPA
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_HSUPA
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_HSPA
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_EVDO_B
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_EHRPD
+						|| mobileSubtype == TelephonyManager.NETWORK_TYPE_HSPAP
+				)
 				{
 					return true;
 				}
 			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
+		} catch (Exception e) { LogProxy.e(TAG, "is3G", e); }
 		return false;
 	}
 
@@ -154,24 +177,12 @@ public class InternetConnectionUtil
 	{
 		try
 		{
-			ConnectivityManager manager = getConnectivityManager(context);
-			if (null != manager)
+			int mobileSubtype = getMobileSubtype(context);
+			if (mobileSubtype >= 0 && mobileSubtype != TelephonyManager.NETWORK_TYPE_LTE && mobileSubtype != 20)
 			{
-				final NetworkInfo netInfo = manager.getActiveNetworkInfo();
-
-				LogProxy.i(TAG, "is23G-->netInfo.getType()=" + netInfo.getType());
-				LogProxy.i(TAG, "is23G-->netInfo.getSubtype()=" + netInfo.getSubtype());
-
-				if (netInfo.getType() == ConnectivityManager.TYPE_WIFI)
-				{
-					return false;
-				}
-				if (netInfo.getSubtype() >= TelephonyManager.NETWORK_TYPE_UNKNOWN && netInfo.getSubtype() < TelephonyManager.NETWORK_TYPE_LTE)
-				{
-					return true;
-				}
+				return true;
 			}
-		} catch (Exception ignore) { }
+		} catch (Exception e) { LogProxy.e(TAG, "is23G", e); }
 		return false;
 	}
 
@@ -179,28 +190,20 @@ public class InternetConnectionUtil
 	{
 		try
 		{
-			ConnectivityManager manager = getConnectivityManager(context);
-			if (null != manager)
-			{
-				final NetworkInfo netInfo = manager.getActiveNetworkInfo();
-
-				if (netInfo.getType() == ConnectivityManager.TYPE_WIFI)
-				{
-					return false;
-				}
-				// TODO:may be 5G in the future
-				if (netInfo.getSubtype() >= TelephonyManager.NETWORK_TYPE_LTE)
-				{
-					return true;
-				}
-			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
+			int mobileSubtype = getMobileSubtype(context);
+			return mobileSubtype == TelephonyManager.NETWORK_TYPE_LTE; // 5G is coming
+		} catch (Exception e) { LogProxy.e(TAG, "is4G", e); }
 		return false;
+	}
 
+	public static boolean is5G(Context context)
+	{
+		try
+		{
+			int mobileSubtype = getMobileSubtype(context);
+			return mobileSubtype == 20; // 5G
+		} catch (Exception e) { LogProxy.e(TAG, "is5G", e); }
+		return false;
 	}
 
 	public static boolean isWap(Context context)
@@ -217,74 +220,54 @@ public class InternetConnectionUtil
 	public static boolean isWifi(Context context)
 	{
 		int type = getNetType(context);
-		return isWifi(type);
-	}
-
-	public static boolean isWifi(int type)
-	{
-		return type == WIFI;
+		return WIFI == type;
 	}
 
 	public static int getNetType(Context context)
 	{
+		ConnectivityManager connectivityManager = getConnectivityManager(context);
+		if (connectivityManager == null) { return NON_NETWORK; }
 
-		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (connectivityManager == null)
-		{
-			return NON_NETWORK;
-		}
 		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-		if (activeNetInfo == null)
-		{
-			return NON_NETWORK;
-		}
+		if (activeNetInfo == null) { return NON_NETWORK; }
 
 		if (activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI)
 		{
 			return WIFI;
-
+		} else if (activeNetInfo.getType() == ConnectivityManager.TYPE_ETHERNET)
+		{
+			return Ethernet;
 		} else
 		{
-			if (activeNetInfo.getExtraInfo() != null)
+			String extraInfo = activeNetInfo.getExtraInfo();
+			if (EmptyUtil.notEmpty(extraInfo))
 			{
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("uninet"))
+				String info = extraInfo.toUpperCase();
+				switch (info)
 				{
-					return UNINET;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("uniwap"))
-				{
-					return UNIWAP;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("3gwap"))
-				{
-					return WAP_3G;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("3gnet"))
-				{
-					return NET_3G;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("cmwap"))
-				{
-					return CMWAP;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("cmnet"))
-				{
-					return CMNET;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("ctwap"))
-				{
-					return CTWAP;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("ctnet"))
-				{
-					return CTNET;
-				}
-				if (activeNetInfo.getExtraInfo().equalsIgnoreCase("LTE"))
-				{
-					return LTE;
+					default:
+						return Unknown;
+					case "UNINET":
+						return UNINET;
+					case "UNIWAP":
+						return UNIWAP;
+					case "3GWAP":
+						return WAP_3G;
+					case "3GNET":
+						return NET_3G;
+					case "CMWAP":
+						return CMWAP;
+					case "CMNET":
+						return CMNET;
+					case "CTWAP":
+						return CTWAP;
+					case "CTNET":
+						return CTNET;
+					case "LTE":
+						return LTE;
 				}
 			}
-			return MOBILE;
+			return Unknown;
 		}
 	}
 
