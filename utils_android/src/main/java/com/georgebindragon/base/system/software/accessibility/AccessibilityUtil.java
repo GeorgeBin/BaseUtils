@@ -1,7 +1,10 @@
 package com.georgebindragon.base.system.software.accessibility;
 
+import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.provider.Settings;
 import android.view.accessibility.AccessibilityManager;
 
@@ -22,7 +25,7 @@ import java.util.List;
  * 修改备注：
  */
 
-
+@SuppressLint("InlinedApi")
 public class AccessibilityUtil
 {
 	private static final String TAG = "AccessibilityUtil-->";
@@ -48,6 +51,35 @@ public class AccessibilityUtil
 				String id = info.getId();
 				if (EmptyUtil.notEmpty(id) && id.contains(packageName) && id.contains(className)) return true;
 			}
+		}
+		return false;
+	}
+
+	// 模拟系统行为：
+
+	public static boolean performGlobalAction_Home(AccessibilityService accessibilityService)
+	{
+		return performGlobalAction(accessibilityService, AccessibilityService.GLOBAL_ACTION_HOME);
+	}
+
+	public static boolean performGlobalAction_Recents(AccessibilityService accessibilityService)
+	{
+		return performGlobalAction(accessibilityService, AccessibilityService.GLOBAL_ACTION_RECENTS);
+	}
+
+	public static boolean performGlobalAction_Back(AccessibilityService accessibilityService)
+	{
+		return performGlobalAction(accessibilityService, AccessibilityService.GLOBAL_ACTION_BACK);
+	}
+
+	public static boolean performGlobalAction(AccessibilityService accessibilityService, int action)
+	{
+		if (null != accessibilityService && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+		{
+			return accessibilityService.performGlobalAction(action);
+		} else
+		{
+			LogProxy.i(TAG, "performGlobalAction-->false");
 		}
 		return false;
 	}
