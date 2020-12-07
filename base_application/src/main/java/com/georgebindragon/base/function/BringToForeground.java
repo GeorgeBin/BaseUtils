@@ -7,11 +7,11 @@ import android.content.Intent;
 
 import com.georgebindragon.base.BaseUtils;
 import com.georgebindragon.base.app.application.ActivitiesManager;
-import com.georgebindragon.base.data.basic.NumberUtil;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.receiver.UtilsActions;
 import com.georgebindragon.base.receiver.callbacks.IBaseReceiverCallBack;
 import com.georgebindragon.base.system.software.ActivityUtil;
+import com.georgebindragon.base.system.software.AppUtil;
 import com.georgebindragon.base.system.software.WindowsUtil;
 import com.georgebindragon.base.utils.EmptyUtil;
 import com.georgebindragon.base.utils.StringUtil;
@@ -32,7 +32,7 @@ public abstract class BringToForeground implements IBaseReceiverCallBack
 {
 	protected String TAG = "BringToForeground: " + getClass().getSimpleName() + "-->";
 
-	private static final String ClickBroadcast_Random = "ClickBroadcast_" + NumberUtil.getRandom(1000000) + "_random";
+	private static final String ClickBroadcast_PackageName = "Broadcast_" + AppUtil.getPackageName() + "_NotificationClick";
 
 	private static String ClickBroadcast = null;
 
@@ -50,7 +50,7 @@ public abstract class BringToForeground implements IBaseReceiverCallBack
 		if (EmptyUtil.isEmpty(ClickBroadcast))
 		{
 			String clickBroadcastString = getClickBroadcastString();
-			ClickBroadcast = EmptyUtil.notEmpty(clickBroadcastString) ? clickBroadcastString : ClickBroadcast_Random;
+			ClickBroadcast = EmptyUtil.notEmpty(clickBroadcastString) ? clickBroadcastString : ClickBroadcast_PackageName;
 		}
 
 		return ClickBroadcast;
