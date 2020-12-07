@@ -29,7 +29,7 @@ public abstract class BaseRemoteServiceHelper
 	protected Context           context;
 	protected ServiceConnection connection= getConnection();
 
-	protected abstract Class getServiceClass();
+	protected abstract Class<?> getServiceClass();
 
 	protected BaseRemoteServiceHelper()
 	{ }
@@ -66,7 +66,7 @@ public abstract class BaseRemoteServiceHelper
 		}
 	}
 
-	private void bindService(Class clasz)
+	private void bindService(Class<?> clasz)
 	{
 		try
 		{
@@ -105,7 +105,7 @@ public abstract class BaseRemoteServiceHelper
 		}
 	}
 
-	private void stopService(Class clasz)
+	private void stopService(Class<?> clasz)
 	{
 		try
 		{
