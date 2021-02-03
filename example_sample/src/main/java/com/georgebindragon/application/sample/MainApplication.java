@@ -6,7 +6,11 @@ import com.georgebindragon.base.app.application.BaseApplication;
 import com.georgebindragon.base.app.lifecycle.AppLifeCycleProxy;
 import com.georgebindragon.base.app.lifecycle.IAppLifeCycle;
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.utils.StringUtil;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 创建人：George
@@ -30,6 +34,15 @@ public class MainApplication extends BaseApplication implements IAppLifeCycle
 	}
 
 	@Override
+	protected IAppLifeCycle getAppLifeCycleImp() { return null; }
+
+	@Override
+	protected void initBaseInMainProcess(Application application)
+	{
+
+	}
+
+	@Override
 	protected void initInMultiProcess(Application application)
 	{
 		AppLifeCycleProxy.setImp(this);
@@ -49,12 +62,18 @@ public class MainApplication extends BaseApplication implements IAppLifeCycle
 	public void onAppStart()
 	{
 		LogProxy.i(TAG, "log测试: onAppStart");
-	}
 
-	@Override
-	public void onAppReceiveBootCompleted()
-	{
-		LogProxy.i(TAG, "log测试: onAppReceiveBootCompleted");
+		Map<String, String> testMap = new HashMap<>();
+		testMap.put("key1", "value1");
+		testMap.put("key2", "value2");
+		testMap.put("key3", "value3");
+		testMap.put("key4", "value4");
+		testMap.put("key5", "value5");
+
+		String printMap = StringUtil.getPrintString(testMap);
+
+		LogProxy.i(TAG, "onAppStart-->printMap=" + printMap);
+
 	}
 
 	@Override

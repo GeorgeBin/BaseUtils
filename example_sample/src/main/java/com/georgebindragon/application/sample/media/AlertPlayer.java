@@ -22,7 +22,7 @@ public class AlertPlayer extends BaseAlertPlayer
 
 	public static AlertPlayer getInstance() { return ourInstance; }
 
-	private static final int[] Rawes = {Raws.ID_Error, Raws.ID_Msg_Send, Raws.ID_PTI, Raws.ID_Take_Photo};
+	private static final int[] Rawes = {Raws.Raw_Error, Raws.Raw_Msg_Send, Raws.Raw_PTI, Raws.Raw_Take_Photo};
 
 	@Override
 	protected int[] getSounds() { return Rawes; }
