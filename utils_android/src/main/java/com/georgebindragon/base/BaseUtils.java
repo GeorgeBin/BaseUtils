@@ -56,7 +56,20 @@ public class BaseUtils
 		LanguageUtil.init(context2);
 	}
 
-	public static Context getContext() { return context; }
+	public static Context getContext()
+	{
+		if (null != context) return context;
+
+		Application applicationByReflect = getApplicationByReflect();
+		if (null != applicationByReflect)
+		{
+			init(applicationByReflect);
+		} else
+		{
+			LogProxy.e(TAG, "getContext", "请调用init手动初始化");
+		}
+		return context;
+	}
 
 	public static Application getApplication()
 	{
