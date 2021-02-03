@@ -1,9 +1,13 @@
 package com.georgebindragon.base.debug;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.utils.EmptyUtil;
+import com.georgebindragon.base.utils.StringUtil;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 创建人：George
@@ -17,88 +21,45 @@ import java.util.List;
  */
 
 
-public class PrintUtil
+public class PrintUtil // extends PrintUtil_Java
 {
 	private static final String TAG = "PrintUtil-->";
 
-	public static void print(String tag, byte[] bytes)
+	public static void printIntent(String tag, Intent intent)
 	{
-		if (null != bytes && bytes.length > 0)
+		boolean logEnable = LogProxy.isLogEnable();
+		System.out.println("getBroadcastIntentDetail-->log是否可见: " + (logEnable ? "可见, 进行打印" : "不可见, 不调用分析打印"));
+		if (!logEnable) return;
+		if (EmptyUtil.isEmpty(tag)) tag = TAG;
+
+		try
 		{
-			LogProxy.d(TAG, "print-->bytes.length=" + bytes.length);
+			if (EmptyUtil.isEmpty(intent)) return;
 
-			StringBuilder buffer = new StringBuilder();
+			StringBuffer sb = new StringBuffer();
 
-			buffer.append("print: ");
-			buffer.append("{");
-			for (byte b : bytes)
+			String action = intent.getAction();
+			sb.append("action:");
+			sb.append(action);
+
+			Bundle extras = intent.getExtras();
+			if (null == extras) return;
+
+			Set<String> keySet = extras.keySet();  //获取所有的Key
+			if (null == keySet) return;
+
+			for (String key : keySet)//bundle.get(key);来获取对应的value
 			{
-				buffer.append(b);
-				buffer.append(",");
+				Object value     = extras.get(key);
+				String keyInfo   = "key" + (EmptyUtil.isEmpty(key) ? "" : "(" + key.getClass().getSimpleName() + ")") + "=" + StringUtil.getPrintString(key);
+				String valueInfo = "value" + (EmptyUtil.isEmpty(value) ? "" : "(" + value.getClass().getSimpleName() + ")") + "=" + StringUtil.getPrintString(value);
+
+				LogProxy.d(tag, "getBroadcastIntentDetail-->extras：Bundle：" + keyInfo + "\t\t" + valueInfo);
 			}
-			buffer.append("}");
-
-			LogProxy.i(EmptyUtil.notEmpty(tag) ? tag : TAG, buffer.toString());
-		} else
+		} catch (Exception e)
 		{
-			LogProxy.i(EmptyUtil.notEmpty(tag) ? tag : TAG, "print-->Empty");
+			e.printStackTrace();
+			LogProxy.e(tag, "getBroadcastIntentDetail", e);
 		}
 	}
-
-	public static void print(String tag, List list)
-	{
-		if (null != list && list.size() > 0)
-		{
-			LogProxy.d(TAG, "print-->list.size()=" + list.size());
-
-			StringBuilder buffer = new StringBuilder();
-
-			buffer.append("print: ");
-			buffer.append("{");
-			for (Object b : list)
-			{
-				buffer.append(b);
-				buffer.append(",");
-			}
-			buffer.append("}");
-
-			LogProxy.i(EmptyUtil.notEmpty(tag) ? tag : TAG, buffer.toString());
-		} else
-		{
-			LogProxy.i(EmptyUtil.notEmpty(tag) ? tag : TAG, "print-->Empty");
-		}
-	}
-
-	public static void printMethodChain(String tag)
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("printMethodChain: ");
-
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		int                 max        = stackTrace.length - 1;
-		int                 min        = 3;
-
-		for (int index = max; index >= min; index--)
-		{
-			StackTraceElement element = stackTrace[index];
-
-			sb.append("\n");
-			sb.append(index == max ? "  " : "↑ ");
-
-			// (类名:行号)  就会变为可点击跳转的内容。(SipAccount.java:112)
-			// ↑ cn.bluetelecom.sdk.sip.inner.imp.SipAccount # onIncomingCall (SipAccount.java:112)
-
-			sb.append(element.getClassName());
-			sb.append(" # ");
-			sb.append(element.getMethodName());
-			sb.append(" (");
-			sb.append(element.getFileName());
-			sb.append(":");
-			sb.append(element.getLineNumber());
-			sb.append(") ");
-		}
-
-		LogProxy.i(EmptyUtil.notEmpty(tag) ? tag : TAG, sb.toString());
-	}
-
 }
