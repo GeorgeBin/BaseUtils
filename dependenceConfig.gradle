@@ -1,0 +1,93 @@
+ext {
+
+    useLocalModule = true //是否使用本地库，true=使用本地库，false=使用远程库
+
+    //配置内使用：
+    Config = [
+            minSdkVersion_old   : 14,
+            minSdkVersion       : 16,
+            targetSdkVersion_old: 20,
+            targetSdkVersion    : 28,
+            compileSdkVersion   : 28,
+    ]
+
+    myGroup = 'com.georgebindragon'
+    DoraemonkitGroup = 'com.didichuxing.doraemonkit'
+    RxJava2Group = 'io.reactivex.rxjava2'
+    QmuiGroup = 'com.qmuiteam'
+
+    //Retrofit2
+    Retrofit2Group = 'com.squareup.retrofit2'
+    Retrofit2Version = '2.5.0'//版本号
+
+    //JakeWharton
+    JakeWharton = 'com.jakewharton'
+    //版本号
+    ButterKnifeVersion = '10.2.0'
+    PhoenixVersion = '2.0.0'
+
+    //依赖内使用：
+    Dependence = [
+
+            //我的基础库  http://jcenter.bintray.com/com/georgebindragon/
+            Utilsjava              : [group: myGroup, name: 'utils-java', version: '1.2.1'],
+            UtilsRx                : [group: myGroup, name: 'utils-rx', version: '1.1.8'],
+            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.2.6'],
+            BaseApplication        : [group: myGroup, name: 'base-application', version: '1.3.4'],
+
+
+            //AndroidX   https://dl.google.com/dl/android/maven2/index.html
+
+            //测试相关
+            Test_Junit             : "junit:junit:4.12",
+            Test_X_Support_Runner  : [group: 'androidx.test', name: 'runner', version: '1.2.0'],
+            Test_X_Support_Espresso: [group: 'androidx.test.espresso', name: 'espresso-core', version: '3.2.0'],
+            //65k支持
+            X_Multidex             : [group: 'androidx.multidex', name: 'multidex', version: '2.0.1'],
+            //AndroidX 支持库依赖
+            Support_X_Appcompat    : [group: 'androidx.appcompat', name: 'appcompat', version: '1.1.0-rc01'],
+            Support_X_RecyclerView : [group: 'androidx.recyclerview', name: 'recyclerview', version: '1.1.0-beta02'],
+
+            //内存泄漏检测 http://jcenter.bintray.com/com/squareup/leakcanary/leakcanary-android/
+            Leakcanary             : "com.squareup.leakcanary:leakcanary-android:2.0-beta-2",
+
+            //开发工具  http://jcenter.bintray.com/com/didichuxing/doraemonkit/
+            Doraemonkit_Debug      : [group: DoraemonkitGroup, name: 'doraemonkit', version: '1.1.8'],
+            Doraemonkit_Release    : [group: DoraemonkitGroup, name: 'doraemonkit-no-op', version: '1.1.8'],
+
+            //数据解析库  http://jcenter.bintray.com/com/google/protobuf/protobuf-lite/
+            ProtobufLite           : "com.google.protobuf:protobuf-lite:3.0.1",
+
+            //Rx库 http://jcenter.bintray.com/io/reactivex/rxjava2/
+            RxJava                 : [group: RxJava2Group, name: 'rxjava', version: '2.2.8'],
+            RxAndroid              : [group: RxJava2Group, name: 'rxandroid', version: '2.1.1'],
+
+            // http://jcenter.bintray.com/com/jakewharton
+
+            // http://jcenter.bintray.com/com/jakewharton/rxrelay2/rxrelay/
+            Rxrelay                : [group: 'com.jakewharton.rxrelay2', name: 'rxrelay', version: '2.1.0'],
+
+            // View绑定
+            RxBinding              : [group: 'com.jakewharton.rxbinding3', name: 'rxbinding-core', version: '3.0.0'],
+            ButterKnife            : [group: JakeWharton, name: 'butterknife', version: ButterKnifeVersion],
+            ButterKnifeCompiler    : [group: JakeWharton, name: 'butterknife-compiler', version: ButterKnifeVersion],
+            Phoenix                : [group: JakeWharton, name: 'process-phoenix', version: PhoenixVersion],
+
+            //UI  http://jcenter.bintray.com/com/qmuiteam/
+            Qmui_Ui                : [group: QmuiGroup, name: 'qmui', version: '1.4.5'],
+            Qmui_Lint              : [group: QmuiGroup, name: 'qmuilint', version: '1.0.1'],
+            Qmui_Lint2             : [group: QmuiGroup, name: 'lint', version: '1.1.0'],
+            Qmui_Arch              : [group: QmuiGroup, name: 'arch', version: '0.7.0'],
+            Qmui_ArchAnnotation    : [group: QmuiGroup, name: 'arch-annotation', version: '0.7.0'],
+            Qmui_ArchCompiler      : [group: QmuiGroup, name: 'arch-compiler', version: '0.7.0'],
+
+            // https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+            // https://jitpack.io/com/github/CymChad/BaseRecyclerViewAdapterHelper/
+            CymChad_BaseAdapter    : [group: 'com.github.CymChad', name: 'BaseRecyclerViewAdapterHelper', version: '2.9.45'],
+
+            //网络库 http://jcenter.bintray.com/com/squareup/retrofit2/retrofit/
+            Retrofit2_Retrofit     : [group: Retrofit2Group, name: 'retrofit', version: Retrofit2Version],
+            Retrofit2_GsonConverter: [group: Retrofit2Group, name: 'converter-gson', version: Retrofit2Version],
+    ]
+
+}

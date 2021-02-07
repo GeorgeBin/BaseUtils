@@ -1,4 +1,5 @@
 //引用配置文件
+apply from:"dependenceConfig.gradle"
 apply from:"localConfig.gradle"
 
 
