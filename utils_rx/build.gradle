@@ -57,5 +57,8 @@ configurations.all {
 }
 
 
-
+// 如果使用本地库，则不能发布版本，因为依赖的不是maven内的库，而是本地库，发布了也不能正常使用
+if (!useLocalModule) {
+    apply from: "${project.getRootDir()}/jcenterConfig_Rx.gradle"
+}
 
