@@ -1,13 +1,13 @@
 //引用配置文件
+apply from:"dependenceConfig.gradle"
 apply from:"localConfig.gradle"
-
 
 buildscript {
     repositories {
         google()
         jcenter()
-
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.0'
         classpath 'com.novoda:bintray-release:0.9.1'
