@@ -1,6 +1,7 @@
-package com.georgebindragon.base.utils;
+package com.georgebindragon.base.debug;
 
 import com.georgebindragon.base.function.log.LogProxy;
+import com.georgebindragon.base.utils.EmptyUtil;
 
 /**
  * 创建人：George
@@ -51,4 +52,16 @@ public class PrintUtil_Java
 		LogProxy.i(EmptyUtil.notEmpty(tag) ? tag : TAG, sb.toString());
 	}
 
+
+	public static PrintTimes printTimes(PrintTimes printOnce, String tag, String... msg)
+	{
+		if (null == printOnce) printOnce = makePrintOnce();
+
+		printOnce.print(tag, msg);
+		return printOnce;
+	}
+
+	public static PrintTimes makePrintOnce() { return new PrintTimes(); }
+
+	public static PrintTimes makePrintTimes(int times) { return new PrintTimes(times); }
 }
