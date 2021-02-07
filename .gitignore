@@ -68,3 +68,4 @@ fastlane/readme.md
 
 .DS_Store
 /jcenter/novoda/
+/jcenter/bintray/
