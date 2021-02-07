@@ -1,1 +1,1 @@
-apply from:"jcenterConfig.gradle"
+apply from:"jcenter/jcenterConfig.gradle"
