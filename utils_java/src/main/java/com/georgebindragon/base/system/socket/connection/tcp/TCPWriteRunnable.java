@@ -6,14 +6,11 @@ import com.georgebindragon.base.system.socket.base.thread.BaseConnectionWriteLoo
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.SocketException;
 
 public class TCPWriteRunnable extends BaseConnectionWriteLoopThread
 {
-	private static final String TAG = "TCPWriteRunnable-->";
-
-	private OutputStream outputStream;
-	private long         socketMark;
+	protected OutputStream outputStream;
+	protected long         socketMark;
 
 	//---------------------------------------------------------外部接口操作---------------------------------------------------------
 
@@ -37,10 +34,7 @@ public class TCPWriteRunnable extends BaseConnectionWriteLoopThread
 			{
 				outputStream.write(sendBytes, 0, sendBytes.length);//非阻塞
 				outputStream.flush();
-			}catch (SocketException e)
-			{
-				LogProxy.e(TAG, "write e=" + e.getMessage());
-			}catch (IOException e)
+			} catch (Exception e)
 			{
 				LogProxy.e(TAG, "write e=" + e.getMessage());
 			}
