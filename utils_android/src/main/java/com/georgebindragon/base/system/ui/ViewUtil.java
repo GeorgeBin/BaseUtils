@@ -1,8 +1,6 @@
 package com.georgebindragon.base.system.ui;
 
 import android.content.Context;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,25 +45,20 @@ public class ViewUtil
 		}
 	}
 
+	private static final int InputType_PSW_Hide    = EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD;// 129
+	private static final int InputType_PSW_Visible = EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;//145
+	// 如果显示时使用值=128，则此时为文本输入，并非密码输入，如果系统有安全键盘（例如 MIUI系统），则会有键盘切换
+
 	//设置密码可见和不可见
 	public static void setPasswordVisibility(EditText editText, boolean setVisible)
 	{
 		if (null != editText)
 		{
 			int selectionEnd = editText.getSelectionEnd();
-			if (setVisible)
-			{
-				// 设置为可见
-				editText.setInputType(EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-				editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-			} else
-			{
-				// 设置为不可见
-				editText.setInputType(EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
-				editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-			}
+			int length       = editText.getText().toString().length();
 
-			int length = editText.getText().toString().length();
+			int type = setVisible ? InputType_PSW_Visible : InputType_PSW_Hide;
+			editText.setInputType(type);// setInputType方法内有调用 setTransformationMethod
 
 			editText.setSelection((Math.min(selectionEnd, length)));//执行上面的代码后光标会处于输入框的最前方-->重置光标位置
 		}
