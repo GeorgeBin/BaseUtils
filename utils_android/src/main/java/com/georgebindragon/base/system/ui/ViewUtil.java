@@ -47,10 +47,20 @@ public class ViewUtil
 		}
 	}
 
-	//设置密码可见和不可见
+	//设置密码是否可见
 	public static void setPasswordVisibility(EditText editText, boolean setVisible)
 	{
-		setPasswordVisibilityByTransformation(editText, setVisible);
+		if (null != editText)
+		{
+			int inputType = editText.getInputType();
+			if (inputType == InputType_PSW_Hide || inputType == InputType_PSW_Visible)
+			{
+				setPasswordVisibilityByType(editText, setVisible);
+			} else
+			{
+				setPasswordVisibilityByTransformation(editText, setVisible);
+			}
+		}
 	}
 
 	private static final int InputType_PSW_Hide    = EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD;// 129
@@ -72,7 +82,7 @@ public class ViewUtil
 		}
 	}
 
-	//设置密码可见和不可见，使用条件：无限制
+	//设置密码可见和不可见，使用条件：无限制，但显示样式与上方用type设置不同
 	public static void setPasswordVisibilityByTransformation(EditText editText, boolean setVisible)
 	{
 		if (null != editText)
