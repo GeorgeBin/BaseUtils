@@ -21,45 +21,82 @@ import java.util.Set;
  */
 
 
-public class PrintUtil // extends PrintUtil_Java
+public class PrintUtil extends PrintUtil_Java
 {
 	private static final String TAG = "PrintUtil-->";
 
 	public static void printIntent(String tag, Intent intent)
 	{
 		boolean logEnable = LogProxy.isLogEnable();
-		System.out.println("getBroadcastIntentDetail-->log是否可见: " + (logEnable ? "可见, 进行打印" : "不可见, 不调用分析打印"));
+		System.out.println("printIntent-->log是否可见: " + (logEnable ? "可见, 进行打印" : "不可见, 不调用分析打印"));
 		if (!logEnable) return;
 		if (EmptyUtil.isEmpty(tag)) tag = TAG;
 
-		try
+		LogProxy.d(tag, "printIntent-->"+getIntentString(intent));
+	}
+
+	public static String getIntentString(Intent intent)
+	{
+		StringBuilder buffer = new StringBuilder();
+
+		if (EmptyUtil.notEmpty(intent))
 		{
-			if (EmptyUtil.isEmpty(intent)) return;
-
-			StringBuffer sb = new StringBuffer();
-
-			String action = intent.getAction();
-			sb.append("action:");
-			sb.append(action);
-
-			Bundle extras = intent.getExtras();
-			if (null == extras) return;
-
-			Set<String> keySet = extras.keySet();  //获取所有的Key
-			if (null == keySet) return;
-
-			for (String key : keySet)//bundle.get(key);来获取对应的value
+			try
 			{
-				Object value     = extras.get(key);
-				String keyInfo   = "key" + (EmptyUtil.isEmpty(key) ? "" : "(" + key.getClass().getSimpleName() + ")") + "=" + StringUtil.getPrintString(key);
-				String valueInfo = "value" + (EmptyUtil.isEmpty(value) ? "" : "(" + value.getClass().getSimpleName() + ")") + "=" + StringUtil.getPrintString(value);
+				buffer.append("Intent");
+				buffer.append(":{");
 
-				LogProxy.d(tag, "getBroadcastIntentDetail-->extras：Bundle：" + keyInfo + "\t\t" + valueInfo);
-			}
-		} catch (Exception e)
+				String action = intent.getAction();
+				buffer.append("action=");
+				buffer.append(action);
+				buffer.append(",");
+
+				Bundle extras = intent.getExtras();
+				if (EmptyUtil.notEmpty(extras))
+				{
+					buffer.append("Bundle:{");
+
+					Set<String> keySet = extras.keySet(); //获取所有的Key
+					if (EmptyUtil.notEmpty(keySet))
+					{
+						for (String key : keySet)
+						{
+							if (EmptyUtil.notEmpty(key))
+							{
+								buffer.append("<");
+								buffer.append(key.getClass().getSimpleName());
+								buffer.append("=");
+								buffer.append(StringUtil.getObjectString(key));
+								buffer.append(">");
+								buffer.append(",");
+
+								Object value = extras.get(key);
+								if (EmptyUtil.notEmpty(value))
+								{
+									buffer.append("<");
+									buffer.append(value.getClass().getSimpleName());
+									buffer.append("=");
+									buffer.append(StringUtil.getObjectString(value));
+									buffer.append(">");
+								} else
+								{
+									buffer.append("");
+								}
+							} else
+							{
+								buffer.append("");
+							}
+							buffer.append(",");
+						}
+					}
+					buffer.append("}");
+				}
+				buffer.append("}");
+			} catch (Exception e) { LogProxy.e(TAG, "getIntentString", e); }
+		} else
 		{
-			e.printStackTrace();
-			LogProxy.e(tag, "getBroadcastIntentDetail", e);
+			return null;
 		}
+		return buffer.toString();
 	}
 }
