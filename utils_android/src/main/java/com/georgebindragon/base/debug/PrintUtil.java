@@ -47,6 +47,7 @@ public class PrintUtil extends PrintUtil_Java
 				buffer.append(":{");
 
 				String action = intent.getAction();
+				buffer.append("\n");
 				buffer.append("action=");
 				buffer.append(action);
 				buffer.append(",");
@@ -54,6 +55,7 @@ public class PrintUtil extends PrintUtil_Java
 				Bundle extras = intent.getExtras();
 				if (EmptyUtil.notEmpty(extras))
 				{
+					buffer.append("\n");
 					buffer.append("Bundle:{");
 
 					Set<String> keySet = extras.keySet(); //获取所有的Key
@@ -61,9 +63,11 @@ public class PrintUtil extends PrintUtil_Java
 					{
 						for (String key : keySet)
 						{
+							buffer.append("\n");
+							buffer.append("\t");
+							buffer.append("<");
 							if (EmptyUtil.notEmpty(key))
 							{
-								buffer.append("<");
 								buffer.append(key.getClass().getSimpleName());
 								buffer.append("=");
 								buffer.append(StringUtil.getObjectString(key));
@@ -77,18 +81,24 @@ public class PrintUtil extends PrintUtil_Java
 									buffer.append(StringUtil.getObjectString(value));
 								} else
 								{
-									buffer.append("");
+									buffer.append(value);
 								}
-								buffer.append(">");
 							} else
 							{
-								buffer.append("");
+								buffer.append("null,null");
 							}
+							buffer.append(">");
 							buffer.append(",");
+							buffer.append("\n");
 						}
+					} else
+					{
+						buffer.append(keySet);
 					}
+					buffer.append("\t");
 					buffer.append("}");
 				}
+				buffer.append("\n");
 				buffer.append("}");
 			} catch (Exception e) { LogProxy.e(TAG, "getIntentString", e); }
 		} else
