@@ -67,21 +67,19 @@ public class PrintUtil extends PrintUtil_Java
 								buffer.append(key.getClass().getSimpleName());
 								buffer.append("=");
 								buffer.append(StringUtil.getObjectString(key));
-								buffer.append(">");
 								buffer.append(",");
 
 								Object value = extras.get(key);
 								if (EmptyUtil.notEmpty(value))
 								{
-									buffer.append("<");
 									buffer.append(value.getClass().getSimpleName());
 									buffer.append("=");
 									buffer.append(StringUtil.getObjectString(value));
-									buffer.append(">");
 								} else
 								{
 									buffer.append("");
 								}
+								buffer.append(">");
 							} else
 							{
 								buffer.append("");
