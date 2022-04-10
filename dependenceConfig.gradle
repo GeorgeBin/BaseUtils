@@ -32,7 +32,7 @@ ext {
             //我的基础库  http://jcenter.bintray.com/com/georgebindragon/
             Utilsjava              : [group: myGroup, name: 'utils-java', version: '1.5.0'],
             UtilsRx                : [group: myGroup, name: 'utils-rx', version: '1.5.0'],
-            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.2.6'],
+            Utilsandroid           : [group: myGroup, name: 'utils-android', version: '1.5.0'],
             BaseApplication        : [group: myGroup, name: 'base-application', version: '1.3.4'],
 
 
