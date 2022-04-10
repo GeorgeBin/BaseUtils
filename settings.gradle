@@ -1,7 +1,22 @@
-//引用配置文件
-apply from:"dependenceConfig.gradle"
-apply from:"localConfig.gradle"
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" } //https://github.com/CymChad/BaseRecyclerViewAdapterHelper 需要
+        jcenter()// = http://jcenter.bintray.com
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" } //https://github.com/CymChad/BaseRecyclerViewAdapterHelper 需要
+        jcenter()// = http://jcenter.bintray.com
+    }
+}
 
 include ':utils_java'
 include ':utils_android'
