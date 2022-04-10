@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.georgebindragon.base.app.R;
+import androidx.annotation.Nullable;
+
 import com.georgebindragon.base.app.ui.activity.base.BaseActivity;
 import com.georgebindragon.base.function.log.LogProxy;
 import com.georgebindragon.base.rx.utils.RxCommonUtil;
-import com.georgebindragon.base.system.software.ActivityUtil;
 import com.georgebindragon.base.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -93,7 +92,8 @@ public abstract class BaseActivityPro extends BaseActivity
 	@Override
 	public void finish()
 	{
-		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);//页面切换方式
+		overridePendingTransition(com.qmuiteam.qmui.arch.R.anim.slide_in_right,
+				com.qmuiteam.qmui.arch.R.anim.slide_still);//页面切换方式
 
 		super.finish();
 	}
@@ -196,7 +196,7 @@ public abstract class BaseActivityPro extends BaseActivity
 	{
 		LogProxy.i(TAG, "jumpActivity 1-->intent=" + StringUtil.getPrintString(intent), "needFinish=" + needFinish);
 
-		ActivityUtil.jumpActivity(this,intent);
+		startActivity(intent);
 		if (needFinish) finish();
 	}
 }
