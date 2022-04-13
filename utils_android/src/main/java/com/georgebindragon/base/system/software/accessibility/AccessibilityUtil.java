@@ -62,7 +62,7 @@ public class AccessibilityUtil
 		return performGlobalAction(accessibilityService, AccessibilityService.GLOBAL_ACTION_HOME);
 	}
 
-	public static boolean performGlobalAction_Recents(AccessibilityService accessibilityService)
+	public static boolean performGlobalAction_Recent(AccessibilityService accessibilityService)
 	{
 		return performGlobalAction(accessibilityService, AccessibilityService.GLOBAL_ACTION_RECENTS);
 	}
