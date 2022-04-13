@@ -28,19 +28,5 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:overrideLibrary="com.didichuxing.doraemonkit"
         tools:targetApi="n">
-
-        <meta-data
-            android:name="notch.config"
-            android:value="portrait|landscape" />
-
-        <!--适配全面屏: 长宽比3-->
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="3" />
-
-        <!--适配刘海屏-->
-        <meta-data
-            android:name="android.notch_support"
-            android:value="true" />
     </application>
 </manifest>
