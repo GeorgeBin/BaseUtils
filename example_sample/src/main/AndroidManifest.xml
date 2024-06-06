@@ -29,6 +29,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <!-- 注意：不能设置为singleTask -->
         <activity
+            android:exported="true"
             android:name=".MainActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
