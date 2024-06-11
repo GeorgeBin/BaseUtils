@@ -399,7 +399,7 @@ public class DigitalTransUtil
 		{
 			String swap    = "" + arr[i++] + arr[i];
 			int    byteint = Integer.parseInt(swap, 16) & 0xFF;
-			b[j] = new Integer(byteint).byteValue();
+			b[j] = Integer.valueOf(byteint).byteValue();
 		}
 		return b;
 	}
