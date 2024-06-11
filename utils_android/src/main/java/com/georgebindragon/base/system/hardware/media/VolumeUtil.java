@@ -76,10 +76,30 @@ public class VolumeUtil
 
 	public static void adjustStreamVolume(Context context, int streamType, int direction, int flags)
 	{
-		AudioManager localAudioManager = AudioManagerUtil.getAudioManager(context);;
+		AudioManager localAudioManager = AudioManagerUtil.getAudioManager(context);
 		if (null != localAudioManager)
 		{
 			localAudioManager.adjustStreamVolume(streamType, direction, flags);
 		}
+	}
+
+	public static int getStreamVolume(Context context, int type)
+	{
+		AudioManager localAudioManager = AudioManagerUtil.getAudioManager(context);
+		if (null != localAudioManager && type >= -1 && type <= 11)
+		{
+			return localAudioManager.getStreamVolume(type);
+		}
+		return -1;
+	}
+
+	public static int getStreamMaxVolume(Context context, int type)
+	{
+		AudioManager localAudioManager = AudioManagerUtil.getAudioManager(context);
+		if (null != localAudioManager && type >= -1 && type <= 11)
+		{
+			return localAudioManager.getStreamMaxVolume(type);
+		}
+		return -1;
 	}
 }
