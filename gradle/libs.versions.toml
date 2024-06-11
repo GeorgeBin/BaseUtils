@@ -1,0 +1,87 @@
+[versions]
+androidDesugarJdkLibs = "2.0.4"
+androidGradlePlugin = "8.0.2"
+ksp = "1.8.21-1.0.11"
+butterKnifeVersion = '10.2.0'
+phoenixVersion = '2.0.0'
+retrofit2Version = '2.5.0'
+agp = "8.3.2"
+kotlin = "1.9.23"
+
+minSdkVersionOld = '14'
+minSdkVersion = '16'
+targetSdkVersionOld = '20'
+targetSdkVersion = '28'
+compileSdkVersion = '28'
+
+[libraries]
+# tencent-mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+
+# 我的基础库  http://jcenter.bintray.com/com/georgebindragon/
+utilsjava = { group = "com.georgebindragon", name = "utils-java", version = "1.5.0" }
+utilsRx = { group = "com.georgebindragon", name = 'utils-rx', version = '1.5.0' }
+utilsandroid = { group = "com.georgebindragon", name = 'utils-android', version = '1.5.0' }
+baseApplication = { group = "com.georgebindragon", name = 'base-application', version = '1.5.0' }
+
+
+# AndroidX   https://dl.google.com/dl/android/maven2/index.html
+
+# 测试相关
+testJunit = "junit:junit:4.12"
+testXSupportRunner = { group = 'androidx.test', name = 'runner', version = '1.2.0' }
+testXSupportEspresso = { group = 'androidx.test.espresso', name = 'espresso-core', version = '3.2.0' }
+# 65k支持
+xMultidex = { group = 'androidx.multidex', name = 'multidex', version = '2.0.1' }
+# AndroidX 支持库依赖
+supportXAppcompat = { group = 'androidx.appcompat', name = 'appcompat', version = '1.1.0-rc01' }
+supportXRecyclerView = { group = 'androidx.recyclerview', name = 'recyclerview', version = '1.1.0-beta02' }
+
+# 内存泄漏检测 http://jcenter.bintray.com/com/squareup/leakcanary/leakcanary-android/
+leakcanary = "com.squareup.leakcanary:leakcanary-android:2.0-beta-2"
+
+# 开发工具  http://jcenter.bintray.com/com/didichuxing/doraemonkit/
+doraemonkitDebug = { group = "com.didichuxing.doraemonkit", name = 'doraemonkit', version = '1.1.8' }
+doraemonkitRelease = { group = "com.didichuxing.doraemonkit", name = 'doraemonkit-no-op', version = '1.1.8' }
+
+# 数据解析库  http://jcenter.bintray.com/com/google/protobuf/protobuf-lite/
+protobufLite = "com.google.protobuf:protobuf-lite:3.0.1"
+
+# Rx库 http://jcenter.bintray.com/io/reactivex/rxjava2/
+rxJava = { group = "com.squareup.retrofit2", name = 'rxjava', version = '2.2.8' }
+rxAndroid = { group = "com.squareup.retrofit2", name = 'rxandroid', version = '2.1.1' }
+
+# http://jcenter.bintray.com/com/jakewharton
+
+# http://jcenter.bintray.com/com/jakewharton/rxrelay2/rxrelay/
+rxrelay = { group = 'com.jakewharton.rxrelay2', name = 'rxrelay', version = '2.1.0' }
+
+# View 绑定
+rxBinding = { group = 'com.jakewharton.rxbinding3', name = 'rxbinding-core', version = '3.0.0' }
+butterKnife = { group = "com.jakewharton", name = 'butterknife', version.ref = "butterKnifeVersion" }
+butterKnifeCompiler = { group = "com.jakewharton", name = 'butterknife-compiler', version = "butterKnifeVersion" }
+phoenix = { group = "com.jakewharton", name = 'process-phoenix', version = "phoenixVersion" }
+
+# UI  http://jcenter.bintray.com/com/qmuiteam/
+qmui_Ui = { group = "com.qmuiteam", name = 'qmui', version = '1.4.5' }
+qmui_Lint = { group = "com.qmuiteam", name = 'qmuilint', version = '1.0.1' }
+qmui_Lint2 = { group = "com.qmuiteam", name = 'lint', version = '1.1.0' }
+qmui_Arch = { group = "com.qmuiteam", name = 'arch', version = '0.7.0' }
+qmui_ArchAnnotation = { group = "com.qmuiteam", name = 'arch-annotation', version = '0.7.0' }
+qmui_ArchCompiler = { group = "com.qmuiteam", name = 'arch-compiler', version = '0.7.0' }
+
+# https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+# https://jitpack.io/com/github/CymChad/BaseRecyclerViewAdapterHelper/
+cymChadBaseAdapter = { group = 'com.github.CymChad', name = 'BaseRecyclerViewAdapterHelper', version = '2.9.45' }
+
+# 网络库 http://jcenter.bintray.com/com/squareup/retrofit2/retrofit/
+retrofit2Retrofit = { group = "com.squareup.retrofit2", name = 'retrofit', version = "retrofit2Version" }
+retrofit2GsonConverter = { group = "com.squareup.retrofit2", name = 'converter-gson', version = "retrofit2Version" }
+
+[plugins]
+#ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+#serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
