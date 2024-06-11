@@ -210,17 +210,11 @@ public class MainActivity extends AppCompatActivity implements MainView, PhoneCa
 	public void onClick(View v)
 	{
 		int id = v.getId();
-		switch (id)
-		{
-			case R.id.btn:
-				reFreshManuallyByFrequency();
-				break;
-			case R.id.test_alarm_btn:
-				testAlarm();
-				break;
-			default:
-				break;
-		}
+    if (id == R.id.btn) {
+      reFreshManuallyByFrequency();
+    } else if (id == R.id.test_alarm_btn) {
+      testAlarm();
+    }
 	}
 
 	private static final long ID = 111111;
