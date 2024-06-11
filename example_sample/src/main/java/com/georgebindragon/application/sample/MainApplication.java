@@ -30,7 +30,7 @@ public class MainApplication extends BaseApplication implements IAppLifeCycle
 	@Override
 	protected boolean isLogEnable()
 	{
-		return BuildConfig.DEBUG;
+		return true;
 	}
 
 	@Override
@@ -39,7 +39,6 @@ public class MainApplication extends BaseApplication implements IAppLifeCycle
 	@Override
 	protected void initBaseInMainProcess(Application application)
 	{
-
 	}
 
 	@Override

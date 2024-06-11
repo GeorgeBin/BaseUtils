@@ -4,7 +4,6 @@ package com.georgebindragon.base.debug;
 import android.content.pm.ApplicationInfo;
 
 import com.georgebindragon.base.BaseUtils;
-import com.georgebindragon.base.android.BuildConfig;
 
 /**
  * 创建人：George
@@ -24,7 +23,7 @@ public class DebugUtil
 {
 	public static boolean isBuildDebug()
 	{
-		return BuildConfig.DEBUG;//做为库, 一直是complete版本, 所以一直返回false
+		return false;//做为库, 一直是complete版本, 所以一直返回false
 	}
 
 	public static boolean isDebug()
