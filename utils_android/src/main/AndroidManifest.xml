@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.georgebindragon.base.android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <!-- 网络状态 -->
@@ -19,7 +18,9 @@
 
     <application>
 
-        <receiver android:name="com.georgebindragon.base.receiver.UtilsReceiver">
+        <receiver
+            android:name="com.georgebindragon.base.receiver.UtilsReceiver"
+            android:exported="false">
             <intent-filter>
                 <!--    屏蔽开机启动广播，App自行实现，因为可能会有回调不及时的问题    -->
                 <!-- <action android:name="android.intent.action.BOOT_COMPLETED"/>-->
