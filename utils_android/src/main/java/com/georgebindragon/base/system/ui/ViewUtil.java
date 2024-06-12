@@ -10,7 +10,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.georgebindragon.base.BaseUtils;
-import com.georgebindragon.base.utils.EmptyUtil;
 
 /**
  * 创建人：George
@@ -37,15 +36,6 @@ public class ViewUtil
 		return from.inflate(res, rootView);
 	}
 
-
-	public static void setTextAndSelection(EditText editText, String info)
-	{
-		if (null != editText)
-		{
-			editText.setText(info);
-			editText.setSelection(EmptyUtil.isEmpty(info) ? 0 : info.length());
-		}
-	}
 
 	//设置密码是否可见
 	public static void setPasswordVisibility(EditText editText, boolean setVisible)
