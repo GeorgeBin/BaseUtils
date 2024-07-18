@@ -49,19 +49,37 @@ android {
 
   // 自定义资源
   sourceSets {
-
-    val mainRoot = "main"// 原 main 目录
-    val basicRoot = "basic"// 基础：网络等
-    val basicNetwork = "$basicRoot/network"
+    // 主要有：aidl、assets、jniLibs、java、kotlin、res、manifest
+    // manifest：每个类型下，只能定义一个。参考：https://developer.android.com/build/build-variants
+    // 原 main 目录下的，要在最后声明（自动生成的文件，会在这个路径下）
 
     getByName("main") {
-      manifest.srcFile("src/$basicRoot/AndroidManifest.xml")
-      res.srcDir("src/$basicNetwork/res")
 
-      // 原 main 目录下的，要在最后声明
-      res.srcDir("src/$mainRoot/res")
-      manifest.srcFile("src/$mainRoot/AndroidManifest.xml")
+      // basic：基础
+      val basicRoot = "basic"// 基础：网络、权限、等
+      // basic-network
+      val basicNetwork = "$basicRoot/network"
+      val basicNetworkRes = "src/$basicNetwork/res"
+      // basic-launch icon：启动器图标
+      val basicLaunchIcon = "$basicRoot/icon"
+      val basicLaunchIconRes = "src/$basicLaunchIcon/res"
+
+      // flavor：定制。可定制内容：应用图标、应用名称、包名？
+      val flavorRoot = "flavor"
+      val flavorXXX = "$flavorRoot/xxx"
+      val flavorXXXRes = "src/$flavorXXX/res"
+
+      // res
+      val resList = listOf(basicNetworkRes, basicLaunchIconRes, flavorXXXRes, "src/main/res")
+      res.srcDirs(resList)
+
     }
+
+    // getByName("debug") {
+    //   res.srcDirs(resList)
+    //   manifest.srcDirs(resList)
+    //   // manifest 只能定义一个，可以设置多维度，进行组合
+    // }
 
   }
 }
