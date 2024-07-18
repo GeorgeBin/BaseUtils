@@ -46,6 +46,24 @@ android {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
   }
+
+  // 自定义资源
+  sourceSets {
+
+    val mainRoot = "main"// 原 main 目录
+    val basicRoot = "basic"// 基础：网络等
+    val basicNetwork = "$basicRoot/network"
+
+    getByName("main") {
+      manifest.srcFile("src/$basicRoot/AndroidManifest.xml")
+      res.srcDir("src/$basicNetwork/res")
+
+      // 原 main 目录下的，要在最后声明
+      res.srcDir("src/$mainRoot/res")
+      manifest.srcFile("src/$mainRoot/AndroidManifest.xml")
+    }
+
+  }
 }
 
 dependencies {
