@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--普通值的配置-->
+
+    <!--默认IP地址-->
+    <string name="custom_default_value_ip_string" translatable="false">210.51.10.122</string>
+
+</resources>

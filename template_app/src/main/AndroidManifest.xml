@@ -1,24 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
 
+    tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware
+    ,Deprecated,DeprecatedWarning">
+
+  <!--++++++++++++++++++++++ 权限 ++++++++++++++++++++++-->
+  <!--++++++++++ 无感权限 ++++++++++-->
+  <!--+++ 必备 +++-->
+  <uses-permission android:name="android.permission.BROADCAST_STICKY" /><!-- 发送广播 -->
+  <uses-permission android:name="android.permission.VIBRATE" /><!-- 震动 -->
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /><!-- 接收关机广播 -->
+  <uses-permission android:name="android.permission.FLASHLIGHT" /><!-- 闪光灯 -->
+  <!--+++ 基础 +++-->
+  <uses-permission android:name="android.permission.INTERNET" /><!-- 联网 -->
+  <uses-permission android:name="android.permission.BLUETOOTH" /><!-- 蓝牙 -->
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /><!-- 蓝牙控制 -->
+  <uses-permission android:name="android.permission.WAKE_LOCK" /><!-- 唤醒设备 -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /><!-- 前台服务 -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" /><!-- Android 14 开始，前台服务要填写具体类型 -->
+  <uses-permission android:name="android.permission.REORDER_TASKS" />
+  <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+  <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+  <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+  <uses-permission android:name="android.permission.SET_WALLPAPER" /><!-- 设置壁纸 -->
+  <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" /><!-- 设置壁纸 -->
+  <!-- WiFi 状态 -->
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+  <!-- 网络状态 -->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /><!-- 解锁手机 -->
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /><!-- 设置播放通道、免提模式 -->
+  <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+  <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" /><!-- 展开系统通知栏 -->
+  <uses-permission android:name="android.permission.SUBSCRIBED_FEEDS_READ" />
+  <uses-permission android:name="android.permission.TRANSMIT_IR" />
+  <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+  <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+  <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" /><!-- 电话状态 -->
+  <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /><!-- 监听通话状态 -->
+  <!-- 快捷方式 -->
+  <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+  <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+
+  <!--++++++++++ 自动申请权限 ++++++++++-->
+  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+  <!--++++++++++ 动态权限 ++++++++++-->
+  <!-- 定位 -->
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+  <!-- 存储 -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+  <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
+  <!-- 摄像头 -->
+  <uses-permission android:name="android.permission.CAMERA" />
+  <!-- 录音 -->
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+
+  <!--++++++++++ 特殊权限 ++++++++++-->
+  <!--+++ 悬浮窗（显示在其他应用上层） +++-->
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+  <!--+++ 节电模式（需要主动申请） +++-->
+  <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+  <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+  <!--++++++++++ 第三方权限 ++++++++++-->
+  <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" /><!-- 百度定位 -->
+
+
+  <!--++++++++++++++++++ application ++++++++++++++++++-->
+  <!--  参考：https://developer.android.com/guide/topics/manifest/application-element-->
   <application
       android:allowBackup="true"
-      android:icon="@mipmap/ic_launcher"
+      android:icon="@mipmap/app_launch_icon"
       android:label="@string/app_name"
-      android:roundIcon="@mipmap/ic_launcher_round"
+      android:largeHeap="true"
+      android:networkSecurityConfig="@xml/network_security_config"
       android:supportsRtl="true"
-      android:theme="@style/Theme.BaseUtils">
+      android:theme="@style/Theme.BaseUtils"
+      android:usesCleartextTraffic="true">
+
+    <!--++++++++++ activity ++++++++++-->
     <activity
         android:name=".MainActivity"
         android:exported="true"
-        android:label="@string/app_name"
         android:theme="@style/Theme.BaseUtils">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+
   </application>
 
 </manifest>

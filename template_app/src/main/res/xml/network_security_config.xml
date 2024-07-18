@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="InsecureBaseConfiguration">
+  <!--  Android 9.0 开始，限制明文流量网络请求 -->
+  <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
