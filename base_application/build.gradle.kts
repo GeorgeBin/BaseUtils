@@ -1,6 +1,8 @@
 plugins {
-  alias(libs.plugins.androidLibrary)
-  alias(libs.plugins.jetbrainsKotlinAndroid)
+  id(libs.plugins.androidLibrary.get().pluginId)
+  id(libs.plugins.jetbrainsKotlinAndroid.get().pluginId)
+  // id(libs.plugins.androidApplication.get().pluginId) apply false
+  // id(libs.plugins.jetbrainsKotlinAndroid.get().pluginId) apply false
 }
 
 android {
@@ -65,11 +67,11 @@ dependencies {
   api(libs.supportXRecyclerView)
 
   //腾讯 UI库
-  api(libs.qmui.ui)
-  api(libs.qmui.lint)
-  api(libs.qmui.lint2)
-  api(libs.qmui.arch)
-  api(libs.qmui.archAnnotation)
+  api(libs.qmuiUi)
+  api(libs.qmuiLint)
+  api(libs.qmuiLint2)
+  api(libs.qmuiArch)
+  api(libs.qmuiArchAnnotation)
 
   //RecyclerView Adapter
   api(libs.cymChadBaseAdapter)

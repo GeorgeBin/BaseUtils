@@ -1,23 +1,29 @@
 [versions]
 androidDesugarJdkLibs = "2.0.4"
-androidGradlePlugin = "8.5.0"
+#androidGradlePlugin = "8.5.0"
 ksp = "1.8.21-1.0.11"
 butterKnifeVersion = '10.2.0'
 phoenixVersion = '2.0.0'
 retrofit2Version = '2.5.0'
 agp = "8.5.0"
-kotlin = "1.9.23"
+kotlin = "1.9.0"
 
 minSdkVersionOld = '14'
 minSdkVersion = '16'
 targetSdkVersionOld = '20'
 targetSdkVersion = '28'
 compileSdkVersion = '28'
+kotlinGradlePlugin = "1.9.0"
+coreKtx = "1.13.1"
+junit = "1.2.1"
+lifecycleRuntimeKtx = "2.8.3"
+activityCompose = "1.9.0"
+composeBom = "2024.04.01"
 
 [libraries]
 # tencent-mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
-android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 
 # 我的基础库  http://jcenter.bintray.com/com/georgebindragon/
 utilsjava = { group = "com.georgebindragon", name = "utils-java", version = "1.5.0" }
@@ -64,12 +70,12 @@ butterKnifeCompiler = { group = "com.jakewharton", name = 'butterknife-compiler'
 phoenix = { group = "com.jakewharton", name = 'process-phoenix', version = "phoenixVersion" }
 
 # UI  http://jcenter.bintray.com/com/qmuiteam/
-qmui_Ui = { group = "com.qmuiteam", name = 'qmui', version = '1.4.5' }
-qmui_Lint = { group = "com.qmuiteam", name = 'qmuilint', version = '1.0.1' }
-qmui_Lint2 = { group = "com.qmuiteam", name = 'lint', version = '1.1.0' }
-qmui_Arch = { group = "com.qmuiteam", name = 'arch', version = '0.7.0' }
-qmui_ArchAnnotation = { group = "com.qmuiteam", name = 'arch-annotation', version = '0.7.0' }
-qmui_ArchCompiler = { group = "com.qmuiteam", name = 'arch-compiler', version = '0.7.0' }
+qmuiUi = { group = "com.qmuiteam", name = 'qmui', version = '1.4.5' }
+qmuiLint = { group = "com.qmuiteam", name = 'qmuilint', version = '1.0.1' }
+qmuiLint2 = { group = "com.qmuiteam", name = 'lint', version = '1.1.0' }
+qmuiArch = { group = "com.qmuiteam", name = 'arch', version = '0.7.0' }
+qmuiArchAnnotation = { group = "com.qmuiteam", name = 'arch-annotation', version = '0.7.0' }
+qmuiArchCompiler = { group = "com.qmuiteam", name = 'arch-compiler', version = '0.7.0' }
 
 # https://github.com/CymChad/BaseRecyclerViewAdapterHelper
 # https://jitpack.io/com/github/CymChad/BaseRecyclerViewAdapterHelper/
@@ -78,6 +84,19 @@ cymChadBaseAdapter = { group = 'com.github.CymChad', name = 'BaseRecyclerViewAda
 # 网络库 http://jcenter.bintray.com/com/squareup/retrofit2/retrofit/
 retrofit2Retrofit = { group = "com.squareup.retrofit2", name = 'retrofit', version = "retrofit2Version" }
 retrofit2GsonConverter = { group = "com.squareup.retrofit2", name = 'converter-gson', version = "retrofit2Version" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+material3 = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
 #ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -85,3 +104,7 @@ retrofit2GsonConverter = { group = "com.squareup.retrofit2", name = 'converter-g
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+
+#androidApplication = { id = "com.android.application" }
+#jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android" }
+#androidLibrary = { id = "com.android.library" }

@@ -43,3 +43,4 @@ include(":base_application")
 include(":utils_kotlin")
 
 include(":example_sample")
+include(":template_app")

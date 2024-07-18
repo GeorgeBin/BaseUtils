@@ -4,19 +4,22 @@ buildscript {
         google()
         mavenLocal()
     }
+  dependencies {
+    classpath(libs.kotlin.gradle.plugin)
+  }
 
-    // dependencies {
-    //     classpath(libs.android.gradlePlugin)
-    //     classpath(libs.kotlin.gradlePlugin)
-    //     classpath(libs.secrets.gradlePlugin)
-    //     classpath(libs.benchmark.gradlePlugin)
-    // }
+  dependencies {
+        classpath(libs.android.gradlePlugin)
+        // classpath(libs.kotlin.gradlePlugin)
+        // classpath(libs.secrets.gradlePlugin)
+        // classpath(libs.benchmark.gradlePlugin)
+    }
 }
 
-// plugins {
-//     alias(libs.plugins.androidApplication) apply false
-//     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-// }
+plugins {
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+}
 
 // apply from:"dependenceConfig.gradle"
 //
