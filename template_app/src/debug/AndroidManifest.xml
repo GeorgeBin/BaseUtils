@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware
+    ,Deprecated,DeprecatedWarning">
+
+  <application
+      android:icon="@drawable/debug_icon"
+      android:label="Debug 版名字"
+      tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute"
+      tools:replace="android:icon,android:label" />
+</manifest>
