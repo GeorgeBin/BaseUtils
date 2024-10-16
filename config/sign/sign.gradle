@@ -1,0 +1,24 @@
+
+//------------------------------------------ 签名 ------------------------------------------
+
+android {
+    // todo: keystore config
+    def debugKeyPath = "${project.getRootDir()}/config/sign/debug.keystore"
+    def releaseKeyPath = "${project.getRootDir()}/config/sign/release.keystore"
+
+    signingConfigs {
+
+        debug { storeFile file(debugKeyPath) }
+
+        release {
+            storeFile file(releaseKeyPath)
+
+            storePassword "password1"
+            keyAlias "key0"
+            keyPassword "password2"
+
+            v1SigningEnabled = true //v1签名
+            v2SigningEnabled = true //v2签名
+        }
+    }
+}

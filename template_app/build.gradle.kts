@@ -1,9 +1,14 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinTargetHierarchy.SourceSetTree.Companion.main
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
-  id(libs.plugins.androidApplication.get().pluginId)
-  id(libs.plugins.jetbrainsKotlinAndroid.get().pluginId)
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.android)
 }
+
+// val  PROD_PROPS = project.rootDir.resolve("local/keystore.properties")
+val PROD_PROPS = gradleLocalProperties(project.rootDir.resolve("local/keystore.properties"),providers)
 
 android {
   namespace = "com.georgebindragon.template.app"
@@ -22,10 +27,21 @@ android {
     }
   }
 
+  signingConfigs {
+    create("release") {
+      setSigningConfigKey(signingConfigs.getByName("release"), PROD_PROPS)
+    }
+
+    // signingConfigs.getByName("debug") {
+    //   setSigningConfigKey(signingConfigs.getByName("debug"), PROD_PROPS)
+    // }
+  }
+
   buildTypes {
     release {
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+      signingConfig = signingConfigs.getByName("release")
     }
   }
   compileOptions {
@@ -101,4 +117,47 @@ dependencies {
   androidTestImplementation(libs.ui.test.junit4)
   debugImplementation(libs.ui.tooling)
   debugImplementation(libs.ui.test.manifest)
+}
+
+// 调用 signing.gradle.kts 中定义的 configureSigning 函数
+val keystorePropertiesPath = "path/to/your/keystore.properties"
+apply(from = project.rootDir.resolve("gradle/sign.gradle.kts"))
+// configureSigning(keystorePropertiesPath)
+
+// 定义加载签名文件的方法
+fun configureSigning(keystorePropertiesPath: String) {
+  val keystorePropertiesFile = file(keystorePropertiesPath)
+  val keystoreProperties = Properties()
+  keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
+  android {
+    signingConfigs {
+      create("release") {
+        keyAlias = keystoreProperties["keyAlias"] as String
+        keyPassword = keystoreProperties["keyPassword"] as String
+        storeFile = file(keystoreProperties["storeFile"] as String)
+        storePassword = keystoreProperties["storePassword"] as String
+      }
+    }
+
+    buildTypes {
+      getByName("release") {
+        signingConfig = signingConfigs.getByName("release")
+      }
+    }
+  }
+}
+
+// 定义设置签名配置的方法
+fun setSigningConfigKey(
+  config: com.android.build.gradle.internal.dsl.SigningConfig,
+  props: Properties?
+): com.android.build.gradle.internal.dsl.SigningConfig {
+  if (props != null) {
+    config.storeFile = props.getProperty("keystore")?.let { file(it) }
+    config.storePassword = props.getProperty("store.pass")
+    config.keyAlias = props.getProperty("key.alias")
+    config.keyPassword = props.getProperty("key.pass")
+  }
+  return config
 }

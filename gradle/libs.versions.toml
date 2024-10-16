@@ -101,10 +101,13 @@ material3 = { group = "androidx.compose.material3", name = "material3" }
 [plugins]
 #ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 #serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
+#androidApplication = { id = "com.android.application", version.ref = "agp" }
+#jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 #androidApplication = { id = "com.android.application" }
 #jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android" }
 #androidLibrary = { id = "com.android.library" }
+
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

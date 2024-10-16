@@ -39,6 +39,36 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <receiver
+        android:exported="true"
+        android:name="com.georgebindragon.base.receiver.UtilsReceiver" >
+      <intent-filter>
+
+        <!-- 屏蔽开机启动广播，App自行实现，因为可能会有回调不及时的问题 -->
+        <!-- <action android:name="android.intent.action.BOOT_COMPLETED"/> -->
+        <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+      </intent-filter>
+    </receiver>
+
+
+    <activity-alias
+        android:exported="true"
+        android:name="leakcanary.internal.activity.LeakLauncherActivity"
+        android:enabled="@bool/leak_canary_add_launcher_icon"
+        android:icon="@mipmap/leak_canary_icon"
+        android:label="@string/leak_canary_display_activity_label"
+        android:targetActivity="leakcanary.internal.activity.LeakActivity"
+        android:taskAffinity="com.squareup.leakcanary.${applicationId}"
+        android:theme="@style/leak_canary_LeakCanary.Base" >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity-alias>
+
+
   </application>
 
 </manifest>

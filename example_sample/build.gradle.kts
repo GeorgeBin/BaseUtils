@@ -1,16 +1,16 @@
 plugins {
-  alias(libs.plugins.androidApplication)
-  alias(libs.plugins.jetbrainsKotlinAndroid)
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.android)
 }
 
 android {
   namespace = "com.georgebindragon.application.sample"
-  compileSdk = 30
+  compileSdk = 34
 
   defaultConfig {
     applicationId = "com.georgebindragon.application.sample"
-    minSdk = 24
-    targetSdk = 30
+    minSdk = 21
+    targetSdk = 34
     versionCode = 1
     versionName = "1.0"
 
@@ -26,13 +26,33 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
+
+  // Java & Kotlin 版本 https://mp.weixin.qq.com/s/Myk26xmD675pNXaUUWhv8g
+
+  // 使用 Java 11：desugaring 支持的最高版本
+  // Java 环境：gradle 运行、Java 源代码编译、Kotlin 源代码编译
+
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11 // 源码 Java 版本
+    targetCompatibility = JavaVersion.VERSION_11 // 编译 Java 版本
   }
+
+  // Kotlin 源代码编译
   kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = "11" // 编译 Java 版本
   }
+
+  java {
+    toolchain {
+      languageVersion.set(JavaLanguageVersion.of(11))
+    }
+  }
+
+  kotlin {
+    jvmToolchain(11)
+  }
+
+
   buildFeatures {
     compose = false
   }
@@ -56,5 +76,8 @@ dependencies {
   implementation("com.hannesdorfmann.mosby3:mvi:3.1.1")
 
   // 基础工具类
+  implementation(libs.utilsjava)
+  implementation(libs.utilsRx)
+  implementation(libs.utilsandroid)
   implementation(libs.baseApplication)
 }
